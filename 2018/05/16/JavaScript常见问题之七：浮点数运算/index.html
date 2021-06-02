@@ -1,0 +1,1016 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="js,JavaScript常见问题,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="这是几个老生常谈的问题，但又经常遇到。“0.1 + 0.2 为什么不等于0.3”，“3.55保留一位小数的时候为什么是3.5”，为什么后端给我的一个ID突然不准确了，为什么很大的数字在简单计算时得到的结果不对，JavaScript在处理数字相关问题的时候，还是有坑的。">
+<meta name="keywords" content="js,JavaScript常见问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript常见问题之七：计算精度">
+<meta property="og:url" content="https://zhyjor.github.io/2018/05/16/JavaScript常见问题之七：浮点数运算/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="这是几个老生常谈的问题，但又经常遇到。“0.1 + 0.2 为什么不等于0.3”，“3.55保留一位小数的时候为什么是3.5”，为什么后端给我的一个ID突然不准确了，为什么很大的数字在简单计算时得到的结果不对，JavaScript在处理数字相关问题的时候，还是有坑的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g2ipqtte9qj32800c940w.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g2ip26osxzj30xc0de75t.jpg">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2021-06-02T13:00:30.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript常见问题之七：计算精度">
+<meta name="twitter:description" content="这是几个老生常谈的问题，但又经常遇到。“0.1 + 0.2 为什么不等于0.3”，“3.55保留一位小数的时候为什么是3.5”，为什么后端给我的一个ID突然不准确了，为什么很大的数字在简单计算时得到的结果不对，JavaScript在处理数字相关问题的时候，还是有坑的。">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g2ipqtte9qj32800c940w.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/05/16/JavaScript常见问题之七：浮点数运算/">
+
+
+
+
+
+  <title> JavaScript常见问题之七：计算精度 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/05/16/JavaScript常见问题之七：浮点数运算/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript常见问题之七：计算精度
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-16T07:55:34+00:00">
+                2018-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/16/JavaScript常见问题之七：浮点数运算/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/16/JavaScript常见问题之七：浮点数运算/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这是几个老生常谈的问题，但又经常遇到。“0.1 + 0.2 为什么不等于0.3”，“3.55保留一位小数的时候为什么是3.5”，为什么后端给我的一个ID突然不准确了，为什么很大的数字在简单计算时得到的结果不对，JavaScript在处理数字相关问题的时候，还是有坑的。<br><a id="more"></a><br>我们知道JavaScript采用的是双精确度（64位）的浮点数表示法。浮点数（Floating-point Number）是对实数的一种近似表示，由一个有效数字（即尾数）加上幂数来表示，通常是乘以某个基数的整数次幂得到。以这种表示法表示的数值，称为浮点数，利用浮点进行运算，称为浮点计算，这种运算通常伴随着因为无法精确表示而进行的近似或舍入。</p>
+<h2 id="IEEE754介绍"><a href="#IEEE754介绍" class="headerlink" title="IEEE754介绍"></a>IEEE754介绍</h2><p>IEEE754标准是电气和电子工程师协会（IEEE）确定的计算机对浮点数的表示的规范，在一些强类型语言与Java、C++等中，浮点数对应的有double，float类型。</p>
+<h3 id="浮点数的存储格式"><a href="#浮点数的存储格式" class="headerlink" title="浮点数的存储格式"></a>浮点数的存储格式</h3><p>wiki上是这样介绍浮点数<br>二进制浮点数是以符号数值表示法的格式存储，对于如下图。最高有效位被指定为符号位（sign bit），接下来次高的e个比特是指数部分，最后剩下的f个低有效位的比特，存储有效数（significand）的小数部分（）。<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g2ipqtte9qj32800c940w.jpg" alt><br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g2ip26osxzj30xc0de75t.jpg" alt></p>
+<h3 id="浮点数运算"><a href="#浮点数运算" class="headerlink" title="浮点数运算"></a>浮点数运算</h3><p>我们知道，科学计数法中 30000 可以写成 3x10^4, 以 10 为底数 4 为指数的科学计数法。在 IEEE754 标准中是比较类似的，只不过它是二进制数，底数也为 2。</p>
+<p>IEEE 754 中最常用的浮点数值表示法是：单精确度（32位）和双精确度（64位），JavaScript 采用的是后者。举个例子，十进制数 150，使用双精度浮点数表示法，表示如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// D 表示十进制，B 表示二进制</span></span><br><span class="line"><span class="number">150</span>D = <span class="number">2</span>^<span class="number">8</span> * <span class="number">0.10010110</span>B <span class="comment">// 后面省略了 46 个 0</span></span><br></pre></td></tr></table></figure></p>
+<p>可以通过短除法计算：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> 150   余数位</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">    75     0   </span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">    37     1</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">    18     1</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">     9     0</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">     4     1</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">     2     0</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">     1     0</span><br><span class="line">÷    2</span><br><span class="line">---------------</span><br><span class="line">     0     1</span><br></pre></td></tr></table></figure></p>
+<p>上面是整数的表示法，最后一个余数为高位值，于是拿到 150 对应的二进制数位 10010110.最后一个余数为高位值，于是拿到 150 对应的二进制数位 10010110，也就等于 2^8 * 0.10010110。</p>
+<p>小数的表示法采用的是乘二取整，如 0.1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// (0011) 表示循环</span><br><span class="line">0.1D = 2^-3 * 0.110011(0011)</span><br></pre></td></tr></table></figure></p>
+<p>其演算方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> 0.1   整数位</span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    0.2     0 </span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    0.4     0   * ↓</span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    0.8     0 </span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    1.6     1 </span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    1.2     1</span><br><span class="line">×     2</span><br><span class="line">---------------</span><br><span class="line">    0.4     0   * ↑</span><br><span class="line">             (0011循环)</span><br></pre></td></tr></table></figure></p>
+<p>如果一个数既包含整数部分，又包含小数部分，其表示法的计算，需要分拆为整数和小数两部分，然后相加得到结果。与整数不同的是，第一个计算得到的整数位为最高位，故 0.1 对应的二进制数为 0.000110011(0011)，也就等于 2^-3 0.1100110011(0011)。</p>
+<h2 id="IEEE754-浮点数精度丢失"><a href="#IEEE754-浮点数精度丢失" class="headerlink" title="IEEE754 浮点数精度丢失"></a>IEEE754 浮点数精度丢失</h2><p>IEEE754 浮点数表示法的数据格式如下图：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/ 下图采用大端表示，高位在左，低位在右。</span><br><span class="line"></span><br><span class="line">sign  exponent         fraction</span><br><span class="line">+---+----------+---------------------+</span><br><span class="line">| <span class="number">1</span> |   <span class="number">2</span>~<span class="number">12</span>   |         <span class="number">13</span>~<span class="number">64</span>       |</span><br><span class="line">+---+----------+---------------------+</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>从上面小数的乘二取整演算中可以看到，有些小数对应的二进制数是无法写全的，比如 0.1，而 fraction 尾数部分有要求，只允许 52 位，超过部分进一舍零。符号位：高位第 1 位，如图 sign 部分</li>
+<li>指数位：高位第 2~12 位，如图 exponent 部分</li>
+<li>尾数位：剩下的 fraction 部分</li>
+</ul>
+<p>那么，我们就可以得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.1D </span><br><span class="line">= 2^-4 * 1.10011(0011)B</span><br><span class="line">= 2^-4 * 1.10011(0011 repeat 12 times)0011B // ← 最后一位为 1，进 1</span><br><span class="line">= 2^-4 * 1.10011(0011 repeat 12 times)010B</span><br></pre></td></tr></table></figure></p>
+<h2 id="0-1-0-2"><a href="#0-1-0-2" class="headerlink" title="0.1 + 0.2"></a>0.1 + 0.2</h2><p>根据上面我们了解到的知识，我们可以很容易算出这些值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.1D = 2^-4 * 1.1001100110011001100110011001100110011001100110011010B</span><br><span class="line">0.2D = 2^-3 * 1.1001100110011001100110011001100110011001100110011010B</span><br><span class="line">0.3D = 2^-2 * 1.0011001100110011001100110011001100110011001100110011B</span><br></pre></td></tr></table></figure></p>
+<p>0.1 + 0.2 时，先将两者指数统一为 -3，故 0.1 小数点向左移一位，于是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.1100110011001100110011001100110011001100110011001101B</span><br><span class="line">+  1.1001100110011001100110011001100110011001100110011010B</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">= 10.0110011001100110011001100110011001100110011001100111B</span><br></pre></td></tr></table></figure></p>
+<p>得到的二进制数为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.0110011001100110011001100110011001100110011001100111B</span><br></pre></td></tr></table></figure></p>
+<p>小数点往左移一位使得整数部分为 1，此时尾数部分为 53 位，进一舍零，于是得到最后的值是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2^-2 * 1.0011001100110011001100110011001100110011001100110100</span><br></pre></td></tr></table></figure></p>
+<p>这个值转化成真值，结果为：0.30000000000000004。那么 0.1 + 0.2 = 0.30000000000000004 的推演到这里就结束了。</p>
+<h2 id="相关验证"><a href="#相关验证" class="headerlink" title="相关验证"></a>相关验证</h2><p>毕竟咱们手动计算可能存在笔误，可以通过一个叫做 double-bits 的 npm 进行推演，我写了一个小 demo，感兴趣的可以玩耍下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = <span class="built_in">require</span>(<span class="string">'double-bits'</span>);</span><br><span class="line"><span class="keyword">const</span> pad = <span class="built_in">require</span>(<span class="string">'pad'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [lo, hi] where lo is a 32 bit integer and hi is a 20 bit integer.</span></span><br><span class="line"><span class="keyword">const</span> base2Str = <span class="function">(<span class="params">n</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> f = db.fraction(n);</span><br><span class="line">  <span class="keyword">const</span> s = db.sign(n) ? <span class="string">'-'</span> : <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">const</span> e = <span class="string">`2^<span class="subst">$&#123;db.exponent(n) + <span class="number">1</span>&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> t = <span class="string">`0.<span class="subst">$&#123;pad(f[<span class="number">1</span>].toString(<span class="number">2</span>), <span class="number">20</span>, <span class="string">'0'</span>)&#125;</span><span class="subst">$&#123;pad(f[<span class="number">0</span>].toString(<span class="number">2</span>), <span class="number">32</span>, <span class="string">'0'</span>)&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;s&#125;</span><span class="subst">$&#123;e&#125;</span> * <span class="subst">$&#123;t&#125;</span>`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.1</span>).toString(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.2</span>).toString(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.3</span>).toString(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">1.2</span>).toString(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面输出结果为：</span></span><br><span class="line"><span class="number">2</span>^<span class="number">-3</span> * <span class="number">0.11001100110011001100110011001100110011001100110011010</span></span><br><span class="line"><span class="number">2</span>^<span class="number">-2</span> * <span class="number">0.11001100110011001100110011001100110011001100110011010</span></span><br><span class="line"><span class="number">2</span>^<span class="number">-1</span> * <span class="number">0.10011001100110011001111001100110011001100110011001100</span></span><br><span class="line"><span class="number">2</span>^<span class="number">1</span> * <span class="number">0.10011001100110011001111001100110011001100110011001100</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为了按照计算机的思维，IEEE754 的标准来计算 0.1 + 0.2，又重新复习了一遍大学计算机基础的知识，原码、反码、补码，以及除二取余、乘二取整计算法，最后能够推演出来，也算是一个胜利吧~</p>
+<p><strong>参考资料</strong><br><a href="http://www.cnblogs.com/hustskyking/p/ieee754-operation-in-js.html" target="_blank" rel="noopener">揭秘 0.1 + 0.2 != 0.3</a><br><a href="https://github.com/camsong/blog/issues/9" target="_blank" rel="noopener">JavaScript 浮点数陷阱及解法</a><br><a href="https://github.com/yuhaiyang1/float_calculate" target="_blank" rel="noopener">js-calculate</a><br><a href="https://segmentfault.com/a/1190000009084877" target="_blank" rel="noopener">该死的IEEE-754浮点数</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/05/16/JavaScript常见问题之七：浮点数运算/">JavaScript常见问题之七：计算精度</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年05月16日 - 15:05</p>
+  <p><span>最后更新:</span>2021年06月02日 - 13:06</p>
+  <p><span>原始链接:</span><a href="/2018/05/16/JavaScript常见问题之七：浮点数运算/" title="JavaScript常见问题之七：计算精度">https://zhyjor.github.io/2018/05/16/JavaScript常见问题之七：浮点数运算/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/05/16/JavaScript常见问题之七：浮点数运算/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/JavaScript常见问题/" rel="tag"># JavaScript常见问题</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/11/html探索之二：如何理解html语义化/" rel="next" title="html探索之二：如何理解html语义化">
+                <i class="fa fa-chevron-left"></i> html探索之二：如何理解html语义化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/17/WebSocket深入理解之一：基础理论/" rel="prev" title="WebSocket深入理解之一：基础理论">
+                WebSocket深入理解之一：基础理论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="zhyjor">
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">313</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">171</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE754介绍"><span class="nav-number">1.</span> <span class="nav-text">IEEE754介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数的存储格式"><span class="nav-number">1.1.</span> <span class="nav-text">浮点数的存储格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数运算"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE754-浮点数精度丢失"><span class="nav-number">2.</span> <span class="nav-text">IEEE754 浮点数精度丢失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1-0-2"><span class="nav-number">3.</span> <span class="nav-text">0.1 + 0.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关验证"><span class="nav-number">4.</span> <span class="nav-text">相关验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共337.5k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

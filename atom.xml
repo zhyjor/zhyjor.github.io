@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>秋染蒹葭</title>
+  
+  <subtitle>会当凌绝顶，一览众山小</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://zhyjor.github.io/"/>
+  <updated>2021-06-02T13:00:30.101Z</updated>
+  <id>https://zhyjor.github.io/</id>
+  
+  <author>
+    <name>zhyjor</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】深入理解CORS及最佳实践</title>
+    <link href="https://zhyjor.github.io/2021/05/31/%E3%80%90%E8%AF%91%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CORS%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    <id>https://zhyjor.github.io/2021/05/31/【译】深入理解CORS及最佳实践/</id>
+    <published>2021-05-31T02:57:14.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<p>5月，将将入夏的天气让人感觉慵懒，这又和最近的忙碌的工作状态形成了对比。特别想在这种刚刚开始热的时候出去玩，一切都是充满生机的样子，没有暑夏的沉闷和无聊。好了，💐不多说，今天搬运一篇写的很好的文章，也在深入理解一下CORS。<br><a id="more"></a><br><a href="https://ieftimov.com/post/deep-dive-cors-history-how-it-works-best-practices/" target="_blank" rel="noopener">原文地址-Deep dive in CORS: History, how it works, and best practices</a></p><p>写本文的目的是了解<code>同源策略</code>和CORS的历史演进，深入理解CORS和跨域访问的几种类型，了解CORS的最佳实践</p><h2 id="出现在浏览器console的报错"><a href="#出现在浏览器console的报错" class="headerlink" title="出现在浏览器console的报错"></a>出现在浏览器console的报错</h2><blockquote><p>No ‘Access-Control-Allow-Origin’ header is present on the requested resource.</p></blockquote><blockquote><p>Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at <a href="https://example.com/" target="_blank" rel="noopener">https://example.com/</a></p></blockquote><blockquote><p>Access to fetch at ‘<a href="https://example.com’" target="_blank" rel="noopener">https://example.com’</a> from origin ‘<a href="http://localhost:3000’" target="_blank" rel="noopener">http://localhost:3000’</a> has been blocked by CORS policy.</p></blockquote><p>几乎所有的开发者都会在浏览器的控制台看到过这些报错，</p><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;5月，将将入夏的天气让人感觉慵懒，这又和最近的忙碌的工作状态形成了对比。特别想在这种刚刚开始热的时候出去玩，一切都是充满生机的样子，没有暑夏的沉闷和无聊。好了，💐不多说，今天搬运一篇写的很好的文章，也在深入理解一下CORS。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端架构之四：监控与优化</title>
+    <link href="https://zhyjor.github.io/2021/05/25/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E4%B9%8B%E5%9B%9B%EF%BC%9A%E7%9B%91%E6%8E%A7%E4%B8%8E%E4%BC%98%E5%8C%96/"/>
+    <id>https://zhyjor.github.io/2021/05/25/前端架构之四：监控与优化/</id>
+    <published>2021-05-25T02:57:25.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端架构之三：cicd</title>
+    <link href="https://zhyjor.github.io/2021/05/25/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E4%B9%8B%E4%B8%89%EF%BC%9Acicd/"/>
+    <id>https://zhyjor.github.io/2021/05/25/前端架构之三：cicd/</id>
+    <published>2021-05-25T02:55:39.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端架构之三：serverless</title>
+    <link href="https://zhyjor.github.io/2021/05/25/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E4%B9%8B%E4%B8%89%EF%BC%9Aserverless/"/>
+    <id>https://zhyjor.github.io/2021/05/25/前端架构之三：serverless/</id>
+    <published>2021-05-25T02:52:45.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端架构系列之二：微前端</title>
+    <link href="https://zhyjor.github.io/2021/05/25/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%EF%BC%9A%E5%BE%AE%E5%89%8D%E7%AB%AF/"/>
+    <id>https://zhyjor.github.io/2021/05/25/前端架构系列之二：微前端/</id>
+    <published>2021-05-25T02:52:14.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端架构系列之一：multi-repo</title>
+    <link href="https://zhyjor.github.io/2021/05/25/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%EF%BC%9Amulti-repo/"/>
+    <id>https://zhyjor.github.io/2021/05/25/前端架构系列之一：multi-repo/</id>
+    <published>2021-05-25T02:47:12.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<p>在开发维护npm包的时候，在包的数量还比较少的时候维护起来并没有什么问题，但是当package的数量增加是，比如babel的那种地狱级的包数量，已经很难用多个仓库去维护，且package需要相互link+版本升级的时候，需要对处理方案进行收敛<br><a id="more"></a></p><p><strong>参考资料</strong><br><a href="http://www.sosout.com/2018/07/21/lerna-repo.html" target="_blank" rel="noopener">lerna管理前端packages的最佳实践</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在开发维护npm包的时候，在包的数量还比较少的时候维护起来并没有什么问题，但是当package的数量增加是，比如babel的那种地狱级的包数量，已经很难用多个仓库去维护，且package需要相互link+版本升级的时候，需要对处理方案进行收敛&lt;br&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="https://zhyjor.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端" scheme="https://zhyjor.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="前端架构" scheme="https://zhyjor.github.io/tags/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="lerna" scheme="https://zhyjor.github.io/tags/lerna/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>写ReactHooks前必读</title>
+    <link href="https://zhyjor.github.io/2021/01/29/%E5%86%99ReactHooks%E5%89%8D%E5%BF%85%E8%AF%BB/"/>
+    <id>https://zhyjor.github.io/2021/01/29/写ReactHooks前必读/</id>
+    <published>2021-01-29T02:44:36.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>移动端video标签的坑</title>
+    <link href="https://zhyjor.github.io/2021/01/28/%E7%A7%BB%E5%8A%A8%E7%AB%AFvideo%E6%A0%87%E7%AD%BE%E7%9A%84%E5%9D%91/"/>
+    <id>https://zhyjor.github.io/2021/01/28/移动端video标签的坑/</id>
+    <published>2021-01-28T08:12:23.000Z</published>
+    <updated>2021-06-02T13:00:30.105Z</updated>
+    
+    <content type="html"><![CDATA[<p>html5中的video的标签，使得页面中使用视频变得简单了很多，与引入图片的方式类似，我们使用video标签指定src属性即可引入视频。<br><a id="more"></a></p><p><strong>参考资料</strong><br><a href="http://renshuai.github.io/2017/08/09/%E7%A7%BB%E5%8A%A8%E7%AB%AFvideo%E6%A0%87%E7%AD%BE%E7%9A%84%E5%9D%91/" target="_blank" rel="noopener">移动端video标签的坑</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;html5中的video的标签，使得页面中使用视频变得简单了很多，与引入图片的方式类似，我们使用video标签指定src属性即可引入视频。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微前端实践</title>
+    <link href="https://zhyjor.github.io/2021/01/04/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%AE%9E%E8%B7%B5/"/>
+    <id>https://zhyjor.github.io/2021/01/04/微前端实践/</id>
+    <published>2021-01-04T12:07:35.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小程序应用实践之一：实现一个海报渲染</title>
+    <link href="https://zhyjor.github.io/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B5%B7%E6%8A%A5%E6%B8%B2%E6%9F%93/"/>
+    <id>https://zhyjor.github.io/2020/12/14/小程序应用实践之一：实现一个海报渲染/</id>
+    <published>2020-12-14T02:11:46.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href="https://segmentfault.com/a/1190000019299888" target="_blank" rel="noopener">Taro框架使用canvas生成图片-附带源码和效果</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000019299888&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Taro框架使用c
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>auth2协议原理与实现</title>
+    <link href="https://zhyjor.github.io/2020/12/12/auth2%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/"/>
+    <id>https://zhyjor.github.io/2020/12/12/auth2协议原理与实现/</id>
+    <published>2020-12-12T02:42:05.000Z</published>
+    <updated>2021-06-02T13:00:30.093Z</updated>
+    
+    <content type="html"><![CDATA[<p>OAuth只是一个授权协议，不是一个实现或是一个中间件。</p><p>OAuth协议是一个授权的开放协议，主要是用来解决第三方登录的</p><a id="more"></a><p>auth1协议在处理签名上更加繁琐，而且不够通用，优化后的版本更简单</p><p>auth2协议分两种，基于token和基于code两种，基于code的方式是服务端获取token的方式，基于token的方式是无服务端的场景，前端直接获取token，用来获取资源服务器的资源</p><h2 id="Q"><a href="#Q" class="headerlink" title="Q"></a>Q</h2><p>目前遇到的问题是gitlab回跳有问题</p><p>gitlab回跳的时候遇到无法跳转的问题</p><p><strong>参考资料</strong><br><a href="https://www.jianshu.com/p/d74ce6ca0c33" target="_blank" rel="noopener">OAuth2.0原理和验证流程分析</a><br><a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">The OAuth 2.0 Authorization Framework</a><br><a href="https://my.oschina.net/wangzhenchao/blog/851773" target="_blank" rel="noopener">Auth 2.0 协议原理与实现：协议原理</a><br><a href="https://www.ory.sh/run-oauth2-server-open-source-api-security/" target="_blank" rel="noopener">Run your own OAuth2 Server</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;OAuth只是一个授权协议，不是一个实现或是一个中间件。&lt;/p&gt;
+&lt;p&gt;OAuth协议是一个授权的开放协议，主要是用来解决第三方登录的&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端脚手架工具开发</title>
+    <link href="https://zhyjor.github.io/2020/12/12/%E5%89%8D%E7%AB%AF%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/"/>
+    <id>https://zhyjor.github.io/2020/12/12/前端脚手架工具开发/</id>
+    <published>2020-12-12T02:32:01.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解threejs之一：简述背景</title>
+    <link href="https://zhyjor.github.io/2020/12/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3threejs%E4%B9%8B%E4%B8%80%EF%BC%9A%E7%AE%80%E8%BF%B0%E8%83%8C%E6%99%AF/"/>
+    <id>https://zhyjor.github.io/2020/12/08/深入理解threejs之一：简述背景/</id>
+    <published>2020-12-08T11:54:55.000Z</published>
+    <updated>2021-06-02T13:00:30.105Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href="https://teakki.com/pe/58a3ef1bf0d40775548c908f" target="_blank" rel="noopener">dragon/threejs教程</a></p><p><img src="https://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://teakki.com/pe/58a3ef1bf0d40775548c908f&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;dragon
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>auth2实践</title>
+    <link href="https://zhyjor.github.io/2020/12/02/auth2%E5%AE%9E%E8%B7%B5/"/>
+    <id>https://zhyjor.github.io/2020/12/02/auth2实践/</id>
+    <published>2020-12-02T01:55:04.000Z</published>
+    <updated>2021-06-02T13:00:30.093Z</updated>
+    
+    <content type="html"><![CDATA[<p>OAuth2协议，定义了一套用户、第三方服务和存储着用户数据的平台之间的交互规则，可以使得用户无需将自己的用户名和密码暴露给第三方，即可使第三方应用获取用户在该平台上的数据，最常见的场景便是现在互联网上的各种使用XXX账号登录。<br><a id="more"></a></p><p>基于OAuth2协议协议的标准写法，相对于oauth1有些改动的</p><p><strong>参考资料</strong><br><a href="https://xxzizixx.github.io/2018/12/13/2018/12/%E5%9F%BA%E4%BA%8EOAuth2%E5%92%8CSSO%E7%9A%84%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0/" target="_blank" rel="noopener">基于OAuth2的开放平台</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;OAuth2协议，定义了一套用户、第三方服务和存储着用户数据的平台之间的交互规则，可以使得用户无需将自己的用户名和密码暴露给第三方，即可使第三方应用获取用户在该平台上的数据，最常见的场景便是现在互联网上的各种使用XXX账号登录。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gitlab-runner的技术架构</title>
+    <link href="https://zhyjor.github.io/2020/10/30/gitlab-runner%E7%9A%84%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"/>
+    <id>https://zhyjor.github.io/2020/10/30/gitlab-runner的技术架构/</id>
+    <published>2020-10-30T09:15:34.000Z</published>
+    <updated>2021-06-02T13:00:30.097Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gitlab配置</title>
+    <link href="https://zhyjor.github.io/2020/10/21/gitlab%E9%85%8D%E7%BD%AE/"/>
+    <id>https://zhyjor.github.io/2020/10/21/gitlab配置/</id>
+    <published>2020-10-21T02:24:30.000Z</published>
+    <updated>2021-06-02T13:00:30.097Z</updated>
+    
+    <content type="html"><![CDATA[<p>Repository mirroring allows for mirroring of repositories to and from external sources.<br><a id="more"></a></p><p><strong>参考资料</strong></p><ul><li>同步时间问题</li></ul><p><a href="https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html" target="_blank" rel="noopener"><strong>Repository mirroring</strong></a><br><a href="https://gitlab.com/gitlab-org/gitlab/-/issues/237891" target="_blank" rel="noopener">Improve CI for external repo with configurable maximum mirroring frequency</a><br><a href="https://gitlab.com/gitlab-org/gitlab/-/issues/12758" target="_blank" rel="noopener">Repository pull mirror scheduling design</a><br><a href="https://gitlab.com/gitlab-com/gl-infra/scalability/-/issues/78#note_262385767" target="_blank" rel="noopener">Reduce rate of RepositoryUpdateMirrorWorker jobs</a><br><a href="https://gitlab.com/gitlab-org/gitlab/-/issues/118753" target="_blank" rel="noopener">Application limits for pull mirror API</a><br><a href="https://gitlab.com/gitlab-org/gitlab/blob/master/ee/lib/gitlab/mirror.rb" target="_blank" rel="noopener">MIN_DELAY = 30.minutes</a><br><a href="https://gitlab.com/gitlab-org/gitlab/-/issues/5258" target="_blank" rel="noopener">Dynamically determine mirror update interval based on total number of mirrors, average update time, and available concurrency</a><br><a href="https://docs.gitlab.com/ee/administration/instance_limits.html#number-of-webhooks" target="_blank" rel="noopener">GitLab application limits</a></p><ul><li>其他</li></ul><p><a href="https://docs.gitlab.com/ee/ci/docker/using_docker_build.html" target="_blank" rel="noopener">Building Docker images with GitLab CI/CD</a></p><p><a href="https://cloud.tencent.com/developer/article/1624837" target="_blank" rel="noopener">GitLab Runner安装注册配置管理</a><br><a href="https://cloud.tencent.com/developer/article/1530690" target="_blank" rel="noopener">如何做Git项目的持续集成</a><br><a href="https://www.upyun.com/tech/article/245/%E5%BD%93%E8%B0%88%E5%88%B0%20GitLab%20CI%20%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E6%88%91%E4%BB%AC%E8%AF%A5%E8%81%8A%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%88%E4%B8%8A%E7%AF%87%EF%BC%89.html" target="_blank" rel="noopener">(17年的文章，有点旧，但是技术细节还不错)当谈到 GitLab CI 的时候，我们该聊些什么（上篇）</a><br><a href="https://www.upyun.com/tech/article/246/%E5%BD%93%E8%B0%88%E5%88%B0%20GitLab%20CI%20%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E6%88%91%E4%BB%AC%E9%83%BD%E8%AF%A5%E8%81%8A%E4%BA%9B%E4%BB%80%E4%B9%88%EF%BC%88%E4%B8%8B%E7%AF%87%EF%BC%89.html" target="_blank" rel="noopener">当谈到 GitLab CI 的时候，我们都该聊些什么（下篇）</a><br><a href="https://www.jqhtml.com/50142.html" target="_blank" rel="noopener">基于镜像部署的Gitlab-CI/CD实践和坑位指南</a><br><a href="https://www.cnblogs.com/jimaojin/p/12611584.html" target="_blank" rel="noopener">docker运行gitlab runner且指定shell executor</a><br><a href="https://gitlab.com/gitlab-org/gitlab-runner/-/blob/master/docs/configuration/advanced-configuration.md" target="_blank" rel="noopener">gitlab-runner docs configuration advanced-configuration</a><br><a href="https://docs.gitlab.com/runner/executors/" target="_blank" rel="noopener">Executors</a><br><a href="https://blog.csdn.net/libertine1993/article/details/80651552" target="_blank" rel="noopener">Docker 从容器中拷贝文件到宿主机中</a><br><a href="https://jingsam.github.io/2018/10/16/host-in-docker.html" target="_blank" rel="noopener">Docker容器访问宿主机网络</a><br><a href="https://blog.csdn.net/u010502101/article/details/89067757" target="_blank" rel="noopener">解决unable to locate package net-tools</a><br><a href="https://blog.csdn.net/q_Catherine/article/details/90741613" target="_blank" rel="noopener">修改gitlab默认端口</a><br><a href="https://zj-git-guide.readthedocs.io/zh_CN/latest/platform/GitLab%E5%AF%BC%E8%87%B48080%E7%AB%AF%E5%8F%A3%E5%86%B2%E7%AA%81/" target="_blank" rel="noopener">GitLab导致8080端口冲突</a><br><a href="https://blog.csdn.net/wangyy130/article/details/85633303" target="_blank" rel="noopener">linux安装gitlab并修改gitlab默认端口号</a><br><a href="https://yeasy.gitbook.io/docker_practice/container/attach_exec" target="_blank" rel="noopener">docker从入门到实践</a><br><a href="https://blog.mayershi.me/2019/12/23/crack-gitlab-ee-licence/index.html" target="_blank" rel="noopener">gitlab-ee 企业版自签许可证license</a><br><a href="https://blog.starudream.cn/2020/01/19/6-crack-gitlab/" target="_blank" rel="noopener">生成 GitLab EE 许可证</a><br><a href="https://www.bookstack.cn/read/gitlab-doc-zh/docs-226.md" target="_blank" rel="noopener">Gitlab 中文文档</a><br><a href="https://www.coder.work/article/6562560" target="_blank" rel="noopener">Mirror确实可以工作，但是速度很慢</a><br><a href="https://about.gitlab.com/releases/2018/03/22/gitlab-10-6-released/#gitlab-cicd-for-external-repos" target="_blank" rel="noopener">External CI/CD configuration in Starter and Bronze</a><br><a href="https://www.jianshu.com/p/825dad1266cf" target="_blank" rel="noopener">配置 GitLab Runners</a><br><a href="https://bbs.aqzt.com/thread-621-1-1.html" target="_blank" rel="noopener">gitlab-ci-multi-runner和GitLab Runner区别</a><br><a href="https://www.jianshu.com/p/2b43151fb92e" target="_blank" rel="noopener">GitLab-CI与GitLab-Runner</a><br><a href="https://docs.gitlab.com/runner/install/docker.html" target="_blank" rel="noopener">在容器中运行GitLab Runner</a><br><a href="https://juejin.im/post/6844904152955355149" target="_blank" rel="noopener">Docker安装Gitlab、Gitlab-Runner并实现项目CICD</a><br><a href="https://forge.etsi.org/rep/help/workflow/repository_mirroring.md" target="_blank" rel="noopener">Repository mirroring</a></p><p><a href="https://meigit.readthedocs.io/en/latest/gitlab_ci_.gitlab-ci.yml_detail.html" target="_blank" rel="noopener">GitLab CI流水线配置文件.gitlab-ci.yml详解</a></p><ul><li>issue</li></ul><p><a href="https://gitlab.com/gitlab-org/gitlab-foss/-/issues/57038" target="_blank" rel="noopener">reset_token_url: reset_registration_token_admin_application_settings_path</a><br><a href="https://stackoverflow.com/questions/54216933/internal-server-error-500-while-accessing-gitlab-admin-runners" target="_blank" rel="noopener">Internal Server Error 500 while accessing $GITLAB/admin/runners</a></p><p><a href="https://blog.csdn.net/ouyang_peng/article/details/84066417" target="_blank" rel="noopener"></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Repository mirroring allows for mirroring of repositories to and from external sources.&lt;br&gt;
+    
+    </summary>
+    
+      <category term="gitlab" scheme="https://zhyjor.github.io/categories/gitlab/"/>
+    
+    
+      <category term="gitlab" scheme="https://zhyjor.github.io/tags/gitlab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微前端框架之一：single-spa源码分析</title>
+    <link href="https://zhyjor.github.io/2020/09/02/%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%B8%80%EF%BC%9Asingle-spa%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    <id>https://zhyjor.github.io/2020/09/02/微前端框架之一：single-spa源码分析/</id>
+    <published>2020-09-02T02:40:41.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<p>single-spa是一个很好的微前端基础框架，qiankun框架就是基于single-spa来实现的，在single-spa的基础上做了一层封装，也解决了single-spa的一些缺陷。</p><p>因为single-spa是一个基础的微前端框架，了解了它的实现原理，再去看其它的微前端框架，就会非常容易了。<br><a id="more"></a></p><p><strong>参考资料</strong><br><a href="https://mp.weixin.qq.com/s/OmYnrPYhQvbnWdkZIToJrA" target="_blank" rel="noopener">微前端框架 之 single-spa 从入门到精通</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;single-spa是一个很好的微前端基础框架，qiankun框架就是基于single-spa来实现的，在single-spa的基础上做了一层封装，也解决了single-spa的一些缺陷。&lt;/p&gt;
+&lt;p&gt;因为single-spa是一个基础的微前端框架，了解了它的实现原理，再去看其它的微前端框架，就会非常容易了。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="微前端" scheme="https://zhyjor.github.io/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="微前端" scheme="https://zhyjor.github.io/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XMLHttpRequest完全解读</title>
+    <link href="https://zhyjor.github.io/2020/06/01/XMLHttpRequest%E5%AE%8C%E5%85%A8%E8%A7%A3%E8%AF%BB/"/>
+    <id>https://zhyjor.github.io/2020/06/01/XMLHttpRequest完全解读/</id>
+    <published>2020-06-01T15:54:58.000Z</published>
+    <updated>2021-06-02T13:00:30.093Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用中，一直对XMLHttpRequest是一种一知半解的状态，会用但是很多问题都是模棱两可，是时候看看w3c关于XMLHttpRequest的详细资料了。</p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做前端上传的时候遇到一个问题，由于minioss（oss的私有版本）无法支持sts授权，使用sdk的方式就只能前端直接拿到sk，但这样是不安全的；后来了解到oss支持对签名URL进行put操作，签名可以放在接口去实现，这样就解决了这个问题；但是现在直接put一个url，怎么拿到进度呢？这时我居然还不知道有xhr.upload.onprgress，本篇文章的来源就是这个！<br><a id="more"></a></p><p><strong>参考资料</strong><br><a href="https://segmentfault.com/a/1190000004322487" target="_blank" rel="noopener">你真的会使用XMLHttpRequest吗？</a><br><a href="https://www.w3ctech.com/topic/854" target="_blank" rel="noopener">【翻译】这个API很“迷人”——(新的Fetch API)</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用中，一直对XMLHttpRequest是一种一知半解的状态，会用但是很多问题都是模棱两可，是时候看看w3c关于XMLHttpRequest的详细资料了。&lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近做前端上传的时候遇到一个问题，由于minioss（oss的私有版本）无法支持sts授权，使用sdk的方式就只能前端直接拿到sk，但这样是不安全的；后来了解到oss支持对签名URL进行put操作，签名可以放在接口去实现，这样就解决了这个问题；但是现在直接put一个url，怎么拿到进度呢？这时我居然还不知道有xhr.upload.onprgress，本篇文章的来源就是这个！&lt;br&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="https://zhyjor.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端" scheme="https://zhyjor.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="XMLHttpRequest" scheme="https://zhyjor.github.io/tags/XMLHttpRequest/"/>
+    
+      <category term="ajax" scheme="https://zhyjor.github.io/tags/ajax/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>graphql实战</title>
+    <link href="https://zhyjor.github.io/2020/05/16/graphql%E5%AE%9E%E6%88%98/"/>
+    <id>https://zhyjor.github.io/2020/05/16/graphql实战/</id>
+    <published>2020-05-16T15:55:35.000Z</published>
+    <updated>2021-06-02T13:00:30.097Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p><strong>参考资料</strong><br><a href></a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;&lt;br&gt;&lt;a href&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://static.zhyjor.com/wexin.png&quot; alt&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="dev" scheme="https://zhyjor.github.io/categories/dev/"/>
+    
+    
+      <category term="dev" scheme="https://zhyjor.github.io/tags/dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从零实现一个断点续传的功能</title>
+    <link href="https://zhyjor.github.io/2020/05/12/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0%E7%9A%84%E5%8A%9F%E8%83%BD/"/>
+    <id>https://zhyjor.github.io/2020/05/12/从零实现一个断点续传的功能/</id>
+    <published>2020-05-12T11:34:19.000Z</published>
+    <updated>2021-06-02T13:00:30.101Z</updated>
+    
+    <content type="html"><![CDATA[<p>前端大文件上传网上的大部分文章已经给出了解决方案，核心是利用 Blob.prototype.slice 方法，和数组的 slice 方法相似，调用的 slice 方法可以返回原文件的某个切片<br><a id="more"></a></p><p><strong>参考资料</strong><br><a href="https://juejin.im/post/5dff8a26e51d4558105420ed" target="_blank" rel="noopener">字节跳动面试官：请你实现一个大文件上传和断点续传</a><br><a href="https://juejin.im/post/5ebb4346e51d451ef53793ad" target="_blank" rel="noopener">大规格文件的上传优化</a></p><p><img src="http://static.zhyjor.com/wexin.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前端大文件上传网上的大部分文章已经给出了解决方案，核心是利用 Blob.prototype.slice 方法，和数组的 slice 方法相似，调用的 slice 方法可以返回原文件的某个切片&lt;br&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="https://zhyjor.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端" scheme="https://zhyjor.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="上传" scheme="https://zhyjor.github.io/tags/%E4%B8%8A%E4%BC%A0/"/>
+    
+  </entry>
+  
+</feed>
