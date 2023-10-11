@@ -1,0 +1,1057 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="SSR探索与实践,ssr," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="与传统的spa相比，服务器端渲染可以有更好的seo,更快的内容到达时间（time to content）。但是服务器端渲染并不是必须的，是否使用，需要细细斟酌。本文是一个完整的服务器渲染的实现，结合一个例子实现。同时假如是仅仅几个静态页面，完全可以使用预渲染实现，没必要完全使用服务器实时动态编译html. 本文主要是参考vue-ssr官方指南，对其中的一些关键点的总结。">
+<meta name="keywords" content="SSR探索与实践,ssr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSR探索与实践之二：vue服务端渲染基础">
+<meta property="og:url" content="https://zhyjor.github.io/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="与传统的spa相比，服务器端渲染可以有更好的seo,更快的内容到达时间（time to content）。但是服务器端渲染并不是必须的，是否使用，需要细细斟酌。本文是一个完整的服务器渲染的实现，结合一个例子实现。同时假如是仅仅几个静态页面，完全可以使用预渲染实现，没必要完全使用服务器实时动态编译html. 本文主要是参考vue-ssr官方指南，对其中的一些关键点的总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201808071502_946.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSR探索与实践之二：vue服务端渲染基础">
+<meta name="twitter:description" content="与传统的spa相比，服务器端渲染可以有更好的seo,更快的内容到达时间（time to content）。但是服务器端渲染并不是必须的，是否使用，需要细细斟酌。本文是一个完整的服务器渲染的实现，结合一个例子实现。同时假如是仅仅几个静态页面，完全可以使用预渲染实现，没必要完全使用服务器实时动态编译html. 本文主要是参考vue-ssr官方指南，对其中的一些关键点的总结。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201808071502_946.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/"/>
+
+
+
+
+
+  <title> SSR探索与实践之二：vue服务端渲染基础 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                SSR探索与实践之二：vue服务端渲染基础
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-07T05:48:05+00:00">
+                2018-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ssr/" itemprop="url" rel="index">
+                    <span itemprop="name">ssr</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/07/SSR探索与实践之二：vue服务端渲染基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>与传统的spa相比，服务器端渲染可以有更好的seo,更快的内容到达时间（time to content）。但是服务器端渲染并不是必须的，是否使用，需要细细斟酌。本文是一个完整的服务器渲染的实现，结合一个例子实现。同时假如是仅仅几个静态页面，完全可以使用预渲染实现，没必要完全使用服务器实时动态编译html.</p>
+<p>本文主要是参考<a href="https://ssr.vuejs.org/zh/" target="_blank" rel="external">vue-ssr官方指南</a>，对其中的一些关键点的总结。<br><a id="more"></a></p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="vue-server-renderer"><a href="#vue-server-renderer" class="headerlink" title="vue-server-renderer"></a>vue-server-renderer</h3><p>vue-server-renderer 和 vue 必须匹配版本。<strong>vue-server-renderer 依赖一些 Node.js 原生模块，因此只能在 Node.js 中使用。</strong></p>
+<h3 id="使用页面模板"><a href="#使用页面模板" class="headerlink" title="使用页面模板"></a>使用页面模板</h3><p>可以直接在创建 renderer 时提供一个页面模板。多数时候，我们会将页面模板放在特有的文件中，例如 index.template.html：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--vue-ssr-outlet--&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们可以读取和传输文件到 Vue renderer 中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> renderer = createRenderer(&#123;</div><div class="line">  template: <span class="built_in">require</span>(<span class="string">'fs'</span>).readFileSync(<span class="string">'./index.template.html'</span>, <span class="string">'utf-8'</span>)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">renderer.renderToString(app, (err, html) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(html) <span class="comment">// html 将是注入应用程序内容的完整页面</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>模板还可以进行简单的插值,我们可以通过传入一个”渲染上下文对象”，作为 renderToString 函数的第二个参数，来提供插值数据：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> context = &#123;</div><div class="line">  title: <span class="string">'hello'</span>,</div><div class="line">  meta: <span class="string">`</span></div><div class="line"><span class="string">    &lt;meta ...&gt;</span></div><div class="line"><span class="string">    &lt;meta ...&gt;</span></div><div class="line"><span class="string">  `</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">renderer.renderToString(app, context, (err, html) =&gt; &#123;</div><div class="line">  <span class="comment">// 页面 title 将会是 "Hello"</span></div><div class="line">  <span class="comment">// meta 标签也会注入</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="避免状态单例"><a href="#避免状态单例" class="headerlink" title="避免状态单例"></a>避免状态单例</h3><p>我们为每个请求创建一个新的根 Vue 实例。这与每个用户在自己的浏览器中使用新应用程序的实例类似。如果我们在多个请求之间使用一个共享的实例，很容易导致交叉请求状态污染(cross-request state pollution)。</p>
+<p>因此，我们不应该直接创建一个应用程序实例，而是应该暴露一个可以重复执行的工厂函数，为每个请求创建新的应用程序实例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="keyword">const</span> Vue = <span class="built_in">require</span>(<span class="string">'vue'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">createApp</span> (<span class="params">context</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Vue(&#123;</div><div class="line">    data: &#123;</div><div class="line">      url: context.url</div><div class="line">    &#125;,</div><div class="line">    template: <span class="string">`&lt;div&gt;访问的 URL 是： &#123;&#123; url &#125;&#125;&lt;/div&gt;`</span></div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>同样的规则也适用于 router、store 和 event bus 实例。你不应该直接从模块导出并将其导入到应用程序中，而是需要在 createApp 中创建一个新的实例，并从根 Vue 实例注入。</strong></p>
+<blockquote>
+<p>在使用带有 { runInNewContext: true } 的 bundle renderer 时，可以消除此约束，但是由于需要为每个请求创建一个新的 vm 上下文，因此伴随有一些显著性能开销。</p>
+</blockquote>
+<h3 id="使用webpack构建"><a href="#使用webpack构建" class="headerlink" title="使用webpack构建"></a>使用webpack构建</h3><p>我们需要使用 webpack 来打包我们的 Vue 应用程序。事实上，我们可能需要在服务器上使用 webpack 打包 Vue 应用程序，因为：</p>
+<ul>
+<li><strong>通常 Vue 应用程序是由 webpack 和 vue-loader 构建，并且许多 webpack 特定功能不能直接在 Node.js 中运行（例如通过 file-loader 导入文件，通过 css-loader 导入 CSS）。</strong></li>
+<li>尽管 Node.js 最新版本能够完全支持 ES2015 特性，我们还是需要转译客户端代码以适应老版浏览器。这也会涉及到构建步骤。</li>
+</ul>
+<p>所以基本看法是，对于客户端应用程序和服务器应用程序，我们都要使用 webpack 打包 - 服务器需要「服务器 bundle」然后用于服务器端渲染(SSR)，而「客户端 bundle」会发送给浏览器，用于混合静态标记。<br><img src="http://static.zhyjor.com/201808071502_946.png" alt=""></p>
+<p>上图是构建vue的过程，我们可以根据这些得出我们的大概的目录结构。大部分源码可以使用通用方式编写，可以使用 webpack 支持的所有功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">src</div><div class="line">├── components</div><div class="line">│   ├── Foo.vue</div><div class="line">│   ├── Bar.vue</div><div class="line">│   └── Baz.vue</div><div class="line">├── App.vue</div><div class="line">├── app.js # 通用 entry(universal entry)</div><div class="line">├── entry-client.js # 仅运行于浏览器</div><div class="line">└── entry-server.js # 仅运行于服务器</div></pre></td></tr></table></figure>
+<h4 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h4><p>app.js 是我们应用程序的「通用 entry」。在纯客户端应用程序中，我们将在此文件中创建根 Vue 实例，并直接挂载到 DOM。但是，对于服务器端渲染(SSR)，责任转移到纯客户端 entry 文件。app.js 简单地使用 export 导出一个 createApp 函数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></div><div class="line"></div><div class="line"><span class="comment">// 导出一个工厂函数，用于创建新的</span></div><div class="line"><span class="comment">// 应用程序、router 和 store 实例</span></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</div><div class="line">    <span class="comment">// 根实例简单的渲染应用程序组件。</span></div><div class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</div><div class="line">  &#125;)</div><div class="line">  <span class="keyword">return</span> &#123; app &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="entry-client-js"><a href="#entry-client-js" class="headerlink" title="entry-client.js:"></a>entry-client.js:</h4><p>客户端 entry 只需创建应用程序，并且将其挂载到 DOM 中：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'./app'</span></div><div class="line"></div><div class="line"><span class="comment">// 客户端特定引导逻辑……</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> &#123; app &#125; = createApp()</div><div class="line"></div><div class="line"><span class="comment">// 这里假定 App.vue 模板中根元素具有 `id="app"`</span></div><div class="line">app.$mount(<span class="string">'#app'</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="entry-server-js"><a href="#entry-server-js" class="headerlink" title="entry-server.js:"></a>entry-server.js:</h4><p><strong>服务器 entry 使用 default export 导出函数，并在每次渲染中重复调用此函数。</strong>此时，除了创建和返回应用程序实例之外，它不会做太多事情 - 但是稍后我们将在此执行服务器端路由匹配(server-side route matching)和数据预取逻辑(data pre-fetching logic)。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'./app'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> &#123; app &#125; = createApp()</div><div class="line">  <span class="keyword">return</span> app</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="路由代码写法"><a href="#路由代码写法" class="headerlink" title="路由代码写法"></a>路由代码写法</h3><p>你可能已经注意到，我们的服务器代码使用了一个 * 处理程序，它接受任意 URL。这允许我们将访问的 URL 传递到我们的 Vue 应用程序中，然后对客户端和服务器复用相同的路由配置！</p>
+<p>为此，建议使用官方提供的 vue-router。我们首先创建一个文件，在其中创建 router。注意，类似于 createApp，我们也需要给每个请求一个新的 router 实例，所以文件导出一个 createRouter 函数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// router.js</span></div><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"></div><div class="line">Vue.use(Router)</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createRouter</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Router(&#123;</div><div class="line">    mode: <span class="string">'history'</span>,</div><div class="line">    routes: [</div><div class="line">      <span class="comment">// ...</span></div><div class="line">    ]</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个是需要在app.js中加上router相关的内容。在createApp()函数中，创建router实例，并将router注入到根vue中。</p>
+<p>对于entry-server.js，我们需要实现服务器端路由逻辑（server-side routing logic）:</p>
+<h3 id="数据预取和状态"><a href="#数据预取和状态" class="headerlink" title="数据预取和状态"></a>数据预取和状态</h3><p>在服务器端渲染(SSR)期间，我们本质上是在渲染我们应用程序的”快照”，<strong>所以如果应用程序依赖于一些异步数据，那么在开始渲染过程之前，需要先预取和解析好这些数据。</strong></p>
+<p><strong>另一个需要关注的问题是在客户端，在挂载(mount)到客户端应用程序之前，需要获取到与服务器端应用程序完全相同的数据 - 否则，客户端应用程序会因为使用与服务器端应用程序不同的状态，然后导致混合失败。</strong>这里是为什么会错误呢？其实跟最新的写法有关</p>
+<p>因此获取数据需位于视图组件之外，即放置在专门的数据预取存储容器(data store)或”状态容器(state container)）”中。</p>
+<ul>
+<li>首先，在服务器端，我们可以在渲染之前预取数据，并将数据填充到 store 中。</li>
+<li>此外，我们将在 HTML 中序列化(serialize)和内联预置(inline)状态。这样，在挂载(mount)到客户端应用程序之前，可以直接从 store 获取到内联预置(inline)状态。</li>
+</ul>
+<h4 id="带有逻辑配置的组件-Logic-Collocation-with-Components"><a href="#带有逻辑配置的组件-Logic-Collocation-with-Components" class="headerlink" title="带有逻辑配置的组件(Logic Collocation with Components)"></a>带有逻辑配置的组件(Logic Collocation with Components)</h4><p><strong>那么，我们在哪里放置「dispatch 数据预取 action」的代码？</strong></p>
+<p>我们需要通过访问路由，来决定获取哪部分数据 - 这也决定了哪些组件需要渲染。事实上，给定路由所需的数据，也是在该路由上渲染组件时所需的数据。所以在路由组件中放置数据预取逻辑，是很自然的事情。</p>
+<p>我们将在路由组件上暴露出一个自定义静态函数 asyncData。<strong>注意，由于此函数会在组件实例化之前调用，所以它无法访问 this。需要将 store 和路由信息作为参数传递进去：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Item.vue --&gt;</div><div class="line">&lt;template&gt;</div><div class="line">  &lt;div&gt;&#123;&#123; item.title &#125;&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">&lt;/</span>template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  asyncData (&#123; store, route &#125;) &#123;</div><div class="line">    <span class="comment">// 触发 action 后，会返回 Promise</span></div><div class="line">    <span class="keyword">return</span> store.dispatch(<span class="string">'fetchItem'</span>, route.params.id)</div><div class="line">  &#125;,</div><div class="line">  computed: &#123;</div><div class="line">    <span class="comment">// 从 store 的 state 对象中的获取 item。</span></div><div class="line">    item () &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.items[<span class="keyword">this</span>.$route.params.id]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="服务器端数据预取-Server-Data-Fetching"><a href="#服务器端数据预取-Server-Data-Fetching" class="headerlink" title="服务器端数据预取(Server Data Fetching)"></a>服务器端数据预取(Server Data Fetching)</h4><p>在 entry-server.js 中，我们可以通过路由获得与 router.getMatchedComponents() 相匹配的组件，如果组件暴露出 asyncData，我们就调用这个方法。然后我们需要将解析完成的状态，附加到渲染上下文(render context)中。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对所有匹配的路由组件调用 `asyncData()`</span></div><div class="line"><span class="built_in">Promise</span>.all(matchedComponents.map(<span class="function"><span class="params">Component</span> =&gt;</span> &#123;</div><div class="line"><span class="keyword">if</span> (Component.asyncData) &#123;</div><div class="line">  <span class="keyword">return</span> Component.asyncData(&#123;</div><div class="line">    store,</div><div class="line">    route: router.currentRoute</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line">&#125;)).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line"><span class="comment">// 在所有预取钩子(preFetch hook) resolve 后，</span></div><div class="line"><span class="comment">// 我们的 store 现在已经填充入渲染应用程序所需的状态。</span></div><div class="line"><span class="comment">// 当我们将状态附加到上下文，</span></div><div class="line"><span class="comment">// 并且 `template` 选项用于 renderer 时，</span></div><div class="line"><span class="comment">// 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。</span></div><div class="line">context.state = store.state</div><div class="line"></div><div class="line">resolve(app)</div><div class="line">&#125;).catch(reject)</div></pre></td></tr></table></figure></p>
+<h4 id="客户端数据预取-Client-Data-Fetching"><a href="#客户端数据预取-Client-Data-Fetching" class="headerlink" title="客户端数据预取(Client Data Fetching)"></a>客户端数据预取(Client Data Fetching)</h4><p>在客户端，处理数据预取有两种不同方式：</p>
+<h5 id="在路由导航之前解析数据："><a href="#在路由导航之前解析数据：" class="headerlink" title="在路由导航之前解析数据："></a>在路由导航之前解析数据：</h5><p>使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到”明显卡顿”。因此，如果使用此策略，建议提供一个数据加载指示器(data loading indicator)。</p>
+<p>我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 asyncData 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。</p>
+<h5 id="匹配要渲染的视图后，再获取数据："><a href="#匹配要渲染的视图后，再获取数据：" class="headerlink" title="匹配要渲染的视图后，再获取数据："></a>匹配要渲染的视图后，再获取数据：</h5><p>此策略将客户端数据预取逻辑，放在视图组件的 beforeMount 函数中。当路由导航被触发时，可以立即切换视图，因此应用程序具有更快的响应速度。然而，传入视图在渲染时不会有完整的可用数据。因此，对于使用此策略的每个视图组件，都需要具有条件加载状态。</p>
+<p>这两种策略是根本上不同的用户体验决策，应该根据你创建的应用程序的实际使用场景进行挑选。<strong>但是无论你选择哪种策略，当路由组件重用（同一路由，但是 params 或 query 已更改，例如，从 user/1 到 user/2）时，也应该调用 asyncData 函数。</strong>我们也可以通过纯客户端(client-only)的全局 mixin 来处理这个问题：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Vue.mixin(&#123;</div><div class="line">  beforeRouteUpdate (to, <span class="keyword">from</span>, next) &#123;</div><div class="line">    <span class="keyword">const</span> &#123; asyncData &#125; = <span class="keyword">this</span>.$options</div><div class="line">    <span class="keyword">if</span> (asyncData) &#123;</div><div class="line">      asyncData(&#123;</div><div class="line">        store: <span class="keyword">this</span>.$store,</div><div class="line">        route: to</div><div class="line">      &#125;).then(next).catch(next)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      next()</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="客户端激活"><a href="#客户端激活" class="headerlink" title="客户端激活"></a>客户端激活</h2><p>所谓客户端激活，指的是 Vue 在浏览器端接管由服务端发送的静态 HTML，使其变为由 Vue 管理的动态 DOM 的过程。</p>
+<p>由于服务器已经渲染好了 HTML，我们显然无需将其丢弃再重新创建所有的 DOM 元素。相反，我们需要”激活”这些静态的 HTML，然后使他们成为动态的（能够响应后续的数据变化）。</p>
+<p>如果你检查服务器渲染的输出结果，你会注意到应用程序的根元素上添加了一个特殊的属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"app"</span> data-server-rendered=<span class="string">"true"</span>&gt;</div></pre></td></tr></table></figure>
+<p>data-server-rendered 特殊属性，让客户端 Vue 知道这部分 HTML 是由 Vue 在服务端渲染的，并且应该以激活模式进行挂载。注意，这里并没有添加 id=”app”，而是添加 data-server-rendered 属性：你需要自行添加 ID 或其他能够选取到应用程序根元素的选择器，否则应用程序将无法正常激活。</p>
+<p>在开发模式下，Vue 将推断客户端生成的虚拟 DOM 树(virtual DOM tree)，是否与从服务器渲染的 DOM 结构(DOM structure)匹配。如果无法匹配，它将退出混合模式，丢弃现有的 DOM 并从头开始渲染。在生产模式下，此检测会被跳过，以避免性能损耗。</p>
+<p><strong>使用「SSR + 客户端混合」时，需要了解的一件事是，浏览器可能会更改的一些特殊的 HTML 结构。</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>hi<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>浏览器会在 <code>&lt;table&gt;</code> 内部自动注入 <code>&lt;tbody&gt;</code>，然而，由于 Vue 生成的虚拟 DOM(virtual DOM) 不包含<code>&lt;tbody&gt;</code>，所以会导致无法匹配。为能够正确匹配，请确保在模板中写入有效的 HTML。</p>
+<h2 id="Bundle-Renderer-指引"><a href="#Bundle-Renderer-指引" class="headerlink" title="Bundle Renderer 指引"></a>Bundle Renderer 指引</h2><h3 id="使用基本-SSR-的问题"><a href="#使用基本-SSR-的问题" class="headerlink" title="使用基本 SSR 的问题"></a>使用基本 SSR 的问题</h3><p>我们假设打包的服务器端代码，将由服务器通过 require 直接使用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> createApp = <span class="built_in">require</span>(<span class="string">'/path/to/built-server-bundle.js'</span>)</div></pre></td></tr></table></figure></p>
+<p>这是理所应当的，然而在每次编辑过应用程序源代码之后，都必须停止并重启服务。这在开发过程中会影响开发效率。此外，Node.js 本身不支持 source map。</p>
+<h3 id="传入-BundleRenderer"><a href="#传入-BundleRenderer" class="headerlink" title="传入 BundleRenderer"></a>传入 BundleRenderer</h3><p>vue-server-renderer 提供一个名为 createBundleRenderer 的 API，用于处理此问题，通过使用 webpack 的自定义插件，server bundle 将生成为可传递到 bundle renderer 的特殊 JSON 文件。所创建的 bundle renderer，用法和普通 renderer 相同，但是 bundle renderer 提供以下优点：</p>
+<ul>
+<li>内置的 source map 支持（在 webpack 配置中使用 devtool: ‘source-map’）</li>
+<li>在开发环境甚至部署过程中热重载（通过读取更新后的 bundle，然后重新创建 renderer 实例）</li>
+<li>关键 CSS(critical CSS) 注入（在使用 *.vue 文件时）：自动内联在渲染过程中用到的组件所需的CSS。更多细节请查看 CSS 章节。</li>
+<li>使用 clientManifest 进行资源注入：自动推断出最佳的预加载(preload)和预取(prefetch)指令，以及初始渲染所需的代码分割 chunk。</li>
+</ul>
+<h2 id="构建配置"><a href="#构建配置" class="headerlink" title="构建配置"></a>构建配置</h2><p>建议将配置分为三个文件：base, client 和 server。基本配置(base config)包含在两个环境共享的配置，例如，输出路径(output path)，别名(alias)和 loader。服务器配置(server config)和客户端配置(client config)，可以通过使用 webpack-merge 来简单地扩展基本配置。</p>
+<h3 id="服务器配置-Server-Config"><a href="#服务器配置-Server-Config" class="headerlink" title="服务器配置(Server Config)"></a>服务器配置(Server Config)</h3><p>服务器配置，<strong>是用于生成传递给 createBundleRenderer 的 server bundle</strong>。它应该是这样的：</p>
+<p><strong>参考资料</strong></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/">SSR探索与实践之二：vue服务端渲染基础</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年08月07日 - 13:08</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/" title="SSR探索与实践之二：vue服务端渲染基础">https://zhyjor.github.io/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/08/07/SSR探索与实践之二：vue服务端渲染基础/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/SSR探索与实践/" rel="tag"># SSR探索与实践</a>
+          
+            <a href="/tags/ssr/" rel="tag"># ssr</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/05/基于electron的开发实践之一：安装与简单使用/" rel="next" title="基于electron的开发实践之一：安装与简单使用">
+                <i class="fa fa-chevron-left"></i> 基于electron的开发实践之一：安装与简单使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/08/SSR探索与实践之三：使用webpack构建vue项目的ssr/" rel="prev" title="SSR探索与实践之三：使用webpack构建vue项目的ssr">
+                SSR探索与实践之三：使用webpack构建vue项目的ssr <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">1.</span> <span class="nav-text">基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-server-renderer"><span class="nav-number">1.1.</span> <span class="nav-text">vue-server-renderer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用页面模板"><span class="nav-number">1.2.</span> <span class="nav-text">使用页面模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免状态单例"><span class="nav-number">1.3.</span> <span class="nav-text">避免状态单例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用webpack构建"><span class="nav-number">1.4.</span> <span class="nav-text">使用webpack构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#app-js"><span class="nav-number">1.4.1.</span> <span class="nav-text">app.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#entry-client-js"><span class="nav-number">1.4.2.</span> <span class="nav-text">entry-client.js:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#entry-server-js"><span class="nav-number">1.4.3.</span> <span class="nav-text">entry-server.js:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由代码写法"><span class="nav-number">1.5.</span> <span class="nav-text">路由代码写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预取和状态"><span class="nav-number">1.6.</span> <span class="nav-text">数据预取和状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#带有逻辑配置的组件-Logic-Collocation-with-Components"><span class="nav-number">1.6.1.</span> <span class="nav-text">带有逻辑配置的组件(Logic Collocation with Components)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器端数据预取-Server-Data-Fetching"><span class="nav-number">1.6.2.</span> <span class="nav-text">服务器端数据预取(Server Data Fetching)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端数据预取-Client-Data-Fetching"><span class="nav-number">1.6.3.</span> <span class="nav-text">客户端数据预取(Client Data Fetching)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在路由导航之前解析数据："><span class="nav-number">1.6.3.1.</span> <span class="nav-text">在路由导航之前解析数据：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#匹配要渲染的视图后，再获取数据："><span class="nav-number">1.6.3.2.</span> <span class="nav-text">匹配要渲染的视图后，再获取数据：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端激活"><span class="nav-number">2.</span> <span class="nav-text">客户端激活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bundle-Renderer-指引"><span class="nav-number">3.</span> <span class="nav-text">Bundle Renderer 指引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用基本-SSR-的问题"><span class="nav-number">3.1.</span> <span class="nav-text">使用基本 SSR 的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传入-BundleRenderer"><span class="nav-number">3.2.</span> <span class="nav-text">传入 BundleRenderer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建配置"><span class="nav-number">4.</span> <span class="nav-text">构建配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器配置-Server-Config"><span class="nav-number">4.1.</span> <span class="nav-text">服务器配置(Server Config)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

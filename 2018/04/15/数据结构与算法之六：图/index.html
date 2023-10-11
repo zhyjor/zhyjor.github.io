@@ -1,0 +1,1127 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构与算法,数据结构," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="图是一种比线性表和树更复杂的数据结构，在图中，结点之间的关系是任意的，任意两个数据元素之间都可能相关。图是一种多对多的数据结构。">
+<meta name="keywords" content="数据结构与算法,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之六：图">
+<meta property="og:url" content="https://zhyjor.github.io/2018/04/15/数据结构与算法之六：图/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="图是一种比线性表和树更复杂的数据结构，在图中，结点之间的关系是任意的，任意两个数据元素之间都可能相关。图是一种多对多的数据结构。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201808291142_253.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030919_750.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030921_810.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030926_556.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030942_954.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030951_489.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030953_529.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809030958_649.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809031023_251.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809031028_13.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809031033_448.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809031055_339.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809031058_507.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之六：图">
+<meta name="twitter:description" content="图是一种比线性表和树更复杂的数据结构，在图中，结点之间的关系是任意的，任意两个数据元素之间都可能相关。图是一种多对多的数据结构。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201808291142_253.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/04/15/数据结构与算法之六：图/"/>
+
+
+
+
+
+  <title> 数据结构与算法之六：图 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/04/15/数据结构与算法之六：图/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构与算法之六：图
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-15T12:18:11+00:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/15/数据结构与算法之六：图/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/15/数据结构与算法之六：图/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>图是一种比线性表和树更复杂的数据结构，在图中，结点之间的关系是任意的，任意两个数据元素之间都可能相关。图是一种多对多的数据结构。<br><a id="more"></a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><blockquote>
+<p>图（Graph）是由顶点的有穷非空集合和顶点之间边的集合组成，通常表示为：<code>G（V，E）</code>，其中，G表示一个图，V是图G中顶点的集合，E是图G中边的集合。</p>
+</blockquote>
+<p>注意：线性表中可以没有元素，称为空表。树中可以没有结点，叫做空树。但是在图中不允许没有顶点，可以没有边。<br>基本术语：</p>
+<ul>
+<li>无向边：若顶点Vi和Vj之间的边没有方向，称这条边为无向边（Edge），用<code>（Vi，Vj）</code>来表示。</li>
+<li>无向图（Undirected graphs）：图中任意两个顶点的边都是无向边。</li>
+<li>有向边：若从顶点Vi到Vj的边有方向，称这条边为有向边，也称为弧（Arc），用<code>&lt;Vi, Vj&gt;</code>来表示，其中Vi称为弧尾（Tail），Vj称为弧头（Head）。</li>
+<li>有向图（Directed graphs）：图中任意两个顶点的边都是有向边。</li>
+<li>简单图：不存在自环（顶点到其自身的边）和重边（完全相同的边）的图</li>
+</ul>
+<p><img src="http://static.zhyjor.com/201808291142_253.png" alt=""></p>
+<ul>
+<li>无向完全图：无向图中，任意两个顶点之间都存在边。</li>
+<li>有向完全图：有向图中，任意两个顶点之间都存在方向相反的两条弧。</li>
+<li>稀疏图；有很少条边或弧的图称为稀疏图，反之称为稠密图。</li>
+<li>权（Weight）：表示从图中一个顶点到另一个顶点的距离或耗费。</li>
+<li>网：带有权重的图</li>
+<li>度：与特定顶点相连接的边数；</li>
+<li>出度、入度：有向图中的概念，出度表示以此顶点为起点的边的数目，入度表示以此顶点为终点的边的数目</li>
+<li>环：第一个顶点和最后一个顶点相同的路径；</li>
+<li>简单环：除去第一个顶点和最后一个顶点后没有重复顶点的环；</li>
+<li>连通图：任意两个顶点都相互连通的图；</li>
+<li>极大连通子图：包含尽可能多的顶点（必须是连通的），即找不到另外一个顶点，使得此顶点能够连接到此极大连通子图的任意一个顶点；</li>
+<li>连通分量：极大连通子图的数量；</li>
+<li>强连通图：此为有向图的概念，表示任意两个顶点a，b，使得a能够连接到b，b也能连接到a 的图；</li>
+<li>生成树：n个顶点，n-1条边，并且保证n个顶点相互连通（不存在环）；</li>
+<li>最小生成树：此生成树的边的权重之和是所有生成树中最小的；</li>
+<li>AOV网（Activity On Vertex Network ）：在有向图中若以顶点表示活动，有向边表示活动之间的先后关系</li>
+<li>AOE网（Activity On Edge Network）：在带权有向图中若以顶点表示事件，有向边表示活动，边上的权值表示该活动持续的时间</li>
+</ul>
+<h2 id="图的存储结构"><a href="#图的存储结构" class="headerlink" title="图的存储结构"></a>图的存储结构</h2><p>由于图的结构比较复杂，任意两个顶点之间都可能存在关系，因此用简单的顺序存储来表示图是不可能，而若使用多重链表的方式（即一个数据域多个指针域的结点来表示），这将会出现严重的空间浪费或操作不便。这里总结一下常用的表示图的方法：</p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>图的邻接矩阵（Adjacency Matrix）存储方式是用两个数组来表示图。一个一维数组存储图中顶点信息，一个二维数组（称邻接矩阵）存储图中的边或弧的信息。</p>
+<p><img src="http://static.zhyjor.com/201809030919_750.png" alt=""></p>
+<p>无向图由于边不区分方向，所以其邻接矩阵是一个对称矩阵。邻接矩阵中的0表示边不存在，主对角线全为0表示图中不存在自环。</p>
+<p>带权有向图的邻接矩阵:<br><img src="http://static.zhyjor.com/201809030921_810.png" alt=""></p>
+<p>在带权有向图的邻接矩阵中，数字表示权值weight，「无穷」表示弧不存在。由于权值可能为0，所以不能像在无向图的邻接矩阵中那样使用0来表示弧不存在。</p>
+<p>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 有向图的邻接矩阵实现</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Digraph</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> vertexsNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> edgesNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] arc;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Digraph</span><span class="params">(<span class="keyword">int</span>[][] data, <span class="keyword">int</span> vertexsNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.vertexsNum = vertexsNum;</div><div class="line">        <span class="keyword">this</span>.edgesNum = data.length;</div><div class="line">        arc = <span class="keyword">new</span> <span class="keyword">int</span>[vertexsNum][vertexsNum];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexsNum; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; vertexsNum; j++) &#123;</div><div class="line">                arc[i][j] = Integer.MAX_VALUE;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> tail = data[i][<span class="number">0</span>];</div><div class="line">            <span class="keyword">int</span> head = data[i][<span class="number">1</span>];</div><div class="line">            arc[tail][head] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//用于测试，返回一个顶点的邻接点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Integer&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> vertex)</span> </span>&#123;</div><div class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexsNum; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (arc[vertex][i] != Integer.MAX_VALUE)</div><div class="line">                set.add(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> set;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] data = &#123;</div><div class="line">                &#123;<span class="number">0</span>,<span class="number">3</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">2</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">1</span>&#125;,</div><div class="line">        &#125;;</div><div class="line">        Digraph wd = <span class="keyword">new</span> Digraph(data,<span class="number">4</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i :wd.adj(<span class="number">1</span>)) &#123;</div><div class="line">            System.out.println(i);</div><div class="line">        &#125;   </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li>优点：结构简单,操作方便</li>
+<li>缺点：对于稀疏图，这种实现方式将浪费大量的空间。</li>
+</ul>
+<h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><p>邻接表是一种将数组与链表相结合的存储方法。其具体实现为：将图中顶点用一个一维数组存储，每个顶点Vi的所有邻接点用一个单链表来存储。这种方式和树结构中孩子表示法一样。</p>
+<p>对于有向图其邻接表结构如下:</p>
+<p><img src="http://static.zhyjor.com/201809030926_556.png" alt=""></p>
+<p>有向图的邻接表是以顶点为弧尾来存储边表的，这样很容易求一个顶点的出度（顶点对应单链表的长度），但若求一个顶点的入度，则需遍历整个图才行。这时可以建立一个有向图的逆邻接表即对每个顶点v都建立一个弧头尾v的单链表。如上图所示。</p>
+<p>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 有向图的邻接表实现</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdjListDigraph</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">EdgeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> index;</div><div class="line">        EdgeNode next;</div><div class="line">        EdgeNode(<span class="keyword">int</span> index, EdgeNode next)&#123;</div><div class="line">            <span class="keyword">this</span>.index = index;</div><div class="line">            <span class="keyword">this</span>.next = next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">VertexNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> id;</div><div class="line">        EdgeNode headNode;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> VertexNode[] vertexs;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> vertexsNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> edgesNum;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AdjListDigraph</span><span class="params">(<span class="keyword">int</span>[][] data, <span class="keyword">int</span> vertexsNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.vertexsNum = vertexsNum;</div><div class="line">        <span class="keyword">this</span>.edgesNum = data.length;</div><div class="line">        vertexs = <span class="keyword">new</span> VertexNode[vertexsNum];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexs.length; i++) &#123;</div><div class="line">            vertexs[i] = <span class="keyword">new</span> VertexNode();</div><div class="line">            vertexs[i].id = i;        <span class="comment">//</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> index = data[i][<span class="number">1</span>];</div><div class="line">            EdgeNode next = vertexs[data[i][<span class="number">0</span>]].headNode;</div><div class="line">            EdgeNode eNode = <span class="keyword">new</span> EdgeNode(index,next);</div><div class="line">            vertexs[data[i][<span class="number">0</span>]].headNode = eNode; <span class="comment">//头插法</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//用于测试，返回一个顶点的邻接点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Integer&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">        EdgeNode current = vertexs[index].headNode;</div><div class="line">        <span class="keyword">while</span>(current != <span class="keyword">null</span>) &#123;</div><div class="line">            VertexNode node = vertexs[current.index];</div><div class="line">            set.add(node.id);</div><div class="line">            current = current.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> set;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] data = &#123;</div><div class="line">                &#123;<span class="number">0</span>,<span class="number">3</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">2</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">1</span>&#125;,</div><div class="line">        &#125;;</div><div class="line">        AdjListDigraph ald = <span class="keyword">new</span> AdjListDigraph(data,<span class="number">4</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i :ald.adj(<span class="number">1</span>)) &#123;</div><div class="line">            System.out.println(i);</div><div class="line">        &#125;   </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>本算法的时间复杂度为 O(N + E)，其中N、E分别为顶点数和边数，邻接表实现比较适合表示稀疏图。</p>
+<h3 id="十字链表"><a href="#十字链表" class="headerlink" title="十字链表"></a>十字链表</h3><p>十字链表（Orthogonal List)是将邻接表和逆邻接表相结合的存储方法，它解决了邻接表（或逆邻接表）的缺陷，即求入度（或出度）时必须遍历整个图。</p>
+<p>十字链表的结构如下：</p>
+<p><img src="http://static.zhyjor.com/201809030942_954.png" alt=""></p>
+<p>图中：</p>
+<ul>
+<li>firstIn表示入边表（即是逆邻接表中的单链表）头指针，firstOut表示出边表（即是邻接表中的单链表）头指针，data表示顶点数据。</li>
+<li>tailVex表示边的起点在顶点数组中的下标，tailNext值出边表指针域，指向起点相同的下一条边。</li>
+<li>headVex表示边的终点在顶点数组中的下标，headNext指入边表指针域，指向终点相同的下一条边。</li>
+</ul>
+<p>代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 有向图的十字链表实现</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrthogonalList</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">EdgeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> tailVex;</div><div class="line">        <span class="keyword">int</span> headVex;</div><div class="line">        EdgeNode headNext;</div><div class="line">        EdgeNode tailNext;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">EdgeNode</span><span class="params">(<span class="keyword">int</span> tailVex, <span class="keyword">int</span> headVex, EdgeNode headNext, EdgeNode tailNext)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>();</div><div class="line">            <span class="keyword">this</span>.tailVex = tailVex;</div><div class="line">            <span class="keyword">this</span>.headVex = headVex;</div><div class="line">            <span class="keyword">this</span>.headNext = headNext;</div><div class="line">            <span class="keyword">this</span>.tailNext = tailNext;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">VertexNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> data;</div><div class="line">        EdgeNode firstIn;</div><div class="line">        EdgeNode firstOut;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> VertexNode[] vertexs;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> vertexsNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> edgesNum;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OrthogonalList</span><span class="params">(<span class="keyword">int</span>[][] data, <span class="keyword">int</span> vertexsNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.vertexsNum = vertexsNum;</div><div class="line">        <span class="keyword">this</span>.edgesNum = data.length;</div><div class="line">        vertexs = <span class="keyword">new</span> VertexNode[vertexsNum];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vertexs.length; i++) &#123;</div><div class="line">            vertexs[i] = <span class="keyword">new</span> VertexNode();</div><div class="line">            vertexs[i].data = i;        <span class="comment">//</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">//关键</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> tail = data[i][<span class="number">0</span>];</div><div class="line">            <span class="keyword">int</span> head = data[i][<span class="number">1</span>];</div><div class="line">            EdgeNode out = vertexs[tail].firstOut;</div><div class="line">            EdgeNode in = vertexs[head].firstIn;</div><div class="line">            EdgeNode eNode = <span class="keyword">new</span> EdgeNode(tail,head,in,out);</div><div class="line">            vertexs[tail].firstOut = eNode;</div><div class="line">            vertexs[head].firstIn = eNode;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//返回一个顶点的出度</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">outDegree</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">        EdgeNode current = vertexs[index].firstOut;</div><div class="line">        <span class="keyword">while</span>(current != <span class="keyword">null</span>) &#123;</div><div class="line">            current = current.tailNext;</div><div class="line">            result++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//返回一个顶点的入度</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">inDegree</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">        EdgeNode current = vertexs[index].firstIn;</div><div class="line">        <span class="keyword">while</span>(current != <span class="keyword">null</span>) &#123;</div><div class="line">            current = current.headNext;</div><div class="line">            result++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] data = &#123;</div><div class="line">                &#123;<span class="number">0</span>,<span class="number">3</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>,<span class="number">2</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">0</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>,<span class="number">1</span>&#125;,</div><div class="line">        &#125;;</div><div class="line">        OrthogonalList orth = <span class="keyword">new</span> OrthogonalList(data,<span class="number">4</span>);</div><div class="line">        System.out.println(<span class="string">"顶点1的出度为"</span> + orth.outDegree(<span class="number">1</span>));</div><div class="line">        System.out.println(<span class="string">"顶点1的入度为"</span> + orth.inDegree(<span class="number">1</span>));</div><div class="line">            </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>十字链表创建图算法的时间复杂度和邻接表相同都为O(N + E)。在有图的应用中推荐使用。</p>
+<h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><p>从图的某个顶点出发，遍历图中其余顶点，且使每个顶点仅被访问一次，这个过程叫做图的遍历（Traversing Graph）。对于图的遍历通常有两种方法：深度优先遍历和广度优先遍历。</p>
+<h3 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h3><p>深度优先遍历（Depth First Search，简称DFS），也成为深度优先搜索。</p>
+<p><strong>遍历思想：</strong>基本思想：首先从图中某个顶点v0出发，访问此顶点，然后依次从v相邻的顶点出发深度优先遍历，直至图中所有与v路径相通的顶点都被访问了；若此时尚有顶点未被访问，则从中选一个顶点作为起始点，重复上述过程，直到所有的顶点都被访问。</p>
+<p>深度优先遍历用递归实现比较简单，只需用一个递归方法来遍历所有顶点，在访问某一个顶点时：</p>
+<ul>
+<li>将它标为已访问</li>
+<li>递归的访问它的所有未被标记过的邻接点</li>
+</ul>
+<p>深度优先遍历的过程：<br><img src="http://static.zhyjor.com/201809030951_489.png" alt=""></p>
+<p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DFSTraverse</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited;</div><div class="line">    </div><div class="line">    <span class="comment">//从顶点index开始遍历</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DFSTraverse</span><span class="params">(Digraph graph, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[graph.getVertexsNum()];</div><div class="line">        dfs(graph,index);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(Digraph graph, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        visited[index] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : graph.adj(index)) &#123;</div><div class="line">            <span class="keyword">if</span>(!visited[i])</div><div class="line">                dfs(graph,i);   </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h3><p>广度优先遍历（Breadth First Search，简称BFS），又称为广度优先搜索</p>
+<p><strong>遍历思想：</strong>首先，从图的某个顶点v0出发，访问了v0之后，依次访问与v0相邻的未被访问的顶点，然后分别从这些顶点出发，广度优先遍历，直至所有的顶点都被访问完。</p>
+<p>广度优先遍历的过程：<br><img src="http://static.zhyjor.com/201809030953_529.png" alt=""></p>
+<p>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BFSTraverse</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BFSTraverse</span><span class="params">(AdjListDigraph graph, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[graph.getVertexsNum()];</div><div class="line">        bfs(graph,index);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(AdjListDigraph graph, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        <span class="comment">//在JSE中LinkedList实现了Queue接口</span></div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        visited[index] = <span class="keyword">true</span>;</div><div class="line">        queue.add(index);</div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty()) &#123;</div><div class="line">            <span class="keyword">int</span> vertex = queue.poll();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i : graph.adj(vertex)) &#123;</div><div class="line">                <span class="keyword">if</span>(!visited[i]) &#123;</div><div class="line">                    visited[i] = <span class="keyword">true</span>;</div><div class="line">                    queue.offer(i);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><blockquote>
+<p>图的生成树是它的一棵含有所有顶点的无环连通子图。一棵加权图的最小生成树（MST）是它的一棵权值（所有边的权值之和）最小的生成树。</p>
+</blockquote>
+<p>计算最小生成树可能遇到的情况：</p>
+<ul>
+<li>非连通的无向图，不存在最小生成树</li>
+<li>权重不一定和距离成正比</li>
+<li>权重可能是0或负数</li>
+<li>若存在相等的权重，那么最小生成树可能不唯一</li>
+</ul>
+<p>图的切分是将图的所有顶点分为两个非空且不重叠的两个集合。横切边是一条连接两个属于不同集合的顶点的边。</p>
+<p><strong>切分定理：</strong>在一幅加权图中，给定任意的切分，它的横切边中的权重最小者必然属于图的最小生成树。</p>
+<p>切分定理是解决最小生成树问题的所有算法的基础。这些算法都是贪心算法。</p>
+<p><img src="http://static.zhyjor.com/201809030958_649.png" alt=""></p>
+<p>首先先构造一个带权的无向图，其代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义边</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Edge</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Edge</span>&gt;</span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> ver1;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> ver2;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer weight;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Edge</span><span class="params">(<span class="keyword">int</span> ver1, <span class="keyword">int</span> ver2, <span class="keyword">int</span> weight)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.ver1 = ver1;</div><div class="line">        <span class="keyword">this</span>.ver2 = ver2;</div><div class="line">        <span class="keyword">this</span>.weight = weight;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//返回一个顶点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">either</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> ver1;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//返回另一个顶点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">other</span><span class="params">(<span class="keyword">int</span> vertex)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (vertex == ver1)</div><div class="line">            <span class="keyword">return</span> ver2;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vertex == ver2)</div><div class="line">            <span class="keyword">return</span> ver1;</div><div class="line">        <span class="keyword">else</span> </div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"边不一致"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Edge e)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.weight.compareTo(e.weight);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getWeight</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> weight;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Edge ["</span> + ver1 + <span class="string">","</span> + ver2 +<span class="string">"]"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 带权无向图的实现</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeightedGraph</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> vertexsNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> edgesNum;</div><div class="line">    <span class="keyword">private</span> List&lt;Edge&gt;[] adj;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeightedGraph</span><span class="params">(<span class="keyword">int</span>[][] data, <span class="keyword">int</span> vertexsNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.vertexsNum = vertexsNum;</div><div class="line">        <span class="keyword">this</span>.edgesNum = data.length;</div><div class="line">        adj  = (List&lt;Edge&gt;[]) <span class="keyword">new</span> ArrayList[vertexsNum];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;vertexsNum; i++) &#123;</div><div class="line">            adj[i] = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">            Edge edge = <span class="keyword">new</span> Edge(data[i][<span class="number">0</span>],data[i][<span class="number">1</span>],data[i][<span class="number">2</span>]);</div><div class="line">            <span class="keyword">int</span> v = edge.either();</div><div class="line">            adj[v].add(edge);</div><div class="line">            adj[edge.other(v)].add(edge);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> vertex)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> adj[vertex];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVertexsNum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> vertexsNum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEdgesNum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> edgesNum;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">getEdges</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;vertexsNum; i++) &#123;</div><div class="line">            <span class="keyword">for</span>(Edge e : adj[i]) &#123;</div><div class="line">                <span class="keyword">if</span>(i &gt; e.other(i)) &#123; <span class="comment">//无向图，防止将一条边加入两次</span></div><div class="line">                    edges.add(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> edges;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h3><p>每次将权值最小的横切边加入生成树中</p>
+<h4 id="Prim算法的延迟实现"><a href="#Prim算法的延迟实现" class="headerlink" title="Prim算法的延迟实现"></a>Prim算法的延迟实现</h4><p>实现过程如下图：<br><img src="http://static.zhyjor.com/201809031023_251.png" alt=""></p>
+<p>从顶点0开始，首先将顶点0加入到树中（标记），顶点0和其它点的横切边（这里即为顶点0的邻接边）加入优先队列，将权值最小的横切边出队，加入生成树中。此时相当于也向树中添加了一个顶点2，接着将集合（顶点1，2组成）和另一个集合（除1,2的顶点组成）间的横切边加入到优先队列中，如此这般，直到队列为空。</p>
+<p>注意：若横切边中另一个顶点在树中，则此边失效。</p>
+<p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyPrimMST</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited; <span class="comment">//标记顶点</span></div><div class="line">    <span class="keyword">private</span> LinkedQueue&lt;Edge&gt; mst; <span class="comment">//存储最小生成树的边</span></div><div class="line">    <span class="keyword">private</span> MinPQ&lt;Edge&gt; pq; <span class="comment">//优先队列，权值越最小优先级越高</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LazyPrimMST</span><span class="params">(WeightedGraph wg)</span> </span>&#123;</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[wg.getVertexsNum()];</div><div class="line">        mst = <span class="keyword">new</span> LinkedQueue&lt;Edge&gt;();</div><div class="line">        pq = <span class="keyword">new</span> MinPQ&lt;&gt;(wg.getVertexsNum());</div><div class="line">        </div><div class="line">        visit(wg, <span class="number">0</span>); <span class="comment">//从0点开始</span></div><div class="line">        <span class="keyword">while</span>(!pq.isEmpty()) &#123;</div><div class="line">            Edge e = pq.deQueue();</div><div class="line">            <span class="keyword">int</span> ver1 = e.either();</div><div class="line">            <span class="keyword">int</span> ver2 = e.other(ver1);</div><div class="line">            <span class="keyword">if</span>(visited[ver1] &amp;&amp; visited[ver2]) &#123;</div><div class="line">                <span class="keyword">continue</span>; <span class="comment">//边失效</span></div><div class="line">            &#125;</div><div class="line">            mst.enQueue(e);</div><div class="line">            <span class="keyword">if</span>(!visited[ver1])</div><div class="line">                visit(wg, ver1);</div><div class="line">            <span class="keyword">if</span>(!visited[ver2])</div><div class="line">                visit(wg, ver2);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(WeightedGraph wg, <span class="keyword">int</span> ver)</span> </span>&#123;</div><div class="line">        visited[ver] = <span class="keyword">true</span>; <span class="comment">//标记顶点</span></div><div class="line">        <span class="keyword">for</span>(Edge e : wg.adj(ver)) &#123;</div><div class="line">            <span class="keyword">if</span>(!visited[e.other(ver)])</div><div class="line">                pq.enQueue(e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">getMST</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mst;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] data = &#123;</div><div class="line">                &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>&#125;,</div><div class="line">                &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">4</span>&#125;,</div><div class="line">                &#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">5</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>, <span class="number">5</span>, <span class="number">11</span>&#125;,</div><div class="line">                &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">8</span>&#125;,</div><div class="line">                &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">10</span>&#125;,</div><div class="line">                &#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>&#125;,</div><div class="line">                &#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>&#125;,</div><div class="line">                &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">9</span>&#125;</div><div class="line">        &#125;;</div><div class="line">        WeightedGraph wg = <span class="keyword">new</span> WeightedGraph(data,<span class="number">6</span>);</div><div class="line">        LazyPrimMST lpm = <span class="keyword">new</span> LazyPrimMST(wg);</div><div class="line">        <span class="keyword">for</span>(Edge e : lpm.getMST()) &#123;</div><div class="line">            System.out.println(e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中，LinkedQueue类的代码在栈与队列中；而MinPQ类的代码与优先队列中MaxPQ类的代码几乎一样，只需将方法less中的小于号改为大于号即可。这里就不在给出代码了</p>
+<p><strong>此方法的时间复杂度为 O(ElogE)，空间复杂度为 O(E)。</strong>其中，V为顶点个数，E为边数</p>
+<h4 id="Prim算法即时实现"><a href="#Prim算法即时实现" class="headerlink" title="Prim算法即时实现"></a>Prim算法即时实现</h4><p>基于Prim算法的延迟实现，我们可以在优先队列中只保存每个非树顶点V的一条边（即它与树中的顶点连接起来的权重最小的那条边），因为其他权重较大的边迟早都会失效。</p>
+<p>实现过程如下图：<br><img src="http://static.zhyjor.com/201809031028_13.png" alt=""></p>
+<p>代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * prim的即时实现</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrimMST</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Edge[] edgeTo; <span class="comment">//点离生成树最近的边</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] distTo; <span class="comment">//点到生成树的距离</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited;</div><div class="line">    <span class="keyword">private</span> IndexMinPQ&lt;Integer&gt; pq; <span class="comment">//索引优先队列，关联顶点与distTo</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PrimMST</span><span class="params">(WeightedGraph wg)</span> </span>&#123;</div><div class="line">        <span class="comment">//初始化</span></div><div class="line">        edgeTo = <span class="keyword">new</span> Edge[wg.getVertexsNum()];</div><div class="line">        distTo = <span class="keyword">new</span> <span class="keyword">int</span>[wg.getVertexsNum()];</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[wg.getVertexsNum()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;wg.getVertexsNum(); i++) &#123;</div><div class="line">            distTo[i] = Integer.MAX_VALUE;</div><div class="line">        &#125;</div><div class="line">        pq = <span class="keyword">new</span> IndexMinPQ&lt;&gt;(wg.getVertexsNum());</div><div class="line">        distTo[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        pq.insert(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(!pq.isEmpty()) &#123;</div><div class="line">            visit(wg, pq.delMin());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(WeightedGraph wg, <span class="keyword">int</span> ver)</span> </span>&#123;</div><div class="line">        visited[ver] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">for</span>(Edge e : wg.adj(ver)) &#123;</div><div class="line">            <span class="keyword">int</span> vertex = e.other(ver); <span class="comment">//边的另一个点</span></div><div class="line">            <span class="keyword">if</span>(visited[vertex])</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">if</span>(e.getWeight() &lt; distTo[vertex]) &#123;</div><div class="line">                edgeTo[vertex] = e; <span class="comment">//被覆盖的边失效</span></div><div class="line">                distTo[vertex] = e.getWeight();</div><div class="line">                <span class="keyword">if</span>(pq.contains(vertex)) &#123;</div><div class="line">                    pq.change(vertex, distTo[vertex]); </div><div class="line">                &#125;<span class="keyword">else</span> &#123;</div><div class="line">                    pq.insert(vertex, distTo[vertex]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">getMST</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Arrays.asList(edgeTo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>此方法的时间复杂度为 O(ElogV)，空间复杂度为 O(V)。</strong>其中，V为顶点个数，E为边数。</p>
+<p>可以看出Prim算法的即时实现比延迟实现明显要快，特别是对于稠密矩阵（E&gt;&gt;&gt;V）的情况。</p>
+<h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><p>Kruskal算法的思想是按照边的权重顺序来生成最小生成树，首先将图中所有边加入优先队列，将权重最小的边出队加入最小生成树，保证加入的边不与已经加入的边形成环，直到树中有V-1到边为止。</p>
+<p>实现过程如下图：<br><img src="http://static.zhyjor.com/201809031033_448.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Kruskal算法的实现</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KruskalMST</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> List&lt;Edge&gt; mst; <span class="comment">//存储最小生成树的边</span></div><div class="line">    <span class="keyword">private</span> MinPQ&lt;Edge&gt; pq; <span class="comment">//优先队列</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] parent; <span class="comment">//用来判断边与边是否形成回路</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KruskalMST</span><span class="params">(WeightedGraph wg)</span> </span>&#123;</div><div class="line">        mst = <span class="keyword">new</span> ArrayList&lt;Edge&gt;();</div><div class="line">        pq = <span class="keyword">new</span> MinPQ&lt;&gt;(wg.getEdgesNum());</div><div class="line">        parent = <span class="keyword">new</span> <span class="keyword">int</span>[wg.getVertexsNum()];</div><div class="line">        <span class="keyword">for</span>(Edge e : wg.getEdges()) &#123;</div><div class="line">            pq.enQueue(e);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//最小生成树的边最多为V-1个</span></div><div class="line">        <span class="keyword">while</span>(!pq.isEmpty() &amp;&amp; mst.size() &lt; wg.getVertexsNum() - <span class="number">1</span>) &#123;</div><div class="line">            Edge e = pq.deQueue();</div><div class="line">            <span class="keyword">int</span> v = e.either();</div><div class="line">            <span class="keyword">int</span> n = find(parent, v);</div><div class="line">            <span class="keyword">int</span> m = find(parent, e.other(v));</div><div class="line">            <span class="keyword">if</span>(n != m) &#123; <span class="comment">//表示此边没有与生成树形成环路</span></div><div class="line">                parent[n] = m;</div><div class="line">                mst.add(e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//查找连接树的尾部下标</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span>[] data, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span>(parent[v] &gt; <span class="number">0</span>) &#123;</div><div class="line">            v = parent[v];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> v;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">getMST</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mst;</div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Kruskal算法的时间复杂度最坏情况下为O(ElogE)。空间复杂度为O(E)。</p>
+<p><strong>对比Prim算法和Kruskal算法，Kruskal算法主要根据边来生成树，边数少时效率比较高，适合稀疏图；而Prim算法对边数多的稠密图效果更好一些。</strong></p>
+<h2 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h2><blockquote>
+<p>最短路径指两顶点之间经过的边上权值之和最少的路径，并且称路径上的第一个顶点为源点，最后一个顶点为终点。</p>
+</blockquote>
+<p>为了操作方便，首先使用面向对象的方法，来实现一个加权的有向图，其代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 有向边</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Edge</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> from;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> to;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> weight;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Edge</span><span class="params">(<span class="keyword">int</span> from, <span class="keyword">int</span> to, <span class="keyword">int</span> weight)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.from = from;</div><div class="line">        <span class="keyword">this</span>.to = to;</div><div class="line">        <span class="keyword">this</span>.weight = weight;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFrom</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> from;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getTo</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> to;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> weight;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//带权有向图的实现</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeightedDigraph</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> vertexsNum;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> edgesNum;</div><div class="line">    <span class="keyword">private</span> List&lt;Edge&gt;[] adj; <span class="comment">//邻接表</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeightedDigraph</span><span class="params">(<span class="keyword">int</span>[][] data, <span class="keyword">int</span> vertexsNum)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.vertexsNum = vertexsNum;</div><div class="line">        <span class="keyword">this</span>.edgesNum = data.length;</div><div class="line">        adj  = (List&lt;Edge&gt;[]) <span class="keyword">new</span> ArrayList[vertexsNum];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;vertexsNum; i++) &#123;</div><div class="line">            adj[i] = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</div><div class="line">            Edge edge = <span class="keyword">new</span> Edge(data[i][<span class="number">0</span>],data[i][<span class="number">1</span>],data[i][<span class="number">2</span>]);</div><div class="line">            <span class="keyword">int</span> v = edge.getFrom();</div><div class="line">            adj[v].add(edge);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> vertex)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> adj[vertex];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVertexsNum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> vertexsNum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEdgesNum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> edgesNum;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//有向图中所有的边</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Edge&gt; <span class="title">getEdges</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span>(List&lt;Edge&gt; list : adj) &#123;</div><div class="line">            <span class="keyword">for</span>(Edge e : list) &#123;</div><div class="line">                edges.add(e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> edges;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>顶点到源点s的最短路径，我们使用一个用顶点索引的Edge数组（edgeTo[]）来存储，使用数组distTo[]来存储最短路径树（包含了源点S到所有可达顶点的最短路径）。</p>
+<p><strong>边的松弛操作：</strong></p>
+<p>边的松弛过程如下图：<br><img src="http://static.zhyjor.com/201809031055_339.png" alt=""></p>
+<p>松弛边【1,4】就是检查顶点0到4的最短路径是否是先从顶点0到1，然后在由顶点1到4。如果是则【0,4】边失效，将【1,4】加入最短路径树。</p>
+<p>代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">relax</span><span class="params">(WeightedDigraph wd,Edge e)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> v = e.getFrom();</div><div class="line">    <span class="keyword">int</span> w = e.getTo();</div><div class="line">    <span class="keyword">if</span>(distTo[w] &gt; distTo[v] + e.getWeight()) &#123;</div><div class="line">        distTo[w] = distTo[v] + e.getWeight();</div><div class="line">        edgeTo[w] = e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>顶点的松弛操作：</strong></p>
+<p>顶点的松弛就是松弛顶点的所有邻接边，这里就不给出过程了，实现代码在Dijkstra实现中。</p>
+<h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>算的的实现过程：<br><img src="http://static.zhyjor.com/201809031058_507.png" alt=""></p>
+<p>Dijkstra算法的代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Dijkstra算法的实现</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dijkstra</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Edge[] edgeTo; <span class="comment">//最短路径树</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] distTo; <span class="comment">//存储每个顶点到源点的距离</span></div><div class="line">    <span class="comment">//索引优先队列，建立distTo和顶点索引，distTo越小，优先级越高</span></div><div class="line">    <span class="keyword">private</span> IndexMinPQ&lt;Integer&gt; pq; </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Dijkstra</span><span class="params">(WeightedDigraph wd, <span class="keyword">int</span> s)</span> </span>&#123;</div><div class="line">        edgeTo = <span class="keyword">new</span> Edge[wd.getVertexsNum()];</div><div class="line">        distTo = <span class="keyword">new</span> <span class="keyword">int</span>[wd.getVertexsNum()];</div><div class="line">        pq = <span class="keyword">new</span> IndexMinPQ&lt;&gt;(wd.getVertexsNum());</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;wd.getVertexsNum(); i++) &#123;</div><div class="line">            distTo[i] = Integer.MAX_VALUE;</div><div class="line">        &#125;</div><div class="line">        distTo[s] = <span class="number">0</span>; <span class="comment">//源点s的distTo为0</span></div><div class="line">        pq.insert(s, <span class="number">0</span>);</div><div class="line">        <span class="keyword">while</span>(pq.isEmpty()) &#123;</div><div class="line">            relax(wd, pq.delMin());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//顶点的松弛</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">relax</span><span class="params">(WeightedDigraph wd, <span class="keyword">int</span> ver)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(Edge e : wd.adj(ver)) &#123;</div><div class="line">            <span class="keyword">int</span> v = e.getTo();</div><div class="line">            <span class="keyword">if</span>(distTo[v] &gt; distTo[ver] + e.getWeight()) &#123;</div><div class="line">                distTo[v] = distTo[ver] + e.getWeight();</div><div class="line">                edgeTo[v] = e;</div><div class="line">                <span class="keyword">if</span>(pq.contains(v)) &#123;</div><div class="line">                    pq.change(v, distTo[v]);</div><div class="line">                &#125;<span class="keyword">else</span> &#123;</div><div class="line">                    pq.insert(v, distTo[v]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>Dijkstra算法的局限性：图中边的权重必须为正，但可以是有环图。时间复杂度为O(ElogV)，空间复杂度O（V）。</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>图的知识实在是太多了，还有很多知识点待整理。如图的邻接多重表、图的边集数组实现、最短路径的Floyd算法、拓扑排序、union-find算法、无环加权有向图的最短路径算法、关键路径、计算无向图中连通分量的Kosaraju算法、有向图中含必经点的最短路径问题、TSP问题，还有A*算法。</p>
+<p><strong>参考资料</strong><br><a href="https://blog.csdn.net/saltriver/article/category/6506969" target="_blank" rel="external">图论（十篇）</a><br><a href="https://juejin.im/entry/5afe65de51882542bd69ec6d" target="_blank" rel="external">Java 图的最小生成树 — prim算法和kruskal算法</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/04/15/数据结构与算法之六：图/">数据结构与算法之六：图</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年04月15日 - 20:04</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/04/15/数据结构与算法之六：图/" title="数据结构与算法之六：图">https://zhyjor.github.io/2018/04/15/数据结构与算法之六：图/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/04/15/数据结构与算法之六：图/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/" rel="next" title="浏览器的数据存储方案之一：前端数据存储方案概览">
+                <i class="fa fa-chevron-left"></i> 浏览器的数据存储方案之一：前端数据存储方案概览
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/vue进阶之一：样式覆盖与scoped作用域/" rel="prev" title="vue进阶之一：样式覆盖与scoped作用域">
+                vue进阶之一：样式覆盖与scoped作用域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的存储结构"><span class="nav-number">2.</span> <span class="nav-text">图的存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#邻接矩阵"><span class="nav-number">2.1.</span> <span class="nav-text">邻接矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻接表"><span class="nav-number">3.</span> <span class="nav-text">邻接表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#十字链表"><span class="nav-number">3.1.</span> <span class="nav-text">十字链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的遍历"><span class="nav-number">4.</span> <span class="nav-text">图的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先遍历"><span class="nav-number">4.1.</span> <span class="nav-text">深度优先遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广度优先遍历"><span class="nav-number">4.2.</span> <span class="nav-text">广度优先遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树"><span class="nav-number">5.</span> <span class="nav-text">最小生成树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Prim算法"><span class="nav-number">5.1.</span> <span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Prim算法的延迟实现"><span class="nav-number">5.1.1.</span> <span class="nav-text">Prim算法的延迟实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prim算法即时实现"><span class="nav-number">5.1.2.</span> <span class="nav-text">Prim算法即时实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">5.2.</span> <span class="nav-text">Kruskal算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径"><span class="nav-number">6.</span> <span class="nav-text">最短路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">6.1.</span> <span class="nav-text">Dijkstra算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

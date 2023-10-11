@@ -1,0 +1,1044 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端,svg," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="天气转暖了，冬日暖阳让人整个都舒展了，周五了，偷偷摸摸鱼，最近少有的晴天，周末户外走起 闲言少叙，开始正文">
+<meta name="keywords" content="前端,svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVG图标的使用姿势：搭建私有图标库">
+<meta property="og:url" content="https://zhyjor.github.io/2023/01/06/Icon图标的正确使用姿势/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="天气转暖了，冬日暖阳让人整个都舒展了，周五了，偷偷摸摸鱼，最近少有的晴天，周末户外走起 闲言少叙，开始正文">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/webp/164049/1564929081020-d9c3259c-9263-48e8-bc7d-42f928b0d8c1.webp?x-oss-process=image/format,png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/164049/1564930264387-2ade8072-5e93-4dc1-a87d-1707ca8237e4.jpeg">
+<meta property="og:image" content="https://static.zhyjor.com/blog/fadfadfadfewrccadcacadadfadfadf.png">
+<meta property="og:image" content="https://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SVG图标的使用姿势：搭建私有图标库">
+<meta name="twitter:description" content="天气转暖了，冬日暖阳让人整个都舒展了，周五了，偷偷摸摸鱼，最近少有的晴天，周末户外走起 闲言少叙，开始正文">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/webp/164049/1564929081020-d9c3259c-9263-48e8-bc7d-42f928b0d8c1.webp?x-oss-process=image/format,png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2023/01/06/Icon图标的正确使用姿势/"/>
+
+
+
+
+
+  <title> SVG图标的使用姿势：搭建私有图标库 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2023/01/06/Icon图标的正确使用姿势/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                SVG图标的使用姿势：搭建私有图标库
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-01-06T03:08:15+00:00">
+                2023-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/01/06/Icon图标的正确使用姿势/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2023/01/06/Icon图标的正确使用姿势/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>天气转暖了，冬日暖阳让人整个都舒展了，周五了，偷偷摸摸鱼，最近少有的晴天，周末户外走起</p>
+<p>闲言少叙，开始正文<br><a id="more"></a><br>随着svg的浏览器兼容性越来越好，图标的使用基本已经都已经是svg方案了。笔者最近自己找麻烦，搭建了一个公司内部的svg治理站点，可以理解为一个私有化的<a href="https://www.iconfont.cn/" target="_blank" rel="external">阿里巴巴图标库</a>。在对接历史svg治理的过程中，遇到了各种各样的问题。尤其是面对水平参差不齐的设计师的时候，导入到系统的svg也是五花八门的。除了需要在存储落盘前，将图标”洗干净”，还需要和设计师去沟通svg在前端的一些使用逻辑，让他们给出更规范的svg，这就是本文的背景。</p>
+<h2 id="三种图标的引入方式"><a href="#三种图标的引入方式" class="headerlink" title="三种图标的引入方式"></a>三种图标的引入方式</h2><p>首先一般第三方组件库都会提供图标组件，比如antd提供了<code>@ant-design/icons</code>，一般在实际使用中是不够用的，这就需要自定义Icon，目前项目中自定义Icon有三种方式</p>
+<ul>
+<li>直接<code>import</code>图标<code>.svg</code>文件，然后作为<code>&lt;img&gt;</code>标签渲染</li>
+<li>svg sprite，通过<code>svg-sprite-loader</code>插件，将指定文件夹内的所有<code>.svg</code>文件组装成一个大的<code>.svg</code>文件，在使用的时候通过<code>use</code>指定<code>symbol</code></li>
+<li>第三种是笔者正在用的方式，相当于第二种的进阶方式，和<code>@ant-design/icons</code>提供的<code>createFromIconfontCN()</code>类似，通过自建svg治理服务，可以简单的使用团队共享出来的svg资源</li>
+</ul>
+<p>大多情况下，同一个图标会有三个状态：normal/hover/disabled，每个状态都会对应一种颜色，假如使用了第一种方案，我们就需要三个不同颜色的图标，而且很难实现在hover的时候，颜色transition的效果。而且假如项目接入了主题色的时候，或者设计师要修改颜色的时候，都会很麻烦</p>
+<p>相比之下，第二种和第三种方式均使用了svg sprite的方式，可以通过css控制图标的颜色，那么只需要一个图标文件，就能满足不同颜色的需求，相比之下，这种方案比<code>&lt;img&gt;</code>的方案更好一些</p>
+<h2 id="如何导出svg"><a href="#如何导出svg" class="headerlink" title="如何导出svg"></a>如何导出svg</h2><p>为了开发的方便，前端的很多同学会安装sketch，用sketch导出需要的icon很方便</p>
+<ol>
+<li>设计稿选中图标</li>
+<li>在选中内容的情况下，sketch右下角点击「设为可导出」选项</li>
+<li>格式选择「svg」，点击最下方的导出选中项</li>
+</ol>
+<p>简单三步，就可以导出svg文件，但是这样并不够</p>
+<h2 id="sketch直接导出文件存在的问题"><a href="#sketch直接导出文件存在的问题" class="headerlink" title="sketch直接导出文件存在的问题"></a>sketch直接导出文件存在的问题</h2><h3 id="视觉面积不一致"><a href="#视觉面积不一致" class="headerlink" title="视觉面积不一致"></a>视觉面积不一致</h3><p>关于视觉面积的问题可以先看看这篇文章<a href="https://medium.muz.li/optical-effects-9fca82b4cd9a" target="_blank" rel="external">Optical Effects in User Interfaces</a><br>一般来说，sketch导出图标是按照图标的边界去导出的，但是图片的形态个不一样，造成图标的各个边界的大小也不一样，比如在下面的例子中，设计师为了保持正方形和圆形的视觉面积的一致，会把圆形的直径做的大一些<br><img src="https://cdn.nlark.com/yuque/0/2019/webp/164049/1564929081020-d9c3259c-9263-48e8-bc7d-42f928b0d8c1.webp?x-oss-process=image/format,png" alt=""></p>
+<p>sketch按照图标的边界导出，最初导出的正方形icon的尺寸是400，圆形的尺寸是450，如果你直接通过<code>&lt;img&gt;</code>引入icon，在界面的宽度就会是400和450，这样确实可以保持视觉大小和设计稿保持一致，但是图标的位置大概率对不齐了，开发的时候就需要针对这种图标进行特殊处理。</p>
+<p>假如设计师想统一调整两个图标大小的时候，比如调整到300，那就很难办了。因为一旦你将两个图标都改成300，那肯定圆的视觉面积较小；正确的做法是将正方形的宽度调整到300，而圆的宽度设置为大约337，相当于手动计算一下对应的尺寸，这也是一个办法。</p>
+<p>除了这个问题，还有左右/上下重心的问题，比如三角形图标▶️，它的重心必然是偏左边一些，所以设计图上可能会适当的偏右，这里就不详细解释了。</p>
+<p>这个问题的解决方法很简单，<strong>将所有的图标放到一个略大一些、统一尺寸的正方形区域内。在使用的时候指定一个统一的宽度就可以了</strong><br><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/164049/1564930264387-2ade8072-5e93-4dc1-a87d-1707ca8237e4.jpeg" alt=""></p>
+<h3 id="sketch-导出的-svg-不够「纯」"><a href="#sketch-导出的-svg-不够「纯」" class="headerlink" title="sketch 导出的 svg 不够「纯」"></a>sketch 导出的 svg 不够「纯」</h3><p>如果你观察过sketch导出的svg源码，你会发现里面有很多层xml节点，会有一些看不太懂的奇怪的标签和属性，svg代码不「纯」会导致一些问题，比如：</p>
+<ul>
+<li>体积更大，比如一些2k左右的图，可以优化到500b以内</li>
+<li>难以自定义颜色，有些图标是通过<code>形状+填充(fill)</code>实现的，而有的时候又是<code>线条+描边(stroke)</code>实现的，而我们若要自定义颜色的话，则需要统一指定<code>fill</code>来实现</li>
+<li>一些svg的属性不兼容，或者sketch导出的有问题，可能会导致在浏览器里打开的效果都有问题</li>
+</ul>
+<h2 id="如何正确输出svg图标"><a href="#如何正确输出svg图标" class="headerlink" title="如何正确输出svg图标"></a>如何正确输出svg图标</h2><p>一般的做法是：</p>
+<ol>
+<li>通过sketch导出</li>
+<li>使用Adobe Illustrator（简称“AI”，是Adobe系统公司推出的基于向量的图形制作软件），重新编辑一遍：<ol>
+<li>取消所有的「分组」，删除无关标签</li>
+<li>将「描边」统一转换为「轮廓」</li>
+<li>可以将一些形状做一些「合并」等操作</li>
+<li>…</li>
+<li>一般坐完这些事情，最终得到的svg文件内部只有一个<code>&lt;path&gt;</code>标签</li>
+</ol>
+</li>
+<li>调整画布到一个统一的正方形区域，如果图标本身很特殊可能不需要</li>
+<li>导出svg，并手动删除fill属性的颜色，这是为了可以通过css自定义颜色（彩色图标除外）</li>
+<li>使用svgo命令压缩图标</li>
+</ol>
+<p>因为AI有一定的上手成本，可以要求设计师完成前3步，再将svg交付给我们，这里可以参考一下<a href="https://www.iconfont.cn/help/detail" target="_blank" rel="external">阿里巴巴图标库-绘制规则</a></p>
+<h3 id="图标治理平台"><a href="#图标治理平台" class="headerlink" title="图标治理平台"></a>图标治理平台</h3><p>笔者在文章开头的位置，不是提到了搭建了一个图标治理平台吗，治理平台是怎么做的呢？其实和上面的流程一样，前三步也是需要设计师来完成，然后设计师导出svg后直接上传，然后会在后端根据页面的的「是否保留颜色」来控制是否去除fill属性，同时使用svgo进行文件的压缩，完成了这一系列的操作后才会将文件落盘存储</p>
+<p>这里画张图简单说一下图标治理平台做了什么事情：<br><img src="https://static.zhyjor.com/blog/fadfadfadfewrccadcacadadfadfadf.png" alt=""></p>
+<p>其中下载svg sprite到本地的方式可以参考一下<code>createFromIconfontCN</code>方法的实践，通过加载一个cdn上的js，在这个js中将svg插入到dom中，在组件中直接使用<code>&lt;use&gt;</code>即可完成图标的使用</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在项目中使用可<code>svg-sprite-loader</code>或者<code>svgr</code>来管理本地的图标，封装自定义icon，这几本已经满足日常需求了，假如你想将图标都维护起来的话，肯定还是选择部署私有的在线的图标治理平台，自己封装<code>createFromIconfontCN()</code>方法，直接使用cdn上的资源，肯定是最方便的。</p>
+<p>假如有想交流部署图标库经验的，欢迎在评论区留言</p>
+<p><strong>参考资料</strong><br><a href="https://medium.muz.li/optical-effects-9fca82b4cd9a" target="_blank" rel="external">Optical Effects in User Interfaces</a></p>
+<p><img src="https://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2023/01/06/Icon图标的正确使用姿势/">SVG图标的使用姿势：搭建私有图标库</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2023年01月06日 - 11:01</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2023/01/06/Icon图标的正确使用姿势/" title="SVG图标的使用姿势：搭建私有图标库">https://zhyjor.github.io/2023/01/06/Icon图标的正确使用姿势/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2023/01/06/Icon图标的正确使用姿势/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/svg/" rel="tag"># svg</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/12/08/从源码的角度回答ReactHooks面试题/" rel="next" title="从源码的角度回答ReactHooks面试题">
+                <i class="fa fa-chevron-left"></i> 从源码的角度回答ReactHooks面试题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/01/13/深入理解koa之一：20行的实现的洋葱圈模型/" rel="prev" title="深入理解koa之一：20行代码实现的洋葱圈中间件模型">
+                深入理解koa之一：20行代码实现的洋葱圈中间件模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三种图标的引入方式"><span class="nav-number">1.</span> <span class="nav-text">三种图标的引入方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何导出svg"><span class="nav-number">2.</span> <span class="nav-text">如何导出svg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sketch直接导出文件存在的问题"><span class="nav-number">3.</span> <span class="nav-text">sketch直接导出文件存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视觉面积不一致"><span class="nav-number">3.1.</span> <span class="nav-text">视觉面积不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sketch-导出的-svg-不够「纯」"><span class="nav-number">3.2.</span> <span class="nav-text">sketch 导出的 svg 不够「纯」</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何正确输出svg图标"><span class="nav-number">4.</span> <span class="nav-text">如何正确输出svg图标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图标治理平台"><span class="nav-number">4.1.</span> <span class="nav-text">图标治理平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

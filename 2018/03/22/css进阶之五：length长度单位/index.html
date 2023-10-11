@@ -1,0 +1,1119 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css,css进阶," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;lt;length&amp;gt;是表示距离尺寸的一种css数据格式。它由一个&amp;lt;number&amp;gt;后紧随一个长度单位（px，em，pt，in，mm，…）组成。和任何 CSS 尺寸一样，数字和单位之间没有空格。&amp;lt;number&amp;gt; 0之后的长度单位是可选的。 许多CSS属性使用&amp;lt;length&amp;gt;值，比如width、margin、padding、font-size、border-w">
+<meta name="keywords" content="css,css进阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css进阶之五：length长度单位">
+<meta property="og:url" content="https://zhyjor.github.io/2018/03/22/css进阶之五：length长度单位/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="&amp;lt;length&amp;gt;是表示距离尺寸的一种css数据格式。它由一个&amp;lt;number&amp;gt;后紧随一个长度单位（px，em，pt，in，mm，…）组成。和任何 CSS 尺寸一样，数字和单位之间没有空格。&amp;lt;number&amp;gt; 0之后的长度单位是可选的。 许多CSS属性使用&amp;lt;length&amp;gt;值，比如width、margin、padding、font-size、border-w">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201805211745_99.png">
+<meta property="og:image" content="http://static.zhyjor.com/201806301401_819.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805211754_360.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805211755_898.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css进阶之五：length长度单位">
+<meta name="twitter:description" content="&amp;lt;length&amp;gt;是表示距离尺寸的一种css数据格式。它由一个&amp;lt;number&amp;gt;后紧随一个长度单位（px，em，pt，in，mm，…）组成。和任何 CSS 尺寸一样，数字和单位之间没有空格。&amp;lt;number&amp;gt; 0之后的长度单位是可选的。 许多CSS属性使用&amp;lt;length&amp;gt;值，比如width、margin、padding、font-size、border-w">
+<meta name="twitter:image" content="http://static.zhyjor.com/201805211745_99.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/03/22/css进阶之五：length长度单位/"/>
+
+
+
+
+
+  <title> css进阶之五：length长度单位 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/03/22/css进阶之五：length长度单位/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                css进阶之五：length长度单位
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T11:37:24+00:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/22/css进阶之五：length长度单位/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/22/css进阶之五：length长度单位/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>&lt;length&gt;</code>是表示距离尺寸的一种css数据格式。它由一个<code>&lt;number&gt;</code>后紧随一个长度单位（px，em，pt，in，mm，…）组成。和任何 CSS 尺寸一样，数字和单位之间没有空格。<code>&lt;number&gt;</code> 0之后的长度单位是可选的。</p>
+<p>许多CSS属性使用<code>&lt;length&gt;</code>值，比如width、margin、padding、font-size、border-width、text-shadow…</p>
+<p>对于某些属性，长度使用负值会有语法错误，但是有一些属性是允许负长度的。请注意虽然<code>&lt;percentage&gt;</code>也是CSS尺寸并且可以被一些 CSS属性接受为<code>&lt;length&gt;</code>值，但它们本身不是<code>&lt;length&gt;</code>值。<br><a id="more"></a></p>
+<h2 id="常见单位"><a href="#常见单位" class="headerlink" title="常见单位"></a>常见单位</h2><h3 id="相对长度单位"><a href="#相对长度单位" class="headerlink" title="相对长度单位"></a>相对长度单位</h3><h4 id="相对字体大小单位"><a href="#相对字体大小单位" class="headerlink" title="相对字体大小单位"></a>相对字体大小单位</h4><p><strong>em</strong><br>相对长度单位，这个单位表示元素的font-size的计算值。如果用在font-size 属性本身，它会继承父元素的font-size。</p>
+<blockquote>
+<p>这个单位常用于创建可伸缩布局，这样即便用户更改了字体尺寸，也可以保持 vertical rhythm of the page。CSS属性line-height，font-size，margin-bottom和margin-top常具有一个用em表示的值。</p>
+</blockquote>
+<p><strong>ex</strong><br>这个单位表示元素font的 x-height 。在含有“X”字母的字体中，它是该字体的小写字母的高度；对于很多字体， 1ex ≈ 0.5em。</p>
+<p><strong>ch</strong><br>这一单位代表元素所用字体 font中“0”这一字形的宽度（“0”，Unicode字符U+0030），或更准确地说是“0”这一字形的预测尺寸（advance measure）。</p>
+<p><strong>rem</strong><br>这个单位代表根元素的 font-size 大小（例如 <html> 元素的font-size）。当用在根元素的font-size上面时 ，它代表了它的初始值(译者注:默认的初始值是html的默认的font-size大小,比如当未在根元素上面设置font-size大小的时候,此时的1rem==1em,当设置font-size=2rem的时候,就使得页面中1rem的大小相当于html的根字体默认大小的2倍,当然此时页面中字体的大小也是html的根字体默认大小的2倍)。</html></p>
+<blockquote>
+<p>该单位在实际使用中一般用于创建完美的可扩展布局。如果不被目标浏览器支持，可以使用em单位，虽然会稍微复杂一些。</p>
+</blockquote>
+<p><strong>lh</strong><br>等于元素行高line-height的计算值</p>
+<p><strong>rlh</strong><br>等于根元素行高line-height的计算值。当用于设置根元素的行高line-height或是字体大小font-size 时，该rlh指的是根元素行高line-height或字体大小font-size 的初始值</p>
+<h4 id="视口比例的长度"><a href="#视口比例的长度" class="headerlink" title="视口比例的长度"></a>视口比例的长度</h4><p>视口比例长度定义了相对于视口的长度大小，视口即文档可视的部分。 当视口的大小被修改（通过更改桌面计算机窗口大小或旋转手机或平板设备的方向）时，只有基于Gecko的浏览器才动态更新视口值。</p>
+<p>如果html和body设置了overflow:auto，滚动条占据的空间不会从视口中减去（译者注：大概就是说会算在视口里，视口大小是包括滚动条的），但当设置为overflow:scroll时，滚动条占据的空间反而会从视口中减去（译者注：大概就是此时视口大小不包括滚动条）。</p>
+<p>overflow:auto，滚动条最终占用的空间大小不是减去视口大小之后的宽度，而 overflow:scroll 才是。</p>
+<p>在 @page 在规则声明块的长度，视口使用无效，声明将被丢弃。</p>
+<p><strong>vh</strong><br>视口高度的 1/100。</p>
+<p><strong>vw</strong><br>视口宽度的 1/100。</p>
+<p><strong>vi</strong><br>Equal to 1% of the size of the initial containing block, in the direction of the root element’s inline axis（axis:轴）.</p>
+<p><strong>vb</strong><br>Equal to 1% of the size of the initial containing block, in the direction of the root element’s block axis（axis:轴）.</p>
+<p><strong>vmin</strong><br>视口高度和宽度之间的最小值的 1/100。</p>
+<p><strong>vmax</strong><br>视口高度和宽度之间的最大值的 1/100。</p>
+<h3 id="绝对长度单位"><a href="#绝对长度单位" class="headerlink" title="绝对长度单位"></a>绝对长度单位</h3><blockquote>
+<p>绝对长度单位代表一个物理测量，当输出介质的物理性质是已知的，如用于打印布局。这是通过将一个单元锚定到一个物理单元，并将其定义为相对于它的另一个。对于低分辨率的设备，如屏幕、高分辨率设备，如打印机，该锚定是不同的。</p>
+<p>from:<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/length#px" target="_blank" rel="external">MDN</a></p>
+</blockquote>
+<p>低DPI设备，单位像素代表物理参考像素和其他人是指相对于它。因此，在定义为96px等于72pt。这个定义的结果是，在这样的设备，长度在英寸（in），厘米（cm），毫米（mm），没有必要匹配的物理单位的长度相同的名称。</p>
+<p>高DPI设备，英寸（in），厘米（cm），毫米（mm）被定义为他们对应的实体。因此，px单位和他们相关（1 / 96 英寸）。</p>
+<blockquote>
+<p>用户可以增加字体大小，用于辅助功能。为了允许使用的布局，无论是所使用的字体大小，只使用绝对长度单位时，输出介质的物理特性是已知的，如位图图像。设置字体大小相关的长度时，更喜欢相对单位像EM或REM。</p>
+</blockquote>
+<p><strong>px</strong><br>与显示设备相关,这里的px指的是css像素，i.e.开发者可以操作的单位。<br>对于屏幕显示，通常是一个设备像素（点）的显示。<br>对于打印机和高分辨率的屏幕，一个CSS像素意味着多个设备像素，因此，每英寸的像素的数量保持在96左右。<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/length#px" target="_blank" rel="external">权威文档MDN</a>上将px定义为了绝对单位,这意味着，按照文档编写者的想法，将中文文字大小设置为12px后，无论使用什么样的设备查看网页，字体的大小始终为1/8英寸(移动端浏览器下需要设置缩放比为1)。</p>
+<p><strong>mm</strong><br>毫米。</p>
+<p><strong>cm</strong><br>厘米（10毫米）。</p>
+<p><strong>in</strong><br>英寸（2.54厘米）。</p>
+<p><strong>pt</strong><br>磅（1/72 英寸）。</p>
+<p><strong>pc</strong><br>12 点活字 (1 pc 等于 12 点)。</p>
+<p><strong>mozmm </strong><br>一个实验单位，无论显示器的尺寸或分辨率如何，都会尝试在一毫米处进行渲染。很少会用到，但可能在移动设备特别有用。</p>
+<h3 id="CSS-单位和每英寸点数（DPI）"><a href="#CSS-单位和每英寸点数（DPI）" class="headerlink" title="CSS 单位和每英寸点数（DPI）"></a>CSS 单位和每英寸点数（DPI）</h3><blockquote>
+<p>CSS 的单位不是根据物理上的英寸来表现的，而是表现为 96px（译注：这里指的应该是 1in = 96px）。这意味着无论真实屏幕的像素密度是多少，（在 CSS 中）它都假设为 96dpi。在一个高像素密度的设备中，1in 会小于实际的 1 物理英寸。类似地 mm、cm 和 pt 都不是一个绝对的长度单位。</p>
+</blockquote>
+<p>一些具体的例子：</p>
+<ul>
+<li>1in 总是（等于）96px</li>
+<li>3pt 总是（等于）4px</li>
+<li>25.4mm 总是（等于）96px</li>
+</ul>
+<h2 id="1px到底有多长"><a href="#1px到底有多长" class="headerlink" title="1px到底有多长"></a>1px到底有多长</h2><p>前面说到的 px 相对单位指的是图像显示的基本单元，它既不是一个确定的物理量，也不是一个点或者小方块，而是一个抽象概念。刚刚提到了图像显示的基本单元，这个东西在不同设备上又是不一样的，例如显示器上的物理像素指的是显示器的点距，而打印机的物理像素则指的是打印机的墨点。</p>
+<h3 id="CSS-像素的真正含义"><a href="#CSS-像素的真正含义" class="headerlink" title="CSS 像素的真正含义"></a>CSS 像素的真正含义</h3><p>按照 CSS 规范的定义，CSS 中的 px 是一个相对长度，它相对的，是 viewing device 的分辨率。这个 viewing device，通常就是电脑显示器。典型的电脑显示器的分辨率是96DPI，也就是1像素为1/96英寸（实际上，假设我们的显示器分辨率都与物理分辨率一致，而液晶点距其实是0.25mm到0.29mm之间，所以不太可能是正好1/96英寸，而只是接近）。</p>
+<p>一般来说，px 就是对应设备的物理像素，然而如果输出设备的解析度与电脑显示器大不相同，输出效果就会有问题。例如打印机输出到纸张上，其解析度比电脑屏幕要高许多，如果不缩放，直接使用设备的物理像素，那电脑上的照片由 600DPI 的打印机打出来就比用显示器看小了约6倍。</p>
+<p>由于不同的物理设备的物理像素的大小是不一样的，所以 CSS 认为浏览器应该对 CSS 中的像素进行调节，使得浏览器中 1个 CSS 像素的大小在不同物理设备上看上去大小总是差不多，目的是为了保证阅读体验的一致。为了达到这一点，浏览器可以直接按照设备的物理像素大小进行换算，而 CSS 规范中使用参考像素来进行换算。</p>
+<p>一个参考像素即为从一臂之遥看解析度为 96DPI 的设备输出（即1英寸96点）时，1点（即1/96英寸）的视角。它并不是1/96英寸长度，而是从一臂之遥的距离处看解析度为 96DPI 的设备输出一单位（即1/96英寸）时视线与水平线的夹角。通常认为常人臂长为28英寸，所以它的视角是: (1/96)in / (28in <em> 2 </em> PI / 360deg) = 0.0213度。如下图是一个示意图：</p>
+<p><img src="http://static.zhyjor.com/201805211745_99.png" alt=""></p>
+<p>对于人来说，眼睛看到的大小取决于可视角度。而可视角度取决于物体的实际大小以及物体与眼睛的距离。10米远处一个1米见方的东西，与1米远处的10厘米见方的东西，看上去的大小差不多是一样的，所谓一叶障目不见泰山，讲的就是这个常识。</p>
+<p>左边的屏幕（可以认为是电脑屏幕）的典型视觉距离是71厘米即28英寸，其1px对应了0.28mm；而右边的屏幕（可以认为是你的42寸高清电视）的典型视觉距离是3.5米即120英寸，其1px对应1.3mm。42寸的1080p电视，分辨率是1920*1080，则其物理像素只有0.5mm左右。</p>
+<p>综上，px 是一个相对单位，而且在特定设备上总是一个近似值（原则是尽量接近参考像素）。</p>
+<h3 id="影响像素的那些因素"><a href="#影响像素的那些因素" class="headerlink" title="影响像素的那些因素"></a>影响像素的那些因素</h3><p>然而，如果你把绝对单位理解为对输出效果的绝对掌控，事情却大相径庭。就网页输出的最主要对象——电脑屏幕来说，px 可被视为一个基准单位——与桌面分辨率一致，如果是液晶屏，则几乎总是与液晶屏物理分辨率一致——也就是说网页设计者设定的1px，就是“最终打开这个网页的用户在显示器上看到的1个点距”！反倒是那些绝对单位，其实一点也不绝对。</p>
+<p>那么 px 都会受哪些因素的影响而变化？</p>
+<ul>
+<li><p>每英寸像素(pixel per inch, ppi/PPI): 它表示的是每英寸所拥有的像素(pixel)数目，更确切的说法应该是像素密度，放到显示器上说的是每英寸多少物理像素及显示器设备的点距。数值越高，代表显示屏能够以越高的密度显示图像。之所以要用对角线来计算，是因为屏幕对角线长度（屏幕尺寸）是厂商制造时就定好的精确数值。而宽和高都需要计算才能得到。<br><img src="http://static.zhyjor.com/201806301401_819.png" alt=""></p>
+</li>
+<li><p>设备像素比(device pixel ratio, dpr/DPR): 它描述的是未缩放状态下，设备像素和 CSS 像素的初始比例关系，也可以解释为默认缩放比例。如何理解这个概念呢？通俗来说，它是指在开发中1个 CSS 像素占用多少设备像素，如 dpr=2 代表1个 CSS 像素用2x2个设备像素来绘制，所以，可以理解为 1px由多少个设备像素组成</p>
+</li>
+<li>DPI: 每英寸多少点。<br>当用于描述显示器时，我们可以吧 ppi 和 dpi 认为是同一个概念。那么 ppi 和 dpr 到底是什么关系呢？ ppi 用作显示设备的工业标准，业界人士用 ppi 的值来衡量一个屏幕是否为高清屏，然后根据得到的密度分界来获得此时对应的 dpr 值，也即默认缩放比例。 dpr 和 ppi 相关，一般 dpr 为 ppi/160 的整数倍，如下所示：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项名</th>
+<th>ldpi</th>
+<th>mdpi</th>
+<th>hdpi</th>
+<th>xhdpi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>密度分界（密度值）</td>
+<td>120</td>
+<td>160</td>
+<td>240</td>
+<td>320</td>
+</tr>
+<tr>
+<td>屏幕尺寸（分辨率）</td>
+<td>240×320</td>
+<td>320×480</td>
+<td>480×800</td>
+<td>640×960</td>
+</tr>
+<tr>
+<td>默认缩放比例</td>
+<td>0.75</td>
+<td>1.0</td>
+<td>1.5</td>
+<td>2.0</td>
+</tr>
+</tbody>
+</table>
+<p>了解了这两个概念后，我们可以来说说导致 CSS 中 px 变化的因素了。</p>
+<ul>
+<li><p>像素密度：从 iPhone4 开始，苹果推出了 Retina 屏，分辨率提高了一倍（<code>640*960</code>），而屏幕尺寸却没变。这时一个css像素=2个设备像素（换算公式为 <code>1px = (dpr)^2 * 1dp</code>, 必须让css中的1px代表更多的设备像素，才能让1px的东西在屏幕上的大小与那些低分辨率的设备差不多，否则会因太小而看不清），即 DPR=2，示意图如下：<img src="http://static.zhyjor.com/201805211754_360.png" alt=""></p>
+</li>
+<li><p>缩放操作：缩放也会引起 css 中 px 的变化。放大页面到200%，字体大小与元素宽度的像素值不变，只是css的1px代表设备像素中的4px，宽高都是200%，DPR增加了。此时，获取 screen.width 值不变，而 window.innerWidth/Height 值（visual viewport）变成原来的一半。缩放值越大，当前 viewport 宽度会越小。</p>
+</li>
+</ul>
+<p>如何理解上面说到的缩放呢？放大1倍，原来 1px 的东西变成 2px，但 1px 变为 2px 并不是把原来的 320px 变为 640px，而是在实际宽度不变的情况下，1px 变得跟原来的 2px 的长度（长宽）一样了（元素会占据更多的设备像素），所以放大1倍后原来需要 320px 才能填满的宽度现在只需要 160px，也即原来 320px 的面积里现在只能填入 160px 的东西了。</p>
+<p>举个例子说明 CSS 像素的相对性，如下示意图：<br><img src="http://static.zhyjor.com/201805211755_898.png" alt=""></p>
+<p>作为Web开发者，我们接触的更多的是用于控制元素样式的样式单位像素。这里的像素我们称之为CSS像素。假设我们用PC浏览器打开一个页面，浏览器此时的效果如左图所示，但如果我们把页面放大（通过“Ctrl键”加上“+号键”），此时块状容器则横向扩张，如右图所示（黑色为实际效果，灰色为原来效果）。吊诡的是此时我们既没有调整浏览器窗口大小，也没有改变块状元素的css宽度，但是它看上去却变大了一倍——这是因为我们把CSS像素放大为了原来的两倍。</p>
+<p>也就是说默认情况下一个CSS像素应该是等于一个物理像素的宽度的，但是浏览器的放大操作让一个CSS像素等于了多个设备像素宽度。</p>
+<ul>
+<li>设备独立像素(Device independent Pixel, DIP): 也称为逻辑像素，简称 DIP.</li>
+</ul>
+<h3 id="像素换算与倍率"><a href="#像素换算与倍率" class="headerlink" title="像素换算与倍率"></a>像素换算与倍率</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">DPR = 设备像素 / CSS像素 = 屏幕横向设备像素 / 理想视口的宽</div><div class="line">CSS像素 = 设备独立像素 = 逻辑像素</div></pre></td></tr></table></figure>
+<p>有关倍率，我们用 iPhone 3gs 和 4s 来举例。假设有个邮件列表界面，我们不妨按照PC端网页设计的思维来想象。3gs上大概只能显示4-5行，4s就能显示9-10行，而且每行会变得特别宽。但两款手机其实是一样大的。如果照这种方式显示，3gs上刚刚好的效果，在4s上就会小到根本看不清字。</p>
+<p>在现实中，这两者效果却是一样的。这是因为Retina屏幕把2x2个像素当1个像素使用。比如原本44像素高的顶部导航栏，在Retina屏上用了88个像素的高度来显示。导致界面元素都变成2倍大小，反而和3gs效果一样了。画质却更清晰。</p>
+<p>在以前，iOS应用的资源图片中，同一张图通常有两个尺寸。你会看到文件名有的带@2x字样，有的不带。其中不带@2x的用在普通屏上，带@2x的用在Retina屏上。只要图片准备好，iOS会自己判断用哪张，Android道理也一样。</p>
+<p>由此可以看出，苹果以普通屏为基准，给Retina屏定义了一个2倍的倍率（iPhone 6plus除外，它达到了3倍）。实际像素除以倍率，就得到逻辑像素尺寸。只要两个屏幕逻辑像素相同，它们的显示效果就是相同的。</p>
+<p><strong>参考资料</strong><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/length#px" target="_blank" rel="external"><code>&lt;length&gt;</code></a><br><a href="https://www.w3cplus.com/css/the-lengths-of-css.html" target="_blank" rel="external">CSS的长度单位-w3c</a></p>
+<p><a href="https://github.com/hijiangtao/hijiangtao.github.io/blob/master/_posts/2017-07-08-Device-Viewport-and-Pixel-Introduction.md" target="_blank" rel="external">1px背后的知识点汇总整理：各种像素大全、viewport以及PPI/DPI/DPR/DIP</a><br><a href="https://www.w3.org/TR/CSS21/syndata.html#length-units" target="_blank" rel="external">cdn中的length-unit</a><br><a href="http://inamidst.com/stuff/notes/csspx" target="_blank" rel="external">CSS px is an Angular Measurement</a><br><a href="http://colachan.com/post/3435" target="_blank" rel="external">移动端尺寸基础知识</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5NTA0NjY4MA==&amp;mid=203073243&amp;idx=1&amp;sn=c71ff9f0c0fb96fea2d3ea2b213018e1#rd" target="_blank" rel="external">知识小科普！像素英寸与DPI的那些事儿</a></p>
+<p><a href="https://www.zhihu.com/question/20383926" target="_blank" rel="external">两张图片，尺寸相同，DPI不同，那么视觉效果有何差别？</a><br><a href="https://www.zhihu.com/question/21220154" target="_blank" rel="external">DPI、PPI、DP、PX 的详细计算方法及算法来源是什么？</a><br><a href="https://www.zhihu.com/question/23504664" target="_blank" rel="external">分辨率1000*1000图片，一张是72ppi另一张是36ppi，在相同显示器上显示效果是否相同？</a><br><a href="https://www.zhihu.com/question/23770739" target="_blank" rel="external">DPI 和 PPI 的区别是什么？</a><br><a href="http://www.360doc.com/content/15/0601/10/4728700_474814384.shtml" target="_blank" rel="external">DPI和PPI如何换算?:屏幕分辨率那些事儿 – 优优网</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/22/css进阶之五：length长度单位/">css进阶之五：length长度单位</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年03月22日 - 19:03</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/03/22/css进阶之五：length长度单位/" title="css进阶之五：length长度单位">https://zhyjor.github.io/2018/03/22/css进阶之五：length长度单位/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/03/22/css进阶之五：length长度单位/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/css进阶/" rel="tag"># css进阶</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/20/vue源码解读之六：compile的三个阶段/" rel="next" title="vue源码解读之六：compile的三个阶段">
+                <i class="fa fa-chevron-left"></i> vue源码解读之六：compile的三个阶段
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/23/vue源码解读之七：VNode虚拟DOM的生成及其diff和patch机制/" rel="prev" title="vue源码解读之七：VNode虚拟DOM的生成及其diff和patch机制">
+                vue源码解读之七：VNode虚拟DOM的生成及其diff和patch机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见单位"><span class="nav-number">1.</span> <span class="nav-text">常见单位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相对长度单位"><span class="nav-number">1.1.</span> <span class="nav-text">相对长度单位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相对字体大小单位"><span class="nav-number">1.1.1.</span> <span class="nav-text">相对字体大小单位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#视口比例的长度"><span class="nav-number">1.1.2.</span> <span class="nav-text">视口比例的长度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对长度单位"><span class="nav-number">1.2.</span> <span class="nav-text">绝对长度单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-单位和每英寸点数（DPI）"><span class="nav-number">1.3.</span> <span class="nav-text">CSS 单位和每英寸点数（DPI）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1px到底有多长"><span class="nav-number">2.</span> <span class="nav-text">1px到底有多长</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-像素的真正含义"><span class="nav-number">2.1.</span> <span class="nav-text">CSS 像素的真正含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响像素的那些因素"><span class="nav-number">2.2.</span> <span class="nav-text">影响像素的那些因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#像素换算与倍率"><span class="nav-number">2.3.</span> <span class="nav-text">像素换算与倍率</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1057 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端工程化," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前端单元测试的好处是显而易见的，比如别人的代码我怎么改，新功能添加上了怎么保证旧功能没问题。而且现在都有测试驱动开发的概念了。但是呢，前端的单元测试究竟该怎么做？">
+<meta name="keywords" content="前端工程化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端工程化之一：常见的单元测试工具">
+<meta property="og:url" content="https://zhyjor.github.io/2017/11/09/前端工程化之一：常见的单元测试工具/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="前端单元测试的好处是显而易见的，比如别人的代码我怎么改，新功能添加上了怎么保证旧功能没问题。而且现在都有测试驱动开发的概念了。但是呢，前端的单元测试究竟该怎么做？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201808101016_544.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808101017_772.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808101024_689.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端工程化之一：常见的单元测试工具">
+<meta name="twitter:description" content="前端单元测试的好处是显而易见的，比如别人的代码我怎么改，新功能添加上了怎么保证旧功能没问题。而且现在都有测试驱动开发的概念了。但是呢，前端的单元测试究竟该怎么做？">
+<meta name="twitter:image" content="http://static.zhyjor.com/201808101016_544.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2017/11/09/前端工程化之一：常见的单元测试工具/"/>
+
+
+
+
+
+  <title> 前端工程化之一：常见的单元测试工具 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2017/11/09/前端工程化之一：常见的单元测试工具/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端工程化之一：常见的单元测试工具
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-09T09:56:01+00:00">
+                2017-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/09/前端工程化之一：常见的单元测试工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/09/前端工程化之一：常见的单元测试工具/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前端单元测试的好处是显而易见的，比如别人的代码我怎么改，新功能添加上了怎么保证旧功能没问题。而且现在都有测试驱动开发的概念了。但是呢，前端的单元测试究竟该怎么做？<br><a id="more"></a><br>假如我们是团队合作，我写的代码可能被其他人修改，即使是自己的代码也有可能在改动的时候出问题，我们需要测试，而且还需要将这些测试固化为代码。测试需要覆盖所有的逻辑，使得我们的代码质量得到保障，这也是单元测试的意义，并且测试用例需要小而精，覆盖率高，稳定。</p>
+<h2 id="怎么开始"><a href="#怎么开始" class="headerlink" title="怎么开始"></a>怎么开始</h2><p>测试需要测试框架+断言库，常用的测试框架是karma,moca。常用的断言库为assert,jasmine,expect,chai等</p>
+<h3 id="使用karma-jasmine-coverage"><a href="#使用karma-jasmine-coverage" class="headerlink" title="使用karma+jasmine+coverage"></a>使用karma+jasmine+coverage</h3><p>Karma是Testacular的新名字，在2012年google开源了Testacular，2013年Testacular改名为Karma。</p>
+<p>Karma是一个基于Node.js的JavaScript测试执行过程管理工具（Test Runner）。该工具可用于测试所有主流Web浏览器，也可集成到CI（Continuous integration）工具，也可和其他代码编辑器一起使用。这个测试工具的一个强大特性就是，它可以监控(Watch)文件的变化，然后自行执行，通过console.log显示测试结果。</p>
+<p>使用初始化命令，设置配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">karma init</div></pre></td></tr></table></figure></p>
+<p>开始测试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">karma start</div></pre></td></tr></table></figure></p>
+<p><img src="http://static.zhyjor.com/201808101016_544.png" alt=""></p>
+<p>可以在chrome的控制台查看信息：</p>
+<p><img src="http://static.zhyjor.com/201808101017_772.png" alt=""></p>
+<h3 id="coverage"><a href="#coverage" class="headerlink" title="coverage"></a>coverage</h3><p>一般的测试我们需要查看测试覆盖率，在Karma中，可以通过karma-coverage查看覆盖率,修改配置文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">preprocessors: &#123;</div><div class="line">    &apos;src/*.js&apos;: [&apos;coverage&apos;]</div><div class="line">&#125;,</div><div class="line"></div><div class="line">coverageReporter: &#123;</div><div class="line">    type: &apos;html&apos;,</div><div class="line">    dir: &apos;coverage/&apos;</div><div class="line">&#125;,</div><div class="line">reporters: [&apos;progress&apos;,&apos;coverage&apos;],</div></pre></td></tr></table></figure></p>
+<p>可以查看测试覆盖率，一共有4个维度的测量数据：</p>
+<p><img src="http://static.zhyjor.com/201808101024_689.png" alt=""></p>
+<p><strong>注意测试要对每一个逻辑分支进行测试，才能保证测试覆盖率。</strong></p>
+<h3 id="Jasmine"><a href="#Jasmine" class="headerlink" title="Jasmine"></a>Jasmine</h3><p>Jasmine是一个Javascript的BDD（Behavior-Driven Development）测试框架，不依赖任何其他框架。</p>
+<h4 id="基本语法介绍"><a href="#基本语法介绍" class="headerlink" title="基本语法介绍"></a>基本语法介绍</h4><p><strong>describe(string, function)</strong>（测试套件,test suite）<br>可以理解为是一个测试集或者测试包（为了便于称呼，我们本文中统一叫测试集，官方称之为suite），主要功能是用来划分单元测试的，describe是可以嵌套使用的。</p>
+<ul>
+<li>参数string：描述测试包的信息</li>
+<li>参数function：测试集的具体实现</li>
+</ul>
+<p><strong>it(string, function)</strong>（测试用例，test case）<br>测试用例（官方称之为spec）</p>
+<ul>
+<li>参数string：描述测试用例的信息</li>
+<li>参数function：测试用例的具体实现</li>
+</ul>
+<p><strong>expect：断言表达式</strong></p>
+<p><strong>每个测试文件中可以包含多个describe，每个describe中可以包含多个it，每个it中可以包含多个expect。</strong></p>
+<h4 id="expect的使用"><a href="#expect的使用" class="headerlink" title="expect的使用"></a>expect的使用</h4><p>所有的expect都可以使用not表示否定的断言。下面是匹配器</p>
+<ul>
+<li>toBe：基本类型判断</li>
+<li>toEqual: toEqual有两种用法，对于基本的类型，toEqual相当于toBe，还可以用来判断对象。</li>
+<li>toMatch: 使用正则表达式判断</li>
+<li>toBeDefine: 判断是否是undefined</li>
+<li>toBeUndefined: 判断是否是undefined，与toBeDefine相反</li>
+<li>toBeNull：判断是否是null</li>
+<li>toBeTruthy：判断是否能转换成bool型，判断的是否是True</li>
+<li>toBeFalsy：判断是否能转换成bool型，判断的是否是False</li>
+<li>toContain： 判断集合是否包含（可以是普通类型，和可以是对象）</li>
+<li>toBeLessThan: 判断值类型的大小，结果若小则为True（也可以判断字符及字符串，以ascii码的大小为判断依据）</li>
+<li>toBeGreaterThan: 判断值类型的大小，结果若大则为True，与toBeLessThan相反（也可以判断字符及字符串，以ascii码的大小为判断依据）</li>
+<li>toBeCloseTo：判断数字是否相似（第二个参数为小数精度，默认为2位）</li>
+<li>toThrow： 判断是否抛出异常</li>
+<li>toThrowError: 判断是否抛出了指定的错误，判断是否是指定的错误</li>
+</ul>
+<h4 id="Setup和Teardown（钩子函数）"><a href="#Setup和Teardown（钩子函数）" class="headerlink" title="Setup和Teardown（钩子函数）"></a>Setup和Teardown（钩子函数）</h4><p>Jasmine允许在执行测试集/测试用例的开始前/结束后做一些初始化/销毁的操作，以下是提供的钩子函数：<br><strong>Setup方法：</strong></p>
+<ul>
+<li>beforeAll：每个suite（即describe）中所有spec（即it）运行之前运行</li>
+<li>beforeEach：每个spec（即it）运行之前运行</li>
+</ul>
+<p><strong>Teardown方法：</strong></p>
+<ul>
+<li>afterAll：每个suite（即describe）中所有spec（即it）运行之后运行</li>
+<li>afterEach：每个spec（即it）运行之后运行</li>
+</ul>
+<p><strong>在beforeEach/it/afterEach中，还可以使用this关键字定义变量，需要注意的是，使用this关键字声明的变量，仅在beforeEach/it/afterEach这个过程中传递。</strong></p>
+<h4 id="xdescribe-xit的使用"><a href="#xdescribe-xit的使用" class="headerlink" title="xdescribe/xit的使用"></a>xdescribe/xit的使用</h4><p>在实际项目中，需要由于发布的版本需要选择测试用例包，xdescribe和xit能很方便的将不包含在版本中的测试用例排除在外。不过xdescribe和xit略有不同：两者一个根本不会运行，另一个it会运行但是被挂起</p>
+<ul>
+<li>xdescribe：该describe下的所有it将被忽略，Jasmine将<strong>直接忽略这些it，因此不会被运行</strong></li>
+<li>xit：<strong>运行到该it时</strong>，挂起它不执行</li>
+</ul>
+<h2 id="自动化单元测试"><a href="#自动化单元测试" class="headerlink" title="自动化单元测试"></a>自动化单元测试</h2><p>Karma+Jasmine+istanbul+webpack自动化单元测试，需要一个karma-webpack库,这是让karma可以去调用webpack，相当于一个桥梁。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i karma-webpack -g</div></pre></td></tr></table></figure></p>
+<p>具体配置可以参考如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Karma configuration</span></div><div class="line"><span class="comment">// Generated on Sat Aug 26 2017 20:31:19 GMT+0800 (中国标准时间)</span></div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>&#123;</div><div class="line">    config.set(&#123;</div><div class="line">        <span class="comment">// 将用于解析所有模式的基本路径（例如，文件，排除）ps: 修改它会影响files和exclude路径，没有特殊需求默认就行。</span></div><div class="line">        basePath: <span class="string">''</span>,</div><div class="line">        <span class="comment">// 选择测试框架我们选的‘jasmine’ 可以在这里去找更多相关的框架 https://npmjs.org/browse/keyword/karma-adapter</span></div><div class="line">        frameworks: [<span class="string">'jasmine'</span>],</div><div class="line">        <span class="comment">// 在浏览器中加载的匹配的文件列表 就是我们的第4步</span></div><div class="line">        files: [</div><div class="line">            <span class="string">'src/**/*.spec.js'</span></div><div class="line">        ],</div><div class="line">        <span class="comment">// 要排除的文件列表 就是我们的第5步</span></div><div class="line">        exclude: [],</div><div class="line">        <span class="comment">// 在将其提供给浏览器之前，预处理匹配的文件， 可用的预处理器 https://npmjs.org/browse/keyword/karma-preprocessor</span></div><div class="line">        <span class="comment">// 测试文件需要处理一下，各框架和库都不一样，可以在链接中找到你对应的框架的处理器</span></div><div class="line">        <span class="comment">// key是文件夹路径，也是就files的路径，value是一个数组，也就是预处理器集合</span></div><div class="line">        preprocessors: &#123;</div><div class="line">            <span class="string">'src/**/*.spec.js'</span>: [<span class="string">'webpack'</span>, <span class="string">'sourcemap'</span>]</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">// webpack配置 不需要入口(entry)和输出(output)配置</span></div><div class="line">        webpack: &#123;</div><div class="line">            devtool: <span class="string">'inline-source-map'</span>,</div><div class="line">            <span class="built_in">module</span>: &#123;</div><div class="line">                rules: [&#123;</div><div class="line">                    test: <span class="regexp">/\.js$/</span>,</div><div class="line">                    use: &#123;</div><div class="line">                        loader: <span class="string">'istanbul-instrumenter-loader'</span>,</div><div class="line">                        options: &#123; <span class="attr">esModules</span>: <span class="literal">true</span> &#125;</div><div class="line">                    &#125;,</div><div class="line">                    enforce: <span class="string">'pre'</span>,</div><div class="line">                    exclude: <span class="regexp">/node_modules|\.spec\.js$/</span>,</div><div class="line">                &#125;, &#123;</div><div class="line">                    test: <span class="regexp">/\.js$/</span>,</div><div class="line">                    use: &#123;</div><div class="line">                        loader: <span class="string">'babel-loader'</span>,</div><div class="line">                        options: &#123;</div><div class="line">                            presets: [<span class="string">'es2015'</span>],</div><div class="line">                            plugins: [<span class="string">'istanbul'</span>]</div><div class="line">                        &#125;</div><div class="line">                    &#125;,</div><div class="line">                    exclude: <span class="regexp">/node_modules/</span></div><div class="line">                &#125;]</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">// 依赖插件</span></div><div class="line">        plugins: [</div><div class="line">            <span class="string">'karma-chrome-launcher'</span>,</div><div class="line">            <span class="string">'karma-jasmine'</span>,</div><div class="line">            <span class="string">'karma-webpack'</span>,</div><div class="line">            <span class="string">'karma-sourcemap-loader'</span>,</div><div class="line">            <span class="string">'karma-coverage-istanbul-reporter'</span></div><div class="line">        ],</div><div class="line">        <span class="comment">// 怎么显示测试结果 测试结果显示插件https://npmjs.org/browse/keyword/karma-reporter</span></div><div class="line">        reporters: [<span class="string">'coverage-istanbul'</span>],</div><div class="line">        <span class="comment">// 配置覆盖率报告的查看方式配置</span></div><div class="line">        coverageIstanbulReporter: &#123;</div><div class="line">            <span class="comment">// 可以用什么形式展示 支持以下格式：clover、cobertura、html、json-summary、json、lcov、lcovonly、none、teamcity、text-lcov、text-summary、text</span></div><div class="line">            <span class="comment">// 可以看连接 : https://github.com/istanbuljs/istanbul-reports/tree/590e6b0089f67b723a1fdf57bc7ccc080ff189d7/lib</span></div><div class="line">            reports: [<span class="string">'html'</span>, <span class="string">'text-summary'</span>],</div><div class="line">            <span class="comment">// 结果存放的位置</span></div><div class="line">            dir: <span class="string">'coverage/'</span>,</div><div class="line">            <span class="comment">// 如果使用webpack和预加载器，可以绕过webpack打破源路径</span></div><div class="line">            fixWebpackSourcePaths: <span class="literal">true</span>,</div><div class="line">            <span class="comment">// 停止输出消息，如`File [$ &#123;filename&#125;]忽略，没有任何东西可以映射</span></div><div class="line">            skipFilesWithNoCoverage: <span class="literal">true</span>,</div><div class="line">            <span class="comment">// 大多数记录接受额外的配置选项。 你可以通过`report-config`选项传递这些</span></div><div class="line">            <span class="string">'report-config'</span>: &#123;</div><div class="line">                <span class="comment">// 配置html</span></div><div class="line">                html: &#123;</div><div class="line">                    <span class="comment">// 输出到 ./coverage/html</span></div><div class="line">                    subdir: <span class="string">'html'</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">// 运行的服务端口，可以自己修改</span></div><div class="line">        port: <span class="number">9876</span>,</div><div class="line">        <span class="comment">// 在输出中启用/禁用颜色（记录(reporters)和日志(logs)） 肯定需要看到运行的结果，不然出错了也不好调试</span></div><div class="line">        colors: <span class="literal">true</span>,</div><div class="line">        <span class="comment">// 显示日志记录的级别 （默认就好）</span></div><div class="line">        <span class="comment">// 可能的值： config.LOG_DISABLE （禁用） || config.LOG_ERROR （错误） || config.LOG_WARN （警告）|| config.LOG_INFO （信息）|| config.LOG_DEBUG （调试）</span></div><div class="line">        logLevel: config.LOG_INFO,</div><div class="line">        <span class="comment">// 每当任何测试文件更改时，启用/禁用监听文件并执行测试  这就是第6步</span></div><div class="line">        autoWatch: <span class="literal">true</span>,</div><div class="line">        <span class="comment">// 可以启动的浏览器列表 需要去下载对应的启动插件 https://npmjs.org/browse/keyword/karma-launcher</span></div><div class="line">        browsers: [<span class="string">'Chrome'</span>],</div><div class="line">        <span class="comment">// 持续集成模式 如果是，Karma启动浏览器，运行测试并退出 默认就好，设true你会后悔的。</span></div><div class="line">        singleRun: <span class="literal">false</span>,</div><div class="line">        <span class="comment">// 并发级别 可以同时启动多少浏览器 默认无限大</span></div><div class="line">        concurrency: <span class="literal">Infinity</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="istanbul的介绍"><a href="#istanbul的介绍" class="headerlink" title="istanbul的介绍"></a>istanbul的介绍</h3><p>istanbul是一个单元测试代码覆盖率检查工具，可以很直观地告诉我们，单元测试对代码的控制程度。</p>
+<p>覆盖率收集工具 nyc，是覆盖率收集工具 istanbul 的命令行版本，istanbul 支持生成各种格式的覆盖率报告。在 package.json 增加 nyc 的配置，告诉 nyc 该忽略哪些文件。</p>
+<h2 id="DOM交互单元测试"><a href="#DOM交互单元测试" class="headerlink" title="DOM交互单元测试"></a>DOM交互单元测试</h2><p><strong>参考资料</strong><br><a href="https://blog.csdn.net/u011348740/article/details/77839913?locationNum=8&amp;fps=1" target="_blank" rel="external">Karma+Jasmine+istanbul+webpack自动化单元测试</a><br><a href="https://github.com/alsotang/node-lessons/tree/master/lesson7" target="_blank" rel="external">《浏览器端测试：mocha，chai，phantomjs》</a><br><a href="https://github.com/alsotang/node-lessons/tree/master/lesson8" target="_blank" rel="external">《测试用例：supertest》</a></p>
+<p><a href="https://www.geekjc.com/book/5a9f552acb134c0648b75978" target="_blank" rel="external">javascript CI篇</a><br><a href="http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html" target="_blank" rel="external">测试框架 Mocha 实例教程</a><br><a href="http://taobaofed.org/blog/2016/01/08/karma-origin/" target="_blank" rel="external">karma 测试框架的前世今生</a><br><a href="https://blog.poetries.top/2017/10/22/unit-test-mocha-chai/" target="_blank" rel="external">Mocha+Chai+Istanbul单元测试</a><br><a href="http://www.tastones.com/stackoverflow/typescript/unit-testing/" target="_blank" rel="external"> TypeScript 教程  单元测试</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/11/09/前端工程化之一：常见的单元测试工具/">前端工程化之一：常见的单元测试工具</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2017年11月09日 - 17:11</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2017/11/09/前端工程化之一：常见的单元测试工具/" title="前端工程化之一：常见的单元测试工具">https://zhyjor.github.io/2017/11/09/前端工程化之一：常见的单元测试工具/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2017/11/09/前端工程化之一：常见的单元测试工具/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/vue进阶之三：vue响应式原理/" rel="next" title="vue进阶之三：vue响应式原理">
+                <i class="fa fa-chevron-left"></i> vue进阶之三：vue响应式原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/12/理解jvm之二：虚拟机执行子系统/" rel="prev" title="理解jvm之二：虚拟机执行子系统">
+                理解jvm之二：虚拟机执行子系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么开始"><span class="nav-number">1.</span> <span class="nav-text">怎么开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用karma-jasmine-coverage"><span class="nav-number">1.1.</span> <span class="nav-text">使用karma+jasmine+coverage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coverage"><span class="nav-number">1.2.</span> <span class="nav-text">coverage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jasmine"><span class="nav-number">1.3.</span> <span class="nav-text">Jasmine</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本语法介绍"><span class="nav-number">1.3.1.</span> <span class="nav-text">基本语法介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expect的使用"><span class="nav-number">1.3.2.</span> <span class="nav-text">expect的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Setup和Teardown（钩子函数）"><span class="nav-number">1.3.3.</span> <span class="nav-text">Setup和Teardown（钩子函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xdescribe-xit的使用"><span class="nav-number">1.3.4.</span> <span class="nav-text">xdescribe/xit的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化单元测试"><span class="nav-number">2.</span> <span class="nav-text">自动化单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#istanbul的介绍"><span class="nav-number">2.1.</span> <span class="nav-text">istanbul的介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM交互单元测试"><span class="nav-number">3.</span> <span class="nav-text">DOM交互单元测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

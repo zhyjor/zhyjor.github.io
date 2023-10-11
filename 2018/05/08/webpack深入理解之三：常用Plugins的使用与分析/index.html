@@ -1,0 +1,1036 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端工程化,webpack,webpack深入理解," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="插件目的在于解决 loader 无法实现的其他事。本文简单介绍插件的使用方法，对于重要的plugin从原理的角度分析其实现的方法。插件是 webpack 的支柱功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上！">
+<meta name="keywords" content="前端工程化,webpack,webpack深入理解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack深入理解之三：常用Plugins的使用与分析">
+<meta property="og:url" content="https://zhyjor.github.io/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="插件目的在于解决 loader 无法实现的其他事。本文简单介绍插件的使用方法，对于重要的plugin从原理的角度分析其实现的方法。插件是 webpack 的支柱功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201809301548_290.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809301552_106.png">
+<meta property="og:image" content="http://static.zhyjor.com/201809301554_687.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack深入理解之三：常用Plugins的使用与分析">
+<meta name="twitter:description" content="插件目的在于解决 loader 无法实现的其他事。本文简单介绍插件的使用方法，对于重要的plugin从原理的角度分析其实现的方法。插件是 webpack 的支柱功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上！">
+<meta name="twitter:image" content="http://static.zhyjor.com/201809301548_290.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/"/>
+
+
+
+
+
+  <title> webpack深入理解之三：常用Plugins的使用与分析 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                webpack深入理解之三：常用Plugins的使用与分析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-08T02:00:32+00:00">
+                2018-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>插件目的在于解决 loader 无法实现的其他事。本文简单介绍插件的使用方法，对于重要的plugin从原理的角度分析其实现的方法。插件是 webpack 的支柱功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上！<br><a id="more"></a></p>
+<h2 id="Plugins是什么"><a href="#Plugins是什么" class="headerlink" title="Plugins是什么"></a>Plugins是什么</h2><blockquote>
+<p>插件是 webpack 的支柱功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上！</p>
+</blockquote>
+<h3 id="webpack事件流"><a href="#webpack事件流" class="headerlink" title="webpack事件流"></a>webpack事件流</h3><p>还记得webpack有哪些常用的事件吗？webpack插件起到的作用，就是为这些事件挂载回调，或者执行指定脚本。webpack的事件流是通过 Tapable 实现的，它就和我们的EventEmit一样，是这一系列的事件的生成和管理工具，它的部分核心代码就像下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class SyncHook&#123;</div><div class="line">    constructor()&#123;</div><div class="line">        this.hooks = [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 订阅事件</div><div class="line">    tap(name, fn)&#123;</div><div class="line">        this.hooks.push(fn);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 发布</div><div class="line">    call()&#123;</div><div class="line">        this.hooks.forEach(hook =&gt; hook(...arguments));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 webpack hook 上的所有钩子都是 Tapable 的示例，所以我们可以通过 tap 方法监听事件，使用 call 方法广播事件，就像官方文档介绍的这样：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compiler.hooks.someHook.tap(<span class="comment">/* ... */</span>);</div></pre></td></tr></table></figure></p>
+<p>几个比较常用的hook我们也已经在前文介绍过了。</p>
+<h3 id="Plugins是什么-1"><a href="#Plugins是什么-1" class="headerlink" title="Plugins是什么"></a>Plugins是什么</h3><p>插件目的在于解决 loader 无法实现的其他事。<strong>如果剖析webpack plugin的本质，它实际上和webpack loader一样简单，其实它只是一个带有apply方法的class。</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//@file: plugins/myplugin.js</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPlugin</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(options)&#123;</div><div class="line">        <span class="comment">//用户自定义配置</span></div><div class="line">        <span class="keyword">this</span>.options = options</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.options)</div><div class="line">    &#125;</div><div class="line">    apply(compiler) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"This is my first plugin."</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = myPlugin</div></pre></td></tr></table></figure></p>
+<p>这样就实现了一个简单的webpack plugin，如果我们要使用它，只需要在<code>webpack.config.js</code> 里 require 并实例化就可以了：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> MyPlugin = <span class="built_in">require</span>(<span class="string">'./plugins/myplugin-4.js'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    ......,</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> MyPlugin(<span class="string">"Plugin is instancing."</span>)</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>每次我们需要使用某个plugin的时候都需要new一下实例化，自然，实例过程中传递的参数，也就成为了我们的构造函数里拿到的options了。</p>
+<p>而实例化所有plugin的时机，便是在webpack初始化所有参数的时候，也就是事件流开始的时候。<strong>所以，如果配合 shell.js 等工具库，我们就可以在这时候执行文件操作等相关脚本</strong>，这就是webpack plugin所做的事情。</p>
+<p>如果你想在指定时机执行某些脚本，自然可以使用在webpack事件流上挂载回调的方法，在回调里执行你所需的操作。</p>
+<h2 id="Tapable新用"><a href="#Tapable新用" class="headerlink" title="Tapable新用"></a>Tapable新用</h2><p>如果我们想赋予webpack事件流我们的自定义事件能够实现嘛？答案是肯定的，可以通过下面的4步实现：</p>
+<p><strong>引入Tapable并找到你想用的hook</strong><br>引入Tapable并找到你想用的hook，同步hook or 异步hook 。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> &#123; SyncHook &#125; = <span class="built_in">require</span>(<span class="string">"tapable"</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>实例化hook</strong><br>实例化Tapable中你所需要的hook并挂载在compiler或compilation上<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compiler.hooks.myHook = <span class="keyword">new</span> SyncHook([<span class="string">'data'</span>])</div></pre></td></tr></table></figure></p>
+<p><strong>监听tap</strong><br>在你需要监听事件的位置tap监听:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compiler.hooks.myHook.tap(<span class="string">'Listen4Myplugin'</span>, (data) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'@Listen4Myplugin'</span>, data)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p><strong>执行call方法</strong><br>在你所需要广播事件的时机执行call方法并传入数据:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compiler.hooks.environment.tap(pluginName, () =&gt; &#123;</div><div class="line">       <span class="comment">//广播自定义事件</span></div><div class="line">       compiler.hooks.myHook.call(<span class="string">"It's my plugin."</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>完整代码实现可以参考我在文章最前方贴出的项目，大概就是下面这样：</p>
+<p>现在我的自定义插件里实例化一个hook并挂载在webpack事件流上:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// @file: plugins/myplugin.js</span></div><div class="line"><span class="keyword">const</span> pluginName = <span class="string">'MyPlugin'</span></div><div class="line"><span class="comment">// tapable是webpack自带的package，是webpack的核心实现</span></div><div class="line"><span class="comment">// 不需要单独install，可以在安装过webpack的项目里直接require</span></div><div class="line"><span class="comment">// 拿到一个同步hook类</span></div><div class="line"><span class="keyword">const</span> &#123; SyncHook &#125; = <span class="built_in">require</span>(<span class="string">"tapable"</span>);</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> </span>&#123;</div><div class="line">    <span class="comment">// 传入webpack config中的plugin配置参数</span></div><div class="line">    <span class="keyword">constructor</span>(options) &#123;</div><div class="line">        <span class="comment">// &#123; test: 1 &#125;</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'@plugin constructor'</span>, options);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    apply(compiler) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'@plugin apply'</span>);</div><div class="line">        <span class="comment">// 实例化自定义事件</span></div><div class="line">        compiler.hooks.myPlugin = <span class="keyword">new</span> SyncHook([<span class="string">'data'</span>])</div><div class="line"></div><div class="line">        compiler.hooks.environment.tap(pluginName, () =&gt; &#123;</div><div class="line">            <span class="comment">//广播自定义事件</span></div><div class="line">            compiler.hooks.myPlugin.call(<span class="string">"It's my plugin."</span>)</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'@environment'</span>);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        <span class="comment">// compiler.hooks.compilation.tap(pluginName, (compilation) =&gt; &#123;</span></div><div class="line">            <span class="comment">// 你也可以在compilation上挂载hook</span></div><div class="line">            <span class="comment">// compilation.hooks.myPlugin = new SyncHook(['data'])</span></div><div class="line">            <span class="comment">// compilation.hooks.myPlugin.call("It's my plugin.")</span></div><div class="line">        <span class="comment">// &#125;);</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">module</span>.exports = MyPlugin</div></pre></td></tr></table></figure>
+<p>在监听插件里监听我的自定义事件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// @file: plugins/listen4myplugin.js</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Listen4Myplugin</span> </span>&#123;</div><div class="line">    apply(compiler) &#123;</div><div class="line">        <span class="comment">// 在myplugin environment 阶段被广播</span></div><div class="line">        compiler.hooks.myPlugin.tap(<span class="string">'Listen4Myplugin'</span>, (data) =&gt; &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'@Listen4Myplugin'</span>, data)</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = Listen4Myplugin</div></pre></td></tr></table></figure></p>
+<p>在webpack配置里引入两个插件并实例化:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// @file: webpack.config.js</span></div><div class="line"><span class="keyword">const</span> MyPlugin = <span class="built_in">require</span>(<span class="string">'./plugins/myplugin-4.js'</span>)</div><div class="line"><span class="keyword">const</span> Listen4Myplugin = <span class="built_in">require</span>(<span class="string">'./plugins/listen4myplugin.js'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    ......,</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> MyPlugin(<span class="string">"Plugin is instancing."</span>),</div><div class="line">        <span class="keyword">new</span> Listen4Myplugin()</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果就是这样：</p>
+<p><img src="http://static.zhyjor.com/201809301548_290.png" alt=""></p>
+<p>我们拿到了call方法传入的数据，并且成功在environment时机里成功输出了。</p>
+<h2 id="实战剖析"><a href="#实战剖析" class="headerlink" title="实战剖析"></a>实战剖析</h2><p>来看一看已经被众人玩坏的 html-webpack-plugin ，我们发现在readme底部有这样一段demo：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPlugin</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">  <span class="comment">// Configure your plugin with options...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">MyPlugin.prototype.apply = <span class="function"><span class="keyword">function</span> (<span class="params">compiler</span>) </span>&#123;</div><div class="line">  compiler.hooks.compilation.tap(<span class="string">'MyPlugin'</span>, (compilation) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'The compiler is starting a new compilation...'</span>);</div><div class="line"></div><div class="line">    compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync(</div><div class="line">      <span class="string">'MyPlugin'</span>,</div><div class="line">      (data, cb) =&gt; &#123;</div><div class="line">        data.html += <span class="string">'The Magic Footer'</span></div><div class="line"></div><div class="line">        cb(<span class="literal">null</span>, data)</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = MyPlugin</div></pre></td></tr></table></figure></p>
+<p>如果你认真读完了上个板块的内容，你会发现，这个 htmlWebpackPluginAfterHtmlProcessing 不就是这个插件自己挂载在webpack事件流上的自定义事件嘛，它会在生成输出文件准备注入HTML时调用你自定义的回调，并向回调里传入本次编译后生成的资源文件的相关信息以及待注入的HTML文件的内容（字符串形式）供我们自定义操作。在项目搜一下这个钩子：</p>
+<p><img src="http://static.zhyjor.com/201809301552_106.png" alt=""></p>
+<p>这不和我们在2.0里说的一样嘛，先实例化我们所需要的hook，从名字就可以看出来只有第一个是同步钩子，另外几个都是异步钩子。然后再找找事件的广播：</p>
+<p><img src="http://static.zhyjor.com/201809301554_687.png" alt=""></p>
+<p>和我们刚刚介绍的一模一样对吧，只不过异步钩子使用promise方法去广播，其他不就完全是我们自定义事件的流程。大家如果有兴趣可以去打下console看看 <code>htmlWebpackPluginAfterHtmlProcessing</code> 这个钩子向回调传入的数据，或许你能发现一片新大陆哦。</p>
+<h2 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h2><h3 id="html-webpack-plugin"><a href="#html-webpack-plugin" class="headerlink" title="html-webpack-plugin"></a>html-webpack-plugin</h3><p>插件的基本作用就是生成html文件，可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口。另外可以为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题。</p>
+<p>html-webpack-plugin的一个实例生成一个html文件，如果单页应用中需要多个页面入口，或者多页应用时配置多个html时，那么就需要实例化该插件多次；</p>
+<p>即有几个页面就需要在webpack的plugins数组中配置几个该插件实例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">             template: <span class="string">'src/html/index.html'</span>,<span class="comment">// 源模板文件</span></div><div class="line">              excludeChunks: [<span class="string">'list'</span>, <span class="string">'detail'</span>]<span class="comment">// 用来配置不允许注入的thunk。</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">            filename: <span class="string">'list.html'</span>,<span class="comment">// 输出文件【注意：这里的根路径是module.exports.output.path】</span></div><div class="line">            template: <span class="string">'src/html/list.html'</span>,</div><div class="line">            thunks: [<span class="string">'common'</span>, <span class="string">'list'</span>]<span class="comment">// 不配置此项默认会将entry中所有的thunk注入到模板中。</span></div><div class="line">        &#125;), </div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">          filename: <span class="string">'detail.html'</span>,</div><div class="line">          template: <span class="string">'src/html/detail.html'</span>,</div><div class="line">           thunks: [<span class="string">'common'</span>, <span class="string">'detail'</span>]</div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">    ...</div></pre></td></tr></table></figure></p>
+<h3 id="clean-webpack-plugin"><a href="#clean-webpack-plugin" class="headerlink" title="clean-webpack-plugin"></a>clean-webpack-plugin</h3><p>使用webpack4时，使用到了clean-webpack-plugin插件，正常情况下，使用webpack命令进行打包，配置文件如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">plugins: [</div><div class="line">	<span class="keyword">new</span> CleanWebpackPlugin(</div><div class="line">        [<span class="string">'dist/main.*.js'</span>,<span class="string">'dist/manifest.*.js'</span>,],　 <span class="comment">//匹配删除的文件,可以设置成匹配所有的dist下文件。</span></div><div class="line">        &#123;</div><div class="line">            root: __dirname,       　　　　　　　　　　<span class="comment">//根目录</span></div><div class="line">            verbose:  <span class="literal">true</span>,        　　　　　　　　　　<span class="comment">//开启在控制台输出信息</span></div><div class="line">            dry:      <span class="literal">false</span>        　　　　　　　　　　<span class="comment">//启用删除文件</span></div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>这时由于clean-webpack-plugin作用在打包前都会清除之前的文件，生成新的带有hash值的文件.</p>
+<h3 id="extract-text-webpack-plugin【4-0已废弃】"><a href="#extract-text-webpack-plugin【4-0已废弃】" class="headerlink" title="extract-text-webpack-plugin【4.0已废弃】"></a>extract-text-webpack-plugin【4.0已废弃】</h3><p>Extact text from bundle into a file, 从bundle中提取出特定的text到一个文件中，使用<code>extract-text-webpack-plugin</code>就可将css从js中独立抽离出来。简单使用如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$ npm install extract-text-webpack-plugin --save-dev</div><div class="line"></div><div class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">"extract-text-webpack-plugin"</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="built_in">module</span>: &#123;</div><div class="line">        loaders: [</div><div class="line">            &#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, <span class="attr">loader</span>: ExtractTextPlugin.extract(<span class="string">"style-loader"</span>, <span class="string">"css-loader"</span>) &#125;</div><div class="line">        ]</div><div class="line">    &#125;,</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"styles.css"</span>)</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它将从每一个用到了require(“*.css”)的entry chunks文件中抽离出css到单独的output文件</p>
+<p><strong>参考资料</strong><br><strong><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="external">webpack官方文档</a></strong><br><strong><a href="http://www.css88.com/doc/webpack2/plugins/html-webpack-plugin/" target="_blank" rel="external">HtmlWebpackPlugin官方教程</a></strong><br><a href="https://juejin.im/post/5adea0106fb9a07a9d6ff6de" target="_blank" rel="external">webpack4-用之初体验，一起敲它十一遍</a><br><a href="https://www.cnblogs.com/sloong/p/5826818.html" target="_blank" rel="external">Webpack 常见静态资源处理 - 模块加载器（Loaders）+ExtractTextPlugin插件</a><br><a href="https://webpack.js.org/concepts/" target="_blank" rel="external">webpack官方文档</a><br><a href="https://juejin.im/post/5b56909a518825195f499806" target="_blank" rel="external">手摸手，带你用合理的姿势使用webpack4（上）</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/">webpack深入理解之三：常用Plugins的使用与分析</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年05月08日 - 10:05</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/" title="webpack深入理解之三：常用Plugins的使用与分析">https://zhyjor.github.io/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/05/08/webpack深入理解之三：常用Plugins的使用与分析/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+            <a href="/tags/webpack深入理解/" rel="tag"># webpack深入理解</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/04/大前端时代之一：多端融合的野望/" rel="next" title="大前端时代之一：多端融合的野望">
+                <i class="fa fa-chevron-left"></i> 大前端时代之一：多端融合的野望
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/10/JavaScript常见问题之六：类型转换与隐式转换/" rel="prev" title="JavaScript常见问题之六：类型转换与隐式转换">
+                JavaScript常见问题之六：类型转换与隐式转换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins是什么"><span class="nav-number">1.</span> <span class="nav-text">Plugins是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack事件流"><span class="nav-number">1.1.</span> <span class="nav-text">webpack事件流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugins是什么-1"><span class="nav-number">1.2.</span> <span class="nav-text">Plugins是什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tapable新用"><span class="nav-number">2.</span> <span class="nav-text">Tapable新用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战剖析"><span class="nav-number">3.</span> <span class="nav-text">实战剖析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用插件"><span class="nav-number">4.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html-webpack-plugin"><span class="nav-number">4.1.</span> <span class="nav-text">html-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clean-webpack-plugin"><span class="nav-number">4.2.</span> <span class="nav-text">clean-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extract-text-webpack-plugin【4-0已废弃】"><span class="nav-number">4.3.</span> <span class="nav-text">extract-text-webpack-plugin【4.0已废弃】</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

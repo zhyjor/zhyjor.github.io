@@ -1,0 +1,1159 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="常见算法,数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="排序算法可以根据实现原理主要分为基于比较与基于桶排序，这里主要说明了10个经典排序的原理与实现方式。">
+<meta name="keywords" content="常见算法,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见算法之一：排序">
+<meta property="og:url" content="https://zhyjor.github.io/2018/02/01/常见算法之一：排序/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="排序算法可以根据实现原理主要分为基于比较与基于桶排序，这里主要说明了10个经典排序的原理与实现方式。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/bubbleSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/selectionSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/insertionSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/mergeSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/quickSort.gif">
+<meta property="og:image" content="http://static.zhyjor.com/201809031359_932.png">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/heapSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/countingSort.gif">
+<meta property="og:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/blob/master/res/radixSort.gif">
+<meta property="og:image" content="http://static.zhyjor.com/201809031405_599.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见算法之一：排序">
+<meta name="twitter:description" content="排序算法可以根据实现原理主要分为基于比较与基于桶排序，这里主要说明了10个经典排序的原理与实现方式。">
+<meta name="twitter:image" content="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/bubbleSort.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/02/01/常见算法之一：排序/"/>
+
+
+
+
+
+  <title> 常见算法之一：排序 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/02/01/常见算法之一：排序/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                常见算法之一：排序
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-01T11:41:12+00:00">
+                2018-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/01/常见算法之一：排序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/01/常见算法之一：排序/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>排序算法可以根据实现原理主要分为<strong>基于比较</strong>与<strong>基于桶排序</strong>，这里主要说明了10个经典排序的原理与实现方式。</p>
+<a id="more"></a>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>冒泡排序（BubbleSort）是一种简单直观的算法。它需要重复的走过未完成排序的序列，一次比较两个元素，假如两者失序就交互顺序，直到走过的序列没有需要交换的元素，就可以认为排序已经完成。这种排序进行的时候，每走过一轮序列，就会找到一个最大值，因此较小的元素是逐渐浮到序列的顶端，因此称冒泡。</p>
+<blockquote>
+<p>排序思想：依次比较相邻的两个元素，若它们的顺序错误则交换，每次循环都将最大（或最小）元素放在序列一端。</p>
+</blockquote>
+<p>冒泡可以设置一个flag，当一趟排序没有发生元素交换的时候就证明该序列已经有序了，这种改进算法无法减小其复杂度，对提升性能没有太大的作用。</p>
+<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>比较相邻的元素，如果序列靠前的较大，就交换他们</li>
+<li>按顺序对每一对相邻的元素执行相同的工作，直到最后一轮，这部完成后，最后的元素就是最大的数</li>
+<li>除最后一个元素，对其他元素重复以上步骤</li>
+<li>持续对越来越少的未完成排序的元素重复上面的步骤，知道没有一对元素需要比较</li>
+</ul>
+<h3 id="动图演示"><a href="#动图演示" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/bubbleSort.gif" alt=""></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length</div><div class="line"></div><div class="line">    <span class="comment">// 这里考虑一下为什么需要len-1，剩余最后一个的时候不用分组，也不用比较</span></div><div class="line">    <span class="comment">// 这里的第一层循环相当于进行分组，会进行len-1次的扫描</span></div><div class="line">    <span class="comment">// 每次的扫描都会对剩余未完成排序的部分进行一次扫描</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</div><div class="line">        <span class="comment">// 这个文件</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; len - i - <span class="number">1</span>; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</div><div class="line">                [arr[j], arr[j + <span class="number">1</span>]] = [arr[j + <span class="number">1</span>], arr[j]]</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>冒泡在正序时最快，逆序时最慢，算法复杂度为O(n^2)</p>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序（Selection Sort）是一种简单直观的排序算法，无论什么数据进去，都是相同的O(n^2)的复杂度，数据规模越小越好，但是不会增大空间复杂度。</p>
+<blockquote>
+<p>排序思想：每一次从待排序的数据元素中找出最小（或最大）的一个元素，将它和待排序的元素中第一个位置的元素进行交换，直到全部待排序的数据元素排完程为止。</p>
+</blockquote>
+<h3 id="算法步骤-1"><a href="#算法步骤-1" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>在未排序的序列中找到最小的元素，放在排序序列的起始位置</li>
+<li>从剩余未排序的元素中寻找最小元素，放在已排序序列的末尾</li>
+<li>重复第二步，直到所有元素均排序完成</li>
+</ul>
+<h3 id="动图演示-1"><a href="#动图演示-1" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/selectionSort.gif" alt=""></p>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectionSort</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length</div><div class="line">    <span class="keyword">let</span> minIndex</div><div class="line">    <span class="comment">// 分组，确定扫描次数，扫描len-1次就完成了排序</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</div><div class="line">        minIndex = i</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; len; j++) &#123;</div><div class="line">            <span class="comment">// 每次扫描选出一个最小的，</span></div><div class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[minIndex]) &#123;</div><div class="line">                minIndex = j</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 让每次扫描的最小的归位</span></div><div class="line">        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(selectionSort([<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">4</span>]))</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>无好坏情况，都是O(n^2)</p>
+<p><strong>冒泡排序与选择排序的区别：</strong></p>
+<ul>
+<li>冒泡排序法是两两依次比较，并做交换，交换的次数多。</li>
+<li>选择排序法是每次循环找出最值，循环结束后将最值调整到合适位置，交换的次数少。</li>
+</ul>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>插入排序和打扑克排的操作很类似，通过构建有序序列，从后向前扫描已排序的序列，将未排序的序列依次插入相应的位置</p>
+<blockquote>
+<p>排序思想：把待排序的元素按其值的大小逐个插入到一个已经排好序的序列中，直到所有的元素插入完为止。</p>
+</blockquote>
+<p>插入算法有一种优化算法，<strong>拆半插入</strong>，或者称为二分插入排序，将直接插入排序中寻找a[i]插入位置的方法改为二分查找，然后再一次性向右移动元素。二分插入排序减少了比较次数，特别是当要排序的数据很大时，这个效果将更加明显。</p>
+<h3 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>将待排序序列的第一个元素看作一个有序序列，将其余元素看作待排序序列</li>
+<li>从头到尾扫描未排序序列，将扫描到的每个元素插入到有序序列的适当位置，如果待插入的元素和某个有序序列的元素相等，则直接将待插入元素放到相等元素的后面</li>
+</ul>
+<h3 id="动图演示-2"><a href="#动图演示-2" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/insertionSort.gif" alt=""></p>
+<h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length</div><div class="line">    <span class="comment">// 前面是已经排序完成的有序序列，将后面未排序的插入对应位置</span></div><div class="line">    <span class="keyword">let</span> preIndex, current</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</div><div class="line">        preIndex = i - <span class="number">1</span></div><div class="line">        <span class="comment">// 待插入的元素</span></div><div class="line">        current = arr[i]</div><div class="line">        <span class="comment">// 假如选取的数值小于当前值，</span></div><div class="line">        <span class="comment">// 让数组后移动一个位置，占据当前数值的原位置</span></div><div class="line">        <span class="keyword">while</span> (preIndex &gt;= <span class="number">0</span> &amp;&amp; arr[preIndex] &gt; current) &#123;</div><div class="line">            arr[preIndex + <span class="number">1</span>] = arr[preIndex]</div><div class="line">            preIndex--</div><div class="line">        &#125;</div><div class="line">        arr[preIndex + <span class="number">1</span>] = current</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(insertionSort([<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>]))</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>O(n^2),最好情况是O(n)</p>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>希尔排序，也称缩小增量排序算法，是插入排序的一种更高效的改进版本，同时也是冲破O(n^2)的第一批算法。但希尔排序是非稳定排序算法。插入排序对几乎已经排好的序列很高效，几乎可以达到线性复杂度；但是对于一般的序列是低效的，因为插入排序每次只能将数据移动一位。</p>
+<p>希尔排序的思想是：先将整个待排序列分割成若干子序列分别直接插入序列，待整个序列中记录基本有序时再对全部记录依次直接插入排序，</p>
+<h3 id="算法步骤-3"><a href="#算法步骤-3" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>选择一个增量序列（t1,t2….,tk）,其中ti&gt;tj,tk=1</li>
+<li>按照增量序列的个数k，对序列进行k趟排序</li>
+<li>每趟排序，根据对应的增量ti,将待排序序列分割成若干长度为m的子序列，分别对各个子表进行直接插入排序，仅增量因子为1时，整个序列作为一个表来处理，表长度即为整个序列的长度</li>
+</ul>
+<p>希尔排序的执行时间依赖于增量序列h，好的增量序列的共同特征：</p>
+<ul>
+<li>最后一个增量必须为1；</li>
+<li>应该尽量避免序列中的值(尤其是相邻的值)互为倍数的情况。</li>
+</ul>
+<p>在此我们选择增量gap=length/2，缩小增量继续以gap = gap/2的方式，这种增量选择我们可以用一个序列来表示，{n/2,(n/2)/2…1}，称为<strong>增量序列</strong>。希尔排序的增量序列的选择与证明是个数学难题，我们选择的这个增量序列是比较常用的，也是希尔建议的增量，称为希尔增量，但其实这个增量序列不是最优的。</p>
+<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><p>代码实现的角度与理论有一定的区别，这里分了三层嵌套循环，<strong>第一层是设置步进值</strong>。这里的步进值是4，在一轮步进完成后，我们就认为已经基本有序了，就会修改步进值为1，当然还有其他的设置步进的方式。<strong>第二层是对未排序序列进行扫描</strong>，左边是已经排序的。<strong>第三层是按照步进值，对同一个位置倍数的序列进行排序</strong>。第二层与第三层其实是使用了插入排序，可以按照插入排序的思想进行分析与实现。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shellSort</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length,temp,gap = <span class="number">1</span></div><div class="line">    <span class="comment">// 定义间隔序列，相当于一共len/3组，每组包含3个元素</span></div><div class="line">    <span class="keyword">while</span>(gap&lt;len/<span class="number">3</span>)&#123;</div><div class="line">        gap = gap*<span class="number">3</span>+<span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 减少间隔，直到间隔gap为1，此时的快排就是已经大概完成的</span></div><div class="line">    <span class="keyword">for</span>(gap;gap&gt;<span class="number">0</span>;gap=<span class="built_in">Math</span>.floor(gap/<span class="number">3</span>))&#123;</div><div class="line">        <span class="comment">// 插入排序的实现，间隔是gap</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = gap;i&lt;len;i++)&#123;</div><div class="line">            temp = arr[i]</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> j = i-gap;j&gt;=<span class="number">0</span>&amp;&amp;arr[j]&gt;temp;j-=gap)&#123;</div><div class="line">                arr[j+gap]=arr[j]</div><div class="line">            &#125;</div><div class="line">            arr[j+gap]=temp</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(shellSort([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">1</span>]))</div></pre></td></tr></table></figure></p>
+<h3 id="复杂度分析-3"><a href="#复杂度分析-3" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>希尔排序中对于增量序列的选择十分重要，直接影响到希尔排序的性能。我们上面选择的增量序列{n/2,(n/2)/2…1}(希尔增量)，其最坏时间复杂度依然为O(n^2)，一些经过优化的增量序列如Hibbard经过复杂证明可使得最坏时间复杂度为O(n^3/2)。</p>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并排序（Merge Sort）是建立在归并操作上的一种有效的排序算法，是采用分治法（Divide and Conquer）的一个非常典型的应用</p>
+<p>作为一种典型的分而治之思想的算法应用，归并排序的实现由两种方法：</p>
+<ul>
+<li>自上而下的递归，所有递归的方法都可以使用迭代重写</li>
+<li>自下而上的迭代</li>
+</ul>
+<p>在《数据结构与算法JavaScript描述》中，作者认为：</p>
+<blockquote>
+<p>However,it is not possible to do so in Javascript,as the recursion goes too deep for the language to handle.(这种递归深度对js而言，还是太深了)</p>
+</blockquote>
+<p>归并排序和选择排序一样，不受输入数据的影响，但是其时间复杂度却好得多，其时间复杂度都是O(nlogn)的时间复杂度，但是需要额外的空间复杂度</p>
+<p><strong>如何将两个有序序列合并呢</strong>，只要比较两个序列的第一个数，谁小就先取谁，并将该数字从对应的序列中删除。再进行比较，如果一个序列为空了，那就直接将另一个依次取出即可（这里适合使用while循环）。合并有序序列的复杂度可以达到O(n)</p>
+<p>归并排序的就是递归的分出小组，当分出的小组只有一个数据时，就可以认为这个小组内部已经达到了有序。这种通过先递归分解序列，再合并序列就完成的归并排序。</p>
+<h3 id="算法步骤-4"><a href="#算法步骤-4" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>申请空间，使得其大小为两个已排序序列之和，该空间用来存放合并后的序列</li>
+<li>设定两个指针，初始位置分别为两个已经排序序列的其实位置</li>
+<li>比较两个指针指向的元素，选择相对较小的放入合并区间，并移动指针到下一位置</li>
+<li>重复步骤三，直到某一指针达到序列尾</li>
+<li>将另一序列剩下的所有元素直接复制到合并序列尾</li>
+</ul>
+<h3 id="动图演示-3"><a href="#动图演示-3" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/mergeSort.gif" alt=""></p>
+<h3 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length</div><div class="line">    <span class="keyword">if</span>(len&lt;<span class="number">2</span>)&#123;</div><div class="line">        <span class="keyword">return</span> arr</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> middle = <span class="built_in">Math</span>.floor(len/<span class="number">2</span>),</div><div class="line">    left=arr.slice(<span class="number">0</span>,middle),</div><div class="line">    right=arr.slice(middle)</div><div class="line">    <span class="keyword">return</span> merge(mergeSort(left),mergeSort(right))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> result = []</div><div class="line">    <span class="keyword">while</span>(left.length &amp;&amp; right.length)&#123;</div><div class="line">        <span class="keyword">if</span>(left[<span class="number">0</span>]&lt;=right[<span class="number">0</span>])&#123;</div><div class="line">            result.push(left.shift())</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            result.push(right.shift())</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(left.length)&#123;</div><div class="line">        result.push(left.shift())</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(right.length)&#123;</div><div class="line">        result.push(right.shift())</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(mergeSort([<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">2</span>]))</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-4"><a href="#复杂度分析-4" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>归并的排序的效率较高，长度为n的序列，完全分开需要log(n)步，每一步都是一个合并有序序列的过程，复杂度为O(n),中的时间复杂度为O(n*log(n))。归并排序每次都是在相邻的数据上进行操作，故其在相同复杂度下的几种排序算法（快排，归并，希尔，堆）中，也是效率比较高的</p>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快排是东尼·霍尔搞出来的一种算法，平均情况下需要O(nlog(n))次比较，Worst Case的时间复杂度达到了O(n^2)，这种情况很少见，实际上快排通常比其他O(nlog(n))的算法更快。</p>
+<blockquote>
+<p>快排最坏的情况是O(n^2)，比如顺序序列的快排。但是他的平摊期望时间是O(nlog(n))，且记号中隐含的常数因子很小，比稳定复杂度为O(nlong(n))的归并排序要小很多。所以，对于绝大多数顺序性较弱的随机序列而言，快排总是优于归并排序</p>
+</blockquote>
+<p>快排又是一种使用分而治之（Devide and Conquer）策略的算法，从本质上讲快排是在冒泡排序的基础上的递归分治法。</p>
+<blockquote>
+<p>排序思想：通过一趟排序将要排序的数据切分成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
+</blockquote>
+<h3 id="算法步骤-5"><a href="#算法步骤-5" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>从序列中挑出一个元素，称为“基准”（pivot）</li>
+<li>重新排序序列，所有元素比基准小的放在基准前面，比基准大的放在基准后面，该基准就处于数列的中间位置，这个称为分区（partition）操作</li>
+<li>递归地（recursive）把小于基准元素的子列和大于基准元素的子列进行排序</li>
+</ul>
+<p>递归的最底部情形是序列的大小为零或者为1，也就是说永远都已经被排好序了。虽然一直递归下去，但是这个算法总会退出。因为每次迭代（iteration）中，都至少把一个元素排到它最后的位置去</p>
+<p>快排的每一轮的处理其实就是将这一轮的基准数归位，直到所有的数归位排序就结束了</p>
+<h3 id="动图演示-4"><a href="#动图演示-4" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/quickSort.gif" alt=""></p>
+<h3 id="代码实现-5"><a href="#代码实现-5" class="headerlink" title="代码实现"></a>代码实现</h3><p><strong>至于哨兵是从左边还是从右边开始，关键是出现两个哨兵相遇，且该相遇点的值大于基准点的值</strong>，对于从左边开始，相遇的时候停下的值肯定是大于哨兵（这个时候讲哨兵归位就应该是在相遇的之前，需要多判断一步），对于从右边开始的，最终相遇时停下的一定小于哨兵（可以直接和哨兵互换位置）。<strong>因此我们一般从右边开始，换句话说，就是从基数的对面开始。</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span> (<span class="params">arr, left, right</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> len = arr.length,</div><div class="line">        partitionIndex,</div><div class="line">        left = <span class="keyword">typeof</span> left != <span class="string">'number'</span> ? <span class="number">0</span> : left,</div><div class="line">        right = <span class="keyword">typeof</span> right != <span class="string">'number'</span> ? len - <span class="number">1</span> : right</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (left &lt; right) &#123;</div><div class="line">        partitionIndex = partition(arr, left, right)</div><div class="line">        quickSort(arr, left, partitionIndex - <span class="number">1</span>)</div><div class="line">        quickSort(arr, partitionIndex + <span class="number">1</span>, right)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">partition</span> (<span class="params">arr, left, right</span>) </span>&#123;</div><div class="line">    <span class="comment">// index代表的就是当前小于pivot值的下一个索引</span></div><div class="line">    <span class="keyword">var</span> pivot = left, index = pivot + <span class="number">1</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = index; i &lt;= right; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (arr[i] &lt; arr[pivot]) &#123;</div><div class="line">            swap(arr, i, index)</div><div class="line">            index++</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    swap(arr, pivot, index - <span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> index - <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span> (<span class="params">arr, i, j</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> temp = arr[i]</div><div class="line">    arr[i] = arr[j]</div><div class="line">    arr[j] = temp</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">partition2</span> (<span class="params">arr, low, high</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> pivot = arr[low]</div><div class="line">    <span class="keyword">while</span> (low &lt; high) &#123;</div><div class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[high] &gt; pivot) &#123;</div><div class="line">            high--</div><div class="line">        &#125;</div><div class="line">        arr[low] = arr[high]</div><div class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[low] &lt;= pivot) &#123;</div><div class="line">            ++low</div><div class="line">        &#125;</div><div class="line">        arr[high] = arr[low]</div><div class="line">    &#125;</div><div class="line">    arr[low] = pivot</div><div class="line">    <span class="keyword">return</span> low</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort2</span> (<span class="params">arr, low, high</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (low &lt; high) &#123;</div><div class="line">        <span class="keyword">let</span> pivot = partition2(arr, low, high)</div><div class="line">        quickSort2(arr, low, pivot - <span class="number">1</span>)</div><div class="line">        quickSort2(arr, pivot + <span class="number">1</span>, high)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(quickSort2([<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">8</span>], <span class="number">0</span>, <span class="number">9</span>))</div></pre></td></tr></table></figure></p>
+<h3 id="复杂度分析-5"><a href="#复杂度分析-5" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>快排之所以会快，因为相比冒泡排序，每次交换都是跳跃式的，每次排序的时候设置一个基准点，小于基准点的全部移动到左边，大于基准点的全部在右边，这样每次交换的时候不会像冒泡那样每次只能在相邻的数字之间进行交换，交换的距离就大了。总的比较和交换次数就少了，速度就提高了，当然最坏的情况是相邻的两个数进行交换。因此时间复杂度最差为O(n^2)，平均O(nlog(n))。<br>快排基于二分的思想，其算法复杂度可以结合二分思想分析。</p>
+<h3 id="快速排序的改进"><a href="#快速排序的改进" class="headerlink" title="快速排序的改进"></a>快速排序的改进</h3><p>快速排序切分不平衡时可能会非常低效，如：第一次以最小的元素切分，第二次以第二小的元素切分，如此，每次调用只会移动一个元素，这将使快速排序退化为冒泡排序。所以快速排序前要将数组进行随机排序，打乱其顺序。另外对于小规模数组，可以使用插入排序来提高排序的性能。原因和归并排序时一样。</p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><blockquote>
+<p>排序思想：利用堆的有序性（根节点最大）来进行排序，每次从堆中取出根节点，并保持堆有序。</p>
+</blockquote>
+<p><strong>这篇博客中实现的堆是从数组中下标为0的位置开始的，所以结点k的子结点下标分别为2k+1和2k+2。</strong></p>
+<p>堆排序（HeapSort）是指利用堆这种数据结构设计的一种排序算法。堆是一个近似完全二叉树的结构，并同时满足堆的性质：子节点的键值或者索引总是小于（大于）其父节点。堆排序是利用堆的概念来排序的选择排序。分为两种：</p>
+<ul>
+<li>大顶堆：每个节点的值都大于或者等于其子节点的值，在堆排序算法中用于升序排列</li>
+<li>小顶堆：每个节点的值都小于或者等于其子节点的值，在堆排序算法中用于降序排列</li>
+</ul>
+<h3 id="算法步骤-6"><a href="#算法步骤-6" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>将待排序的序列构建成一个堆，根据升序（大顶堆）降序（小顶堆）选择堆的类型。构造堆完成完成后，最大的元素已经到达堆顶，将最大元素与末尾元素交换，将最大的元素沉到数组末端。重新调整堆结构，使得其满足堆的定义，然后继续交换堆顶元素与当前的末尾元素，反复执行调整和交换步骤，直到整个序列有序。</p>
+<p><img src="http://static.zhyjor.com/201809031359_932.png" alt=""></p>
+<p><strong>关键是一个堆的创建过程，如何如何确定堆的位置和序列下标的关系</strong></p>
+<ul>
+<li>创建一个堆H[0…n-1]，需要满足堆的定义</li>
+<li>将堆首（最大值）和堆尾互换</li>
+<li>把堆的尺寸缩小1，并调用shift_down(0)，重新调整堆的结构</li>
+<li>重复步骤2，直到堆的尺寸为1</li>
+</ul>
+<h3 id="动图演示-5"><a href="#动图演示-5" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/heapSort.gif" alt=""></p>
+<h3 id="代码实现-6"><a href="#代码实现-6" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> len</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildMaxHeap</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">    len = arr.length</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="built_in">Math</span>.floor(len / <span class="number">2</span>); i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">        heapify(arr, i)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 堆调整</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapify</span> (<span class="params">arr, i</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> left = <span class="number">2</span> * i + <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> right = <span class="number">2</span> * i + <span class="number">2</span></div><div class="line">    <span class="keyword">var</span> largest = i</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (left &lt; len &amp;&amp; arr[left] &gt; arr[largest]) &#123;</div><div class="line">        largest = left</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (right &lt; len &amp;&amp; arr[right] &gt; arr[largest]) &#123;</div><div class="line">        largest = right</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (largest != i) &#123;</div><div class="line">        swap(arr, i, largest)</div><div class="line">        heapify(arr, largest)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span> (<span class="params">arr, i, j</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> temp = arr[i];</div><div class="line">    arr[i] = arr[j]</div><div class="line">    arr[j] = temp</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 交换堆顶和最后一个</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapSort</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">    buildMaxHeap(arr)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</div><div class="line">        swap(arr, <span class="number">0</span>, i)</div><div class="line">        len--</div><div class="line">        heapify(arr, <span class="number">0</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(heapSort([<span class="number">6</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">89</span>,<span class="number">2</span>,<span class="number">3</span>]))</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-6"><a href="#复杂度分析-6" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>堆排序是一种选择排序，整体主要由<strong>构建初始堆</strong>和<strong>交换堆顶与末尾元素并重建堆</strong>两部分组成。其中构建初始堆经推到复杂度为O(n)，在交换并重建堆的过程中，需要交换n-1次，而重建堆的过程中，根据完全二叉树的性质，(log2(n-1),log2(n-2)…1)，逐步递减，近似为nlogn，所以堆排序的时间复杂度一般认为是O(nlog(n))级。</p>
+<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><p>计数排序的核心在与将输入的数据值转换为键存储在额外开辟的数组空间中。作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有范围的整数</p>
+<p>该算法是一个不需要比较的，类似桶排序的线性时间排序算法。该算法对已知数量范围的数组进行排序。</p>
+<p><strong>计数排序的核心思想是，构建一个足够大的数组 hashArray[]，数组大小需要保证能够把所有元素都包含在这个数组上 。</strong></p>
+<h3 id="算法步骤-7"><a href="#算法步骤-7" class="headerlink" title="算法步骤"></a>算法步骤</h3><ul>
+<li>对已知最大最小值的需要排序的序列A，先创建另外一个数组C，长度为最大值与最小值的间隔。</li>
+<li>扫描一趟A，得到A中的各个元素的总数，将各个元素的总数保存到C对应的单元中。即数组C是A的元素为下标，以A中各个元素的个数为值的数组。</li>
+<li>将C中的记录按照每个元素的计数展开到待排序数组中，排序就完成了</li>
+</ul>
+<h3 id="动图演示-6"><a href="#动图演示-6" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/raw/master/res/countingSort.gif" alt=""></p>
+<h3 id="代码实现-7"><a href="#代码实现-7" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">countingSort</span> (<span class="params">arr, maxValue</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> bucket = <span class="keyword">new</span> <span class="built_in">Array</span>(maxValue + <span class="number">1</span>),</div><div class="line">        sortedIndex = <span class="number">0</span>,</div><div class="line">        arrLen = arr.length,</div><div class="line">        bucketLen = maxValue + <span class="number">1</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;arrLen;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(!bucket[arr[i]])&#123;</div><div class="line">            bucket[arr[i]]=<span class="number">0</span></div><div class="line">        &#125;</div><div class="line">        bucket[arr[i]]++</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j =<span class="number">0</span>;j&lt;bucketLen;j++)&#123;</div><div class="line">        <span class="keyword">while</span> (bucket[j]&gt;<span class="number">0</span>)&#123;</div><div class="line">            arr[sortedIndex++]=j</div><div class="line">            bucket[j]--</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(countingSort([<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">11</span>,<span class="number">112</span>],<span class="number">112</span>))</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-7"><a href="#复杂度分析-7" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>这种排序需要一个辅助数组实现，不基于比较，算法复杂度为O(n)，但是由于需要一个辅助数组C，空间复杂度会变大</p>
+<h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><p>有说法桶排序（bucketSort）是计数排序的升级版，利用了函数的映射关系，高效与否就是看这个映射函数的确定。为了使桶排序更加高效，有两点需确认：</p>
+<ul>
+<li>在额外空间充足的情况下，尽量增大桶的数量</li>
+<li>使用映射函数能够将输入的N个数据均匀的分配到K个桶中</li>
+</ul>
+<h3 id="代码实现-8"><a href="#代码实现-8" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bucketSort</span>(<span class="params">arr, bucketSize</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (arr.length === <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">return</span> arr;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> i;</div><div class="line">    <span class="keyword">var</span> minValue = arr[<span class="number">0</span>];</div><div class="line">    <span class="keyword">var</span> maxValue = arr[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</div><div class="line">      <span class="keyword">if</span> (arr[i] &lt; minValue) &#123;</div><div class="line">          minValue = arr[i];                <span class="comment">// 输入数据的最小值</span></div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[i] &gt; maxValue) &#123;</div><div class="line">          maxValue = arr[i];                <span class="comment">// 输入数据的最大值</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//桶的初始化</span></div><div class="line">    <span class="keyword">var</span> DEFAULT_BUCKET_SIZE = <span class="number">5</span>;            <span class="comment">// 设置桶的默认数量为5</span></div><div class="line">    bucketSize = bucketSize || DEFAULT_BUCKET_SIZE;</div><div class="line">    <span class="keyword">var</span> bucketCount = <span class="built_in">Math</span>.floor((maxValue - minValue) / bucketSize) + <span class="number">1</span>;   </div><div class="line">    <span class="keyword">var</span> buckets = <span class="keyword">new</span> <span class="built_in">Array</span>(bucketCount);</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; buckets.length; i++) &#123;</div><div class="line">        buckets[i] = [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//利用映射函数将数据分配到各个桶中</span></div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</div><div class="line">        buckets[<span class="built_in">Math</span>.floor((arr[i] - minValue) / bucketSize)].push(arr[i]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    arr.length = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; buckets.length; i++) &#123;</div><div class="line">        insertionSort(buckets[i]);                      <span class="comment">// 对每个桶进行排序，这里使用了插入排序</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; buckets[i].length; j++) &#123;</div><div class="line">            arr.push(buckets[i][j]);                      </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="复杂度分析-8"><a href="#复杂度分析-8" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>同时，对于桶中元素的排序，选择何种比较排序算法对性能依然重要</p>
+<h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><p>基数排序是一种非比较型整数排序算法，将整数按位数分割成不同的数字，然后按照每个位数进行比较。由于整数也可以表示字符串（名字日期）和特定的浮点数，因此基数排序也不是只能用于整数</p>
+<p>对比三种非比较型的算法，三种算法都利用了桶的概念，但是对桶的使用有些差异。</p>
+<ul>
+<li>基数排序：根据键值的每位数字来分配桶</li>
+<li>计数排序：每个桶只存储单一键值；</li>
+<li>桶排序：每个桶存储一定范围的数值；</li>
+</ul>
+<h3 id="动图演示-7"><a href="#动图演示-7" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://github.com/hustcc/JS-Sorting-Algorithm/blob/master/res/radixSort.gif" alt=""></p>
+<h3 id="代码实现-9"><a href="#代码实现-9" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//LSD Radix Sort</span></div><div class="line"><span class="keyword">var</span> counter = [];</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">radixSort</span>(<span class="params">arr, maxDigit</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> mod = <span class="number">10</span>;</div><div class="line">    <span class="keyword">var</span> dev = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; maxDigit; i++, dev *= <span class="number">10</span>, mod *= <span class="number">10</span>) &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arr.length; j++) &#123;</div><div class="line">            <span class="keyword">var</span> bucket = <span class="built_in">parseInt</span>((arr[j] % mod) / dev);</div><div class="line">            <span class="keyword">if</span>(counter[bucket]==<span class="literal">null</span>) &#123;</div><div class="line">                counter[bucket] = [];</div><div class="line">            &#125;</div><div class="line">            counter[bucket].push(arr[j]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> pos = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; counter.length; j++) &#123;</div><div class="line">            <span class="keyword">var</span> value = <span class="literal">null</span>;</div><div class="line">            <span class="keyword">if</span>(counter[j]!=<span class="literal">null</span>) &#123;</div><div class="line">                <span class="keyword">while</span> ((value = counter[j].shift()) != <span class="literal">null</span>) &#123;</div><div class="line">                      arr[pos++] = value;</div><div class="line">                &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>说明：这里只比较通用的实现方法，而不会对排序方法的改进版本进行比较。</p>
+<p>排序的稳定性：</p>
+<blockquote>
+<p>假定在待排序的记录序列中，存在多个具有相同的关键字的记录，若经过排序，这些记录的相对次序保持不变，即在原序列中，ri=rj，且ri在rj之前，而在排序后的序列中，ri仍在rj之前，则称这种排序算法是稳定的；否则称为不稳定的。</p>
+</blockquote>
+<p><img src="http://static.zhyjor.com/201809031405_599.png" alt=""></p>
+<p><strong>参考资料</strong></p>
+<p><a href="http://blog.csdn.net/vayne_xiao/article/details/53508973" target="_blank" rel="external">坐在马桶上看算法：快速排序</a><br><a href="https://www.cnblogs.com/ECJTUACM-873284962/p/6935506.html" target="_blank" rel="external">基数排序与桶排序，计数排序【详解】</a><br><a href="http://www.jqhtml.com/14906.html" target="_blank" rel="external">优雅的 JavaScript 排序算法（ES6）</a><br><a href="https://juejin.im/post/57dcd394a22b9d00610c5ec8" target="_blank" rel="external">十大经典排序算法总结（JavaScript描述）</a><br><a href="https://www.cnblogs.com/wangyingli/p/5994256.html" target="_blank" rel="external">数据结构与算法（七），排序</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/01/常见算法之一：排序/">常见算法之一：排序</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年02月01日 - 19:02</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/02/01/常见算法之一：排序/" title="常见算法之一：排序">https://zhyjor.github.io/2018/02/01/常见算法之一：排序/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/02/01/常见算法之一：排序/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/常见算法/" rel="tag"># 常见算法</a>
+          
+            <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/webkit技术内幕之零：写在前面/" rel="next" title="webkit技术内幕之零：写在前面">
+                <i class="fa fa-chevron-left"></i> webkit技术内幕之零：写在前面
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/常见算法之二：汉诺塔（Hanoi）/" rel="prev" title="常见算法之二：汉诺塔（Hanoi）与递归">
+                常见算法之二：汉诺塔（Hanoi）与递归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤"><span class="nav-number">1.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示"><span class="nav-number">1.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析"><span class="nav-number">1.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-1"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-1"><span class="nav-number">2.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-1"><span class="nav-number">2.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-1"><span class="nav-number">2.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-2"><span class="nav-number">3.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-2"><span class="nav-number">3.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-2"><span class="nav-number">3.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-2"><span class="nav-number">3.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-3"><span class="nav-number">4.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-3"><span class="nav-number">4.2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-3"><span class="nav-number">4.3.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">5.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-4"><span class="nav-number">5.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-3"><span class="nav-number">5.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-4"><span class="nav-number">5.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-4"><span class="nav-number">5.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">6.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-5"><span class="nav-number">6.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-4"><span class="nav-number">6.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-5"><span class="nav-number">6.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-5"><span class="nav-number">6.4.</span> <span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序的改进"><span class="nav-number">6.5.</span> <span class="nav-text">快速排序的改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">7.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-6"><span class="nav-number">7.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-5"><span class="nav-number">7.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-6"><span class="nav-number">7.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-6"><span class="nav-number">7.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序"><span class="nav-number">8.</span> <span class="nav-text">计数排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-7"><span class="nav-number">8.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-6"><span class="nav-number">8.2.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-7"><span class="nav-number">8.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-7"><span class="nav-number">8.4.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序"><span class="nav-number">9.</span> <span class="nav-text">桶排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-8"><span class="nav-number">9.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-8"><span class="nav-number">9.2.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序"><span class="nav-number">10.</span> <span class="nav-text">基数排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动图演示-7"><span class="nav-number">10.1.</span> <span class="nav-text">动图演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-9"><span class="nav-number">10.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

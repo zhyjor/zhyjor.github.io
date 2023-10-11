@@ -1,0 +1,1125 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PWA,PWA探索与实践," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="PWA最重要的一个部分，service worker。它和传统的Worker相似但又不同。操作Service Worker的方法很简单，只需要简单的register一下。">
+<meta name="keywords" content="PWA,PWA探索与实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PWA探索与实践之二：深入理解ServiceWorker">
+<meta property="og:url" content="https://zhyjor.github.io/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="PWA最重要的一个部分，service worker。它和传统的Worker相似但又不同。操作Service Worker的方法很简单，只需要简单的register一下。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201807171724_580.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807180930_434.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807181522_845.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807181535_955.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807181538_577.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807190856_952.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807190919_842.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807190922_924.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807190929_106.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807191027_424.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807191030_410.png">
+<meta property="og:image" content="http://static.zhyjor.com/201807191055_355.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PWA探索与实践之二：深入理解ServiceWorker">
+<meta name="twitter:description" content="PWA最重要的一个部分，service worker。它和传统的Worker相似但又不同。操作Service Worker的方法很简单，只需要简单的register一下。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201807171724_580.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/"/>
+
+
+
+
+
+  <title> PWA探索与实践之二：深入理解ServiceWorker | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                PWA探索与实践之二：深入理解ServiceWorker
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T08:13:41+00:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>PWA最重要的一个部分，service worker。它和传统的Worker相似但又不同。操作Service Worker的方法很简单，只需要简单的register一下。<br><a id="more"></a><br>Service Worker 讲道理是由两部分构成，一部分是 cache，还有一部分则是 <a href="https://segmentfault.com/a/1190000006678016" target="_blank" rel="external">Worker</a>。所以，SW（Service Worker） 本身的执行，就完全不会阻碍当前 js 进程的执行，确保性能第一。那 SW 到底是怎么工作的呢？</p>
+<ul>
+<li>后台进程: SW 就是一个 worker 独立于当前网页进程。</li>
+<li>网络代理: SW 可以用来代理请求，缓存文件</li>
+<li>灵活触发: 需要的时候调起，不需要的时候睡眠（这个是个坑）</li>
+<li>异步控制: SW 内部使用 promise 来进行控制。</li>
+</ul>
+<h2 id="注册与使用"><a href="#注册与使用" class="headerlink" title="注册与使用"></a>注册与使用</h2><p>SW 实际上是挂载到 navigator 下的对象。在使用之前，我们需要先检查一下是否可用，如果可用，我们就要使用 SW 进行路由的注册缓存文件了。不过，这里有点争议。啥时候开始执行 SW 的注册呢？上面说过，SW 就是一个网络代理，用来捕获你网页的所有 fetch 请求。那么，是不是可以这么写？<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 执行注册</span></div><div class="line">    navigator.serviceWorker.register(<span class="string">'/sw.js'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">registration</span>) </span>&#123;</div><div class="line">      </div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">      </div><div class="line">    &#125;); </div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>这样理解逻辑上是没有任何问题的，关键在于，虽然 SW 是 worker ，但浏览器的资源也是有限的，浏览器分配给你网页的内存就这么多，你再开个 SW（这个很大的。。。），没有 jank 才怪嘞，而且如果你网页在一开始加载的时候有动画展示的话，那么这种方式基本上就 GG 了。 另外，如果算上用户第一次加载，那么这个卡顿或者延时就很大了。 当然，W3C 在制定相关规范时，肯定考虑到这点，实际上 SW 在你网页加载完成同样也能捕获已经发出的请求。所以，为了减少性能损耗，我们一般直接在 onload 事件里面注册 SW 即可。GOOGLE Jeff Posnick 针对这个加载，专门讨论了一下。<a href="https://developers.google.com/web/fundamentals/instant-and-offline/service-worker/registration" target="_blank" rel="external">有兴趣的可以参考一下</a>。（特别提醒，如果想要测试注册 SW 可以使用隐身模式调试！！！）。</p>
+<p>那当我注册成功时，怎样查看我注册的 SW 呢？ 这很简单，直接打开 chrome://inspect/#service-workers 就可以查看，在当前浏览器中，正在注册的 SW。另外，还有一个 chrome://serviceworker-internals，用来查看当前浏览器中，所有注册好的 SW。 使用 SW 进行注册时，还有一个很重要的特性，即，SW 的作用域不同，监听的 fetch 请求也是不一样的。 例如，我们将注册路由换成: /example/sw.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 执行注册</span></div><div class="line">    navigator.serviceWorker.register(<span class="string">'/example/sw.js'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">registration</span>) </span>&#123;</div><div class="line">      </div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">      </div><div class="line">    &#125;);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>那么，SW 后面只会监听 /example 路由下的所有 fetch 请求，而不会去监听其他，比如 /jimmy,/sam 等路径下的。</p>
+<h2 id="SW-的生命周期"><a href="#SW-的生命周期" class="headerlink" title="SW 的生命周期"></a>SW 的生命周期</h2><p>首先，SW 并不是你网页加载就与生俱来的。如果，你需要使用 SW，你首先需要注册一个 SW，让浏览器为你的网页分配一块内存空间来。并且，你能否注册成功，还需要看你缓存的资源量决定。如果，你需要缓存的静态资源全部保存成功，那么恭喜您，SW 安装成功。如果，其中有一个资源下载失败并且无法缓存，那么这次调起就是失败的。不过，SW 是由重试机制的，这点也不算特别坑。</p>
+<p>检查完之后，SW 就进入待机状态。此时，SW 有两种状态，一种是 active，一种是 terminated。就是激活/睡眠。激活是为了工作，睡眠则为了节省内存。这是一开始设计的初衷。如果，SW 已经 OK，那么，你网页的资源都会被 SW 控制，当然，SW 第一次加载除外。</p>
+<p>简单的流程图如下：</p>
+<p><img src="http://static.zhyjor.com/201807171724_580.png" alt=""></p>
+<p>我们可以看到生命周期分为这么几个状态 安装中, 安装后, 激活中, 激活后, 废弃。</p>
+<h3 id="使用关键"><a href="#使用关键" class="headerlink" title="使用关键"></a>使用关键</h3><h4 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h4><p>下面的部分是在另外一个 js 中的脚本，使用的是 worker 的编程方法。监听安装 SW 的代码也很简单，当安装成功后，就可以开始缓存文件了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(<span class="string">'mysite-static-v1'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> cache.addAll([</div><div class="line">        <span class="string">'/css/whatever-v3.css'</span>,</div><div class="line">        <span class="string">'/css/imgs/sprites-v6.png'</span>,</div><div class="line">        <span class="string">'/css/fonts/whatever-v8.woff'</span>,</div><div class="line">        <span class="string">'/js/all-min-v4.js'</span></div><div class="line">      ]);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>此时，SW 会检测你制定文件的缓存问题，如果，已经都缓存了，那么 OK，SW 安装成功。如果查到文件没有缓存，则会发送请求去获取，并且会带上 cache-bust 的 query string，来表示缓存的版本问题。当然，这只针对于第一次加载的情况。当所有的资源都已经下载成功，那么恭喜你可以进行下一步了。<a href="https://googlechrome.github.io/samples/service-worker/prefetch/index.html" target="_blank" rel="external">大家可以参考一下 google demo</a>。</p>
+<p>首先 event.waitUntil 你可以理解为 new Promise，它接受的实际参数只能是一个 promise，因为,caches 和 cache.addAll 返回的都是 Promise，这里就是一个串行的异步加载，当所有加载都成功时，那么 SW 就可以下一步。另外，<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ExtendableEvent/waitUntil" target="_blank" rel="external">event.waitUntil</a> 还有另外一个重要好处，它可以用来延长一个事件作用的时间，这里特别针对于我们 SW 来说，比如我们使用 caches.open 是用来打开指定的缓存，但开启的时候，并不是一下就能调用成功，也有可能有一定延迟，由于系统会随时睡眠 SW，所以，为了防止执行中断，就需要使用 event.waitUntil 进行捕获。另外，event.waitUntil 会监听所有的异步 promise，如果其中一个 promise 是 reject 状态，那么该次 event 是失败的。这就导致，我们的 SW 开启失败。</p>
+<h4 id="不稳定加载"><a href="#不稳定加载" class="headerlink" title="不稳定加载"></a>不稳定加载</h4><p>不过，如果其中一个文件下载失败的话，那么这次你的 SW 启动就告吹了，即，如果其中有一个 Promise 是使用 reject 的话，那就代表着–您这次启动是 GG 的。那，有没有其他办法在保证一定稳定性的前提下，去加载比较大的文件呢？ 有的，那你别返回 cache.addAll 就ok了。什么个意思呢？ 就这样：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(<span class="string">'mygame-core-v1'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">    <span class="comment">// 不稳定文件或大文件加载</span></div><div class="line">      cache.addAll(</div><div class="line">        <span class="comment">//...</span></div><div class="line">      );</div><div class="line">      <span class="comment">// 稳定文件或小文件加载</span></div><div class="line">      <span class="keyword">return</span> cache.addAll(</div><div class="line">        <span class="comment">// core assets &amp; levels 1-10</span></div><div class="line">      );</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这样，第一个 cache.addAll 是不会被捕获的，当然，由于异步的存在，这毋庸置疑会有一些问题。比如，当大文件还在加载的时候，SW 断开，那么这次请求就是无效的。不过，你这样写本来就算是一个 trick，这种情况在制定方案的时候，肯定也要考虑进去的。整个步骤，我们可以用下图表示:</p>
+<p><img src="http://static.zhyjor.com/201807180930_434.png" alt=""></p>
+<h3 id="缓存捕获（fetch）"><a href="#缓存捕获（fetch）" class="headerlink" title="缓存捕获（fetch）"></a>缓存捕获（fetch）</h3><p>该阶段就是事关整个网页能否正常打开的一个阶段–非常关键。在这一阶段，我们将学会，如何让 web 使用缓存，如何做向下兼容。 先看一个简单的格式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="comment">// Cache hit - return response</span></div><div class="line">        <span class="keyword">if</span> (response) &#123;</div><div class="line">          <span class="keyword">return</span> response;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> fetch(event.request);</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>首先看一下，第一个方法–event.respondWith，用来包含响应主页面请求的代码。当接受到 fetch 请求时，会直接返回 event.respondWith Promise 结果。我们在 worker 中，捕获页面所有的 fetch 请求。可以看到 event.request ，这个就是 fetch 的 request 流。我们通过 caches.match 捕获，然后返回 Promise 对象，用来进行响应的处理。大家看这段代码时，可能会有很多的疑惑，是的，一开始我看的时候也是，因为，根本没注释，有些 name 实际上是内核自带的。上面的就有：</p>
+<ul>
+<li>caches:这是用来控制缓存专门分离出来的一个对象。可以参考: <a href="https://w3c.github.io/ServiceWorker/#cache-objectsline/offline-cookbook/images/cm-on-install-not.png" target="_blank" rel="external">caches</a></li>
+<li>fetch: 是现代浏览器用来代替 XMLHttpRequest 专门开发出的 ajax 请求。可以参考: <a href="https://www.villainhr.com/page/2016/09/25/%E5%89%8D%E7%AB%AF%20fetch%20%E9%80%9A%E4%BF%A1" target="_blank" rel="external">fetch 通信</a></li>
+</ul>
+<p>简单来说，caches.match 根据 event.request，在缓存空间中查找指定路径的缓存文件，如果匹配到，那么 response 是有内容的。如果没有的话，则再通过 fetch 进行捕获。整个流图如下：</p>
+<p><img src="http://static.zhyjor.com/201807181522_845.png" alt=""></p>
+<p>OK，那现在有个问题，如果没有找到缓存，那么应该怎么做呢？</p>
+<ul>
+<li>啥都不做，等下一次 SW 自己根据路由去缓存。</li>
+<li>没找到，我手动 fetch 然后添加进缓存。</li>
+</ul>
+<p>那怎么手动添加呢？ 很简单，自己发送 fetch，然后使用 caches 进行缓存即可。不过，这里又涉及到另外一个概念，Request 和 Response 流。这是在 fetch 通信方式 很重要的两个概念。fetch 不仅分装了 ajax，而且在通信方式上也做了进一步的优化，同 node 一样，使用流来进行重用。众所周知，一个流一般只能使用一次，可以理解为喝矿泉水，只能喝一次，不过，如果我知道了该水的配方，那么我就可以量产该水，这就是流的复制。下面代码也基本使用到这两个概念，基本代码为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (response) &#123;</div><div class="line">          <span class="keyword">return</span> response;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 因为 event.request 流已经在 caches.match 中使用过一次，</span></div><div class="line">        <span class="comment">// 那么该流是不能再次使用的。我们只能得到它的副本，拿去使用。</span></div><div class="line">        <span class="keyword">var</span> fetchRequest = event.request.clone();</div><div class="line"></div><div class="line">        <span class="comment">// fetch 的通过信方式，得到 Request 对象，然后发送请求</span></div><div class="line">        <span class="keyword">return</span> fetch(fetchRequest).then(</div><div class="line">          <span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">            <span class="comment">// 检查是否成功</span></div><div class="line">            <span class="keyword">if</span>(!response || response.status !== <span class="number">200</span> || response.type !== <span class="string">'basic'</span>) &#123;</div><div class="line">              <span class="keyword">return</span> response;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 如果成功，该 response 一是要拿给浏览器渲染，而是要进行缓存。</span></div><div class="line">            <span class="comment">// 不过需要记住，由于 caches.put 使用的是文件的响应流，一旦使用，</span></div><div class="line">            <span class="comment">// 那么返回的 response 就无法访问造成失败，所以，这里需要复制一份。</span></div><div class="line">            <span class="keyword">var</span> responseToCache = response.clone();</div><div class="line"></div><div class="line">            caches.open(CACHE_NAME)</div><div class="line">              .then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">                cache.put(event.request, responseToCache);</div><div class="line">              &#125;);</div><div class="line"></div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">          &#125;</div><div class="line">        );</div><div class="line">      &#125;)</div><div class="line">    );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>那么整个流图变为：</p>
+<p><img src="http://static.zhyjor.com/201807181535_955.png" alt=""></p>
+<p>而里面最关键的地方就是 stream 这是现在浏览器操作数据的一个新的标准。为了避免将数据一次性写入内存，我们这里引入了 stream，相当于一点一点的吐。这个和 nodeJS 里面的 stream 是一样的效果。你用上述哪个流图，这估计得取决于你自己的业务。</p>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><p>在 SW 中的更新涉及到两块，一个是基本静态资源的更新，还有一个是 SW.js 文件的更新。这里，我们先说一下比较坑的 SW.js 的更新。</p>
+<h4 id="SW-js-的更新"><a href="#SW-js-的更新" class="headerlink" title="SW.js 的更新"></a>SW.js 的更新</h4><p>SW.js 的更新不仅仅只是简单的更新，为了用户可靠性体验，里面还是有很多门道的。</p>
+<ul>
+<li>首先更新 SW.js 文件，这是最主要的。只有更新 SW.js 文件之后，之后的流程才能触发。SW.js 的更新也很简单，直接改动 SW.js 文件即可。浏览器会自动检查差异性（就算只有 1B 的差异也行），然后进行获取。</li>
+<li>新的 SW.js 文件开始下载，并且 install 事件被触发</li>
+<li>此时，旧的 SW 还在工作，新的 SW 进入 waiting 状态。注意，此时并不存在替换</li>
+<li>现在，两个 SW 同时存在，不过还是以前的 SW 在掌管当前网页。只有当 old SW 不工作，即，被 terminated 后，新的 SW 才会发生作用。具体行为就是，该网页被关闭一段时间，或者手动的清除 service worker。然后，新的 SW 就度过可 waiting 的状态。</li>
+<li>一旦新的 SW 接管，则会触发 activate 事件。</li>
+</ul>
+<p>整个流程图为：</p>
+<p><img src="http://static.zhyjor.com/201807181538_577.png" alt=""></p>
+<p>如果上述步骤成功后，原来的 SW.js 就会被清除。但是，以前版本 SW.js 缓存文件没有被删除。针对于这一情况，我们可以在新的 SW.js 里面监听 activate 事件，进行相关资源的删除操作。当然，这里主要使用到的 API 和 caches 有很大的关系（因为，现在所有缓存的资源都在 caches 的控制下了）。比如，我以前的 SW 缓存的版本是 v1，现在是 v2。那么我需要将 v1 给删除掉，则代码为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'activate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> cacheWhitelist = [<span class="string">'v1'</span>];</div><div class="line"></div><div class="line">  event.waitUntil(</div><div class="line">  <span class="comment">// 遍历 caches 里所有缓存的 keys 值</span></div><div class="line">    caches.keys().then(<span class="function"><span class="keyword">function</span>(<span class="params">cacheNames</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(</div><div class="line">        cacheNames.map(<span class="function"><span class="keyword">function</span>(<span class="params">cacheName</span>) </span>&#123;</div><div class="line">          <span class="keyword">if</span> (cacheWhitelist.includes(cacheName)) &#123;</div><div class="line">          <span class="comment">// 删除 v1 版本缓存的文件</span></div><div class="line">            <span class="keyword">return</span> caches.delete(cacheName);</div><div class="line">          &#125;</div><div class="line">        &#125;)</div><div class="line">      );</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这里不仅可以用来作为版本的更新，还可以作为缓存目录的替换。比如，我想直接将 site-v1的缓存文件，替换为 ajax-v1 和 page-v1。我们一是需要先在 install 事件里面将 ajajx-v1 和 page-v1 缓存套件给注册了，然后，在 activate 里面将 site-v1 缓存给删除，实际代码和上面其实是一样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'activate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> cacheWhitelist = [<span class="string">'site-v1'</span>];</div><div class="line"></div><div class="line">  event.waitUntil(</div><div class="line">  <span class="comment">// 遍历 caches 里所有缓存的 keys 值</span></div><div class="line">    caches.keys().then(<span class="function"><span class="keyword">function</span>(<span class="params">cacheNames</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(</div><div class="line">        cacheNames.map(<span class="function"><span class="keyword">function</span>(<span class="params">cacheName</span>) </span>&#123;</div><div class="line">          <span class="keyword">if</span> (cacheWhitelist.includes(cacheName)) &#123;</div><div class="line">          <span class="comment">// 删除 v1 版本缓存的文件</span></div><div class="line">            <span class="keyword">return</span> caches.delete(cacheName);</div><div class="line">          &#125;</div><div class="line">        &#125;)</div><div class="line">      );</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>不过，sw.js 文件的更新是一个很纠结的过程。因为，<strong>它的替换是当 older SW 不工作的时候，new SW 才能发生作用</strong>。并且，浏览器何时关闭对应的 SW 又是一个未知数。不过，Service Worker 本身就是这么设计的。</p>
+<h5 id="skipWaiting"><a href="#skipWaiting" class="headerlink" title="skipWaiting"></a>skipWaiting</h5><p>那有没有什么办法能够让 new SW 立即生效呢？有的，可以在 install 阶段使用 self.skipWaiting(); API。因为上面说到 new SW 加载后会触发 install 然后进入 waiting 状态。那么，我们可以直接在 install 阶段跳过等待，直接让 new SW 进行接管。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</div><div class="line">  self.skipWaiting();</div><div class="line"></div><div class="line">  event.waitUntil(</div><div class="line">    <span class="comment">// caching etc</span></div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>不过，这样有个弊端是，此时用户正在当前网页中，此时，older SW 会触发 activate 事件，删除相关的资源，这样会造成资源丢失，只能通过网络获取。并且后面的网络请求都会交给 new SW 进行捕获和处理。所以，用不用还得根据具体业务来看。</p>
+<h5 id="手动更新"><a href="#手动更新" class="headerlink" title="手动更新"></a>手动更新</h5><p>上面的 SW 更新都是在一开始加载的时候进行的，那么，如果用户需要长时间停留在你的网页上，有没有什么手段，在间隔时间检查更新呢？</p>
+<p>有的，可以使用 registration.update() 来完成。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">navigator.serviceWorker.register(<span class="string">'/sw.js'</span>).then(<span class="function"><span class="params">reg</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// sometime later…</span></div><div class="line">  reg.update();</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>另外，如果你一旦用到了 sw.js 并且确定路由之后，请千万不要在更改路径了，因为，浏览器判断 sw.js 是否更新，是根据 sw.js 的路径来的。如果你修改的 sw.js 路径，而以前的 sw.js 还在作用，那么你新的 sw 永远无法工作。除非你手动启用 update 进行更新。</p>
+<h4 id="文件更新"><a href="#文件更新" class="headerlink" title="文件更新"></a>文件更新</h4><p>对于文件更新来说，整个机制就显得很简单了。可以说，你想要一个文件更新，只需要在 SW 的 fetch 阶段使用 caches 进行缓存即可。实际操作也很简单，一开始我们的 install 阶段的代码为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(<span class="string">'mysite-static-v1'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> cache.addAll([</div><div class="line">        <span class="string">'/css/whatever-v3.css'</span>,</div><div class="line">        <span class="string">'/css/imgs/sprites-v6.png'</span>,</div><div class="line">        <span class="string">'/css/fonts/whatever-v8.woff'</span>,</div><div class="line">        <span class="string">'/js/all-min-v4.js'</span></div><div class="line">      ]);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>我们只需要在这里简单的写下一下 prefetch 代码即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> now = <span class="built_in">Date</span>.now();</div><div class="line">  <span class="comment">// 事先设置好需要进行更新的文件路径</span></div><div class="line">  <span class="keyword">var</span> urlsToPrefetch = [</div><div class="line">    <span class="string">'static/pre_fetched.txt'</span>,</div><div class="line">    <span class="string">'static/pre_fetched.html'</span>,</div><div class="line">    <span class="string">'https://www.chromium.org/_/rsrc/1302286216006/config/customLogo.gif'</span></div><div class="line">  ];</div><div class="line">  </div><div class="line"></div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> cachePromises = urlsToPrefetch.map(<span class="function"><span class="keyword">function</span>(<span class="params">urlToPrefetch</span>) </span>&#123;</div><div class="line">      <span class="comment">// 使用 url 对象进行路由拼接</span></div><div class="line">        <span class="keyword">var</span> url = <span class="keyword">new</span> URL(urlToPrefetch, location.href);</div><div class="line">        url.search += (url.search ? <span class="string">'&amp;'</span> : <span class="string">'?'</span>) + <span class="string">'cache-bust='</span> + now;</div><div class="line">        <span class="comment">// 创建 request 对象进行流量的获取</span></div><div class="line">        <span class="keyword">var</span> request = <span class="keyword">new</span> Request(url, &#123;<span class="attr">mode</span>: <span class="string">'no-cors'</span>&#125;);</div><div class="line">        <span class="comment">// 手动发送请求，用来进行文件的更新</span></div><div class="line">        <span class="keyword">return</span> fetch(request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">          <span class="keyword">if</span> (response.status &gt;= <span class="number">400</span>) &#123;</div><div class="line">            <span class="comment">// 解决请求失败时的情况</span></div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'request for '</span> + urlToPrefetch +</div><div class="line">              <span class="string">' failed with status '</span> + response.statusText);</div><div class="line">          &#125;</div><div class="line">          <span class="comment">// 将成功后的 response 流，存放在 caches 套件中，完成指定文件的更新。</span></div><div class="line">          <span class="keyword">return</span> cache.put(urlToPrefetch, response);</div><div class="line">        &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">          <span class="built_in">console</span>.error(<span class="string">'Not caching '</span> + urlToPrefetch + <span class="string">' due to '</span> + error);</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(cachePromises).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Pre-fetching complete.'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.error(<span class="string">'Pre-fetching failed:'</span>, error);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>当成功获取到缓存之后， SW 并不会直接进行替换，他会等到用户下一次刷新页面过后，使用新的缓存文件。</p>
+<p><img src="http://static.zhyjor.com/201807190856_952.png" alt=""></p>
+<p>不过，这里请注意，我并没有说，我们更新缓存只能在 install 里更新，事实上，更新缓存可以在任何地方执行。它主要的目的是用来更新 caches 里面缓存套件。我们提取一下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 找到缓存套件并打开</span></div><div class="line">caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">        <span class="comment">// 根据事先定义的路由开始发送请求</span></div><div class="line">      <span class="keyword">var</span> cachePromises = urlsToPrefetch.map(<span class="function"><span class="keyword">function</span>(<span class="params">urlToPrefetch</span>) </span>&#123;</div><div class="line">        <span class="comment">// 执行 fetch</span></div><div class="line">        <span class="keyword">return</span> fetch(request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">          <span class="comment">// 缓存请求到的资源</span></div><div class="line">          <span class="keyword">return</span> cache.put(urlToPrefetch, response);</div><div class="line">        &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">          <span class="built_in">console</span>.error(<span class="string">'Not caching '</span> + urlToPrefetch + <span class="string">' due to '</span> + error);</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    <span class="comment">// 使用 promise.all 进行全部捕获</span></div><div class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(cachePromises).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Pre-fetching complete.'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.error(<span class="string">'Pre-fetching failed:'</span>, error);</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<p>现在，我们已经拿到了核心代码，那有没有什么简便的办法，让我们少写一些配置项，直接对每一个文件进行文件更新。 有的！！！ 还记得上面的 fetch 事件吗？我们简单回顾一下它的代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="comment">// Cache hit - return response</span></div><div class="line">        <span class="keyword">if</span> (response) &#123;</div><div class="line">          <span class="keyword">return</span> response;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> fetch(event.request);</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>实际上，我们可以将上面的核心代码做一些变化直接用上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'mysite-dynamic'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> cache.match(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> fetchPromise = fetch(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">networkResponse</span>) </span>&#123;</div><div class="line">          cache.put(event.request, networkResponse.clone());</div><div class="line">          <span class="keyword">return</span> networkResponse;</div><div class="line">        &#125;)</div><div class="line">        <span class="keyword">return</span> response || fetchPromise;</div><div class="line">      &#125;)</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里比较难的地方在于，我们并没有去捕获 fetch(fetchRequest)… 相关内容。也就是说，这一块是完全独立于我们的主体业务的。他的 fetch 只是用更新文件而已。我们可以使用一个流图进行表示：<br><img src="http://static.zhyjor.com/201807190919_842.png" alt=""></p>
+<h4 id="用户更新"><a href="#用户更新" class="headerlink" title="用户更新"></a>用户更新</h4><p>现在，为了更好的用户体验，我们可以做的更尊重用户一些。可以设置一个 button，告诉用户是否选择缓存指定文件。有同学可能会想到使用 postmessage API，来告诉 SW 执行相关的缓存信息。不过事实上，还有更简单的办法来完成，即，直接使用 caches 对象。caches 和 web worker 类似。都是直接挂载到 window 对象上的。所以，我们可以直接使用 caches 这个全局变量来进行搜索。那么该环节就不需要直接通过 SW，这个流程图可以画为：</p>
+<p><img src="http://static.zhyjor.com/201807190922_924.png" alt=""></p>
+<p>代码可以参考：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.querySelector(<span class="string">'.cache-article'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.preventDefault();</div><div class="line"></div><div class="line">  <span class="keyword">var</span> id = <span class="keyword">this</span>.dataset.articleId;</div><div class="line">  <span class="comment">// 创建 caches 套件</span></div><div class="line">  caches.open(<span class="string">'mysite-article-'</span> + id).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">    fetch(<span class="string">'/get-article-urls?id='</span> + id).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">      <span class="comment">// 返回 json 对象</span></div><div class="line">      <span class="keyword">return</span> response.json();</div><div class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="comment">// 缓存指定路由</span></div><div class="line">      cache.addAll(data);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>不过上述的弊端也是有的，你把缓存的更新交给前台来做，实际上是增加的 js 主线程的负担，所以，按照一般的思路，我们是需要通过 message 来触发 service worker 的文件更新。</p>
+<h2 id="Message-通信"><a href="#Message-通信" class="headerlink" title="Message 通信"></a>Message 通信</h2><p>这里，我们简单介绍一下， client 和 service worker 相互通信。首先， service worker 向 client 发送消息很容易。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"SW Received Message: "</span> + event.data);</div><div class="line">    event.ports[<span class="number">0</span>].postMessage(<span class="string">"SW Says 'Hello back!'"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>其中 event.ports 是根据 messageChannel API 构造出来的。该 API 的用法大家 MDN 一下吧。我们主要来看一下，如何在 clients 端，向 service worker 传递信息。这里就要借由：ServiceWorkerContainer 这个对象在 navigator 上获取。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">navigator.serviceWorker === ServiceWorkerContainer</div></pre></td></tr></table></figure>
+<p>在该 API 上挂载了一些方法和属性，用来获取 service worker 上的相关状态。来看一下：</p>
+<p><img src="http://static.zhyjor.com/201807190929_106.png" alt=""></p>
+<p>其中和通信相关的就两个，一个是 controller，一个是 onmessage 事件。</p>
+<ul>
+<li>controller: 通过其上挂载的 postMessage API 向 Service worker 发送信息。</li>
+<li>onmessage: 接受 Service worker 发送的消息</li>
+</ul>
+<p>即：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">send_message_to_sw</span>(<span class="params">msg</span>)</span>&#123;</div><div class="line">    navigator.serviceWorker.controller.postMessage(<span class="string">"Client 1 says '"</span>+msg+<span class="string">"'"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而 Service Worker 只要负责接收即可：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'message'</span>,event =&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"receive message"</span> + event.data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>该方法常常用于，用来更新根目录的 html 文档，因为 SW 在更新的时候，并不会对根目录下的 HTML 文档进行更新。那么综上所述，一般而言，除了根文件而言，其他文件只要根据 hash 值来跟新即可。我们看一下整个的写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">resp</span>) </span>&#123;</div><div class="line">      fetchList.push(event.request.url);</div><div class="line">      <span class="keyword">return</span> resp || fetch(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'update files like'</span> + event.request.url);</div><div class="line">            cache.put(event.request, response.clone());</div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">          &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'message'</span>,event =&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"receive message"</span> + event.data);</div><div class="line">  <span class="comment">// 更新根目录下的 html 文件。</span></div><div class="line">  <span class="keyword">var</span> url = event.data;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"update root file "</span> + url);</div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="params">cache</span>=&gt;</span>&#123;</div><div class="line">        <span class="keyword">return</span> fetch(url)</div><div class="line">          .then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</div><div class="line">            cache.put(url,res);</div><div class="line">          &#125;)</div><div class="line">    &#125;)</div><div class="line">  )</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>然后，在 index.js 中，添加 postMessage API。记住，每次网页打开时，并不会每次都触发 register，因为你已经接受 SW，所以，我们需要做额外的判断，来检测是否发送相关的消息。那么我们在代码中就可以添加如下内容：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> SW = navigator.serviceWorker;</div><div class="line">SW.register(<span class="string">'sw.js'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">registration</span>) </span>&#123;</div><div class="line"> <span class="comment">//...</span></div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">if</span>(SW.controller)&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'send message ::'</span>);</div><div class="line">      SW.controller.postMessage(location.href)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果想更深入了解 Message 的相关处理，可以参考：<a href="http://craig-russell.co.uk/2016/01/29/service-worker-messaging.html#.W0_19VUzZph" target="_blank" rel="external">sendMessage</a></p>
+<h2 id="Sync-离线处理"><a href="#Sync-离线处理" class="headerlink" title="Sync 离线处理"></a>Sync 离线处理</h2><p>Sync 是为了更好解决没网的条件下，一些请求发送成功性问题。该场景的处理常常针对即时性要求比较高的业务。比如：IM，弱网数据存储，朋友圈动态发送等。在以前，我们针对没网的条件是通过 navigator.onLine 来判断有没有网。不过，这种方式会比较生硬，在没网的条件下也无法正常发送请求。而 Sync 则可以帮助我们完整这件事，假如用户在发朋友圈，而此时又没网了。。。通过 Sync，用户可以正常的发送该朋友圈（此时，并未真正的发送请求），当网重新连接，会触发 Service Worker 中的 sync 事件。</p>
+<p>直接看个例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 通过 reg.sync 注册一个 Sync</span></div><div class="line">SW.ready.then(<span class="function"><span class="params">reg</span>=&gt;</span>&#123;</div><div class="line">     <span class="keyword">return</span> reg.sync.register(<span class="string">'yes'</span>);</div><div class="line">   &#125;) </div><div class="line">   .then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"成功"</span>+ res);</div><div class="line">   &#125;)</div><div class="line">   </div><div class="line"><span class="comment">// sw.js </span></div><div class="line">self.addEventListener(<span class="string">'sync'</span>,event=&gt;&#123;</div><div class="line">    <span class="comment">// 监听 Sync 事件</span></div><div class="line">  <span class="keyword">if</span>(event.tag === <span class="string">'yes'</span>)fetch(<span class="string">'/'</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p><strong>需要说明的是，sync 触发条件时：有网！有网！有网！</strong></p>
+<p>即，当在没网条件时，该 sync 事件是不会被触发的。提醒大家一点，在测试的时候，最好是直接关闭 wifi 或者直接断网，使用 Chrome 浏览器内置的 offline 好像没有用。</p>
+<p>另外，如果遇到用户重复发送时，需要注意使用不同的 tag 进行注册。因为，多个相同的 Sync 触发的时候，会自动进行合并，使用最新的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 没网条件下，连续注册 3 次</span></div><div class="line">reg.sync.register(<span class="string">'yes'</span>);</div><div class="line">reg.sync.register(<span class="string">'yes'</span>);</div><div class="line">reg.sync.register(<span class="string">'yes'</span>);</div><div class="line"><span class="comment">// 只有第三次会成功</span></div></pre></td></tr></table></figure>
+<h2 id="Caches"><a href="#Caches" class="headerlink" title="Caches"></a>Caches</h2><p>上面大致了解了一下关于 SW 的基本流程，不过说到底，SW 只是一个容器，它的内涵只是一个驻留后台进程。我们想关心的是，在这进程里面，我们可以做些什么？ </p>
+<p>最主要的应该有两个东西，缓存和推送。这里我们主要讲解一下缓存。不过在SW 中，我们一般只能缓存 POST.上面在文件更新里面也讲了几个更新的方式。简单来说:<br><img src="http://static.zhyjor.com/201807191027_424.png" alt=""></p>
+<p>简单的情形上面已经说了，我这里专门将一下比较复杂的内容。</p>
+<h3 id="网络缓存同时进行"><a href="#网络缓存同时进行" class="headerlink" title="网络缓存同时进行"></a>网络缓存同时进行</h3><p>这种情形一般很少用的，一方面检查请求，一方面有检查缓存，然后看两个谁快，就用谁，我这里直接上代码吧：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">promiseAny</span>(<span class="params">promises</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 通过 promise 的 resolve 特性来决定谁快</span></div><div class="line">    promises = promises.map(<span class="function"><span class="params">p</span> =&gt;</span> <span class="built_in">Promise</span>.resolve(p));</div><div class="line">    <span class="comment">// 这里调用外层的 resolve</span></div><div class="line">    promises.forEach(<span class="function"><span class="params">p</span> =&gt;</span> p.then(resolve));</div><div class="line">    <span class="comment">// 如果其中有一方出现 error，则直接挂掉</span></div><div class="line">    promises.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a.catch(<span class="function"><span class="params">()</span> =&gt;</span> b))</div><div class="line">      .catch(<span class="function"><span class="params">()</span> =&gt;</span> reject(<span class="built_in">Error</span>(<span class="string">"All failed"</span>)));</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    promiseAny([</div><div class="line">      caches.match(event.request),</div><div class="line">      fetch(event.request)</div><div class="line">    ])</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="总是更新"><a href="#总是更新" class="headerlink" title="总是更新"></a>总是更新</h3><p>这里就和我们在后台配置的 Last-Modifier || Etag 一样，询问更新的文件内容，然后执行更新:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'mysite-dynamic'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> fetch(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        cache.put(event.request, response.clone());</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="先返回后更新"><a href="#先返回后更新" class="headerlink" title="先返回后更新"></a>先返回后更新</h3><p>这应该是目前为止最佳的体验，返回的时候不会影响正在发送的请求，而接受到的新的请求后，最新的文件会替换旧的文件。（这个就是前面写的代码）:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'mysite-dynamic'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> cache.match(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> fetchPromise = fetch(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">networkResponse</span>) </span>&#123;</div><div class="line">          cache.put(event.request, networkResponse.clone());</div><div class="line">          <span class="keyword">return</span> networkResponse;</div><div class="line">        &#125;)</div><div class="line">        <span class="keyword">return</span> response || fetchPromise;</div><div class="line">      &#125;)</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="最佳实践更新"><a href="#最佳实践更新" class="headerlink" title="最佳实践更新"></a>最佳实践更新</h3><p>上面说的哪几种都有某一方面的缺陷，那如果才能实现一种比较靠谱的缓存方案呢？我们借鉴一下上面提到的 message 通信方式，方案为：<br><img src="http://static.zhyjor.com/201807191030_410.png" alt=""></p>
+<p>我们对资源做的主要工作就是如果处理好 fetch 事件中的相关资源。这里，我们简单的通过文件类型这个点来进行划分，优先情况是缓存 js/css 文件。那在 fetch 事件中，我们就需要写为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> CURRENT_CACHES = &#123;</div><div class="line">  prefetch: <span class="string">'prefetch-cache-v'</span> + <span class="number">1</span>;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> FILE_LISTS = [<span class="string">'js'</span>,<span class="string">'css'</span>,<span class="string">'png'</span>];</div><div class="line"></div><div class="line"><span class="keyword">var</span> goSaving = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>)</span>&#123;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> file <span class="keyword">of</span> FILE_LISTS)&#123;</div><div class="line">    <span class="keyword">if</span>(url.endsWith(file)) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">resp</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> resp || fetch(event.request).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">          <span class="comment">// 检查是否需要缓存</span></div><div class="line">          <span class="keyword">var</span> url = event.request.url;</div><div class="line">          <span class="keyword">if</span>(!goSaving(url))<span class="keyword">return</span> response;</div><div class="line">          <span class="built_in">console</span>.log(<span class="string">'save file:'</span> + url);</div><div class="line">          <span class="comment">// 需要缓存,则将资源放到 caches Object 中</span></div><div class="line">          <span class="keyword">return</span> caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="keyword">function</span>(<span class="params">cache</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'update files like'</span> + event.request.url);</div><div class="line">            cache.put(event.request, response.clone());</div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">          &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这样通过在 FILE_LISTS 添加想要缓存的文件类型即可。之后，我们只要在 message 中更新原来的 document 即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'message'</span>,event =&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"receive message"</span> + event.data);</div><div class="line">  <span class="comment">// 更新根目录下的 html 文件。</span></div><div class="line">  <span class="keyword">var</span> url = event.data;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"update root file "</span> + url);</div><div class="line">  event.waitUntil(</div><div class="line">    caches.open(CURRENT_CACHES.prefetch).then(<span class="function"><span class="params">cache</span>=&gt;</span>&#123;</div><div class="line">        <span class="keyword">return</span> fetch(url)</div><div class="line">          .then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</div><div class="line">            cache.put(url,res);</div><div class="line">          &#125;)</div><div class="line">    &#125;)</div><div class="line">  )</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>接下来，我们来详细了解一下关于 Cache Object 相关的内容。加深印象：</p>
+<h2 id="sw-使用的相关问题"><a href="#sw-使用的相关问题" class="headerlink" title="sw 使用的相关问题"></a>sw 使用的相关问题</h2><h3 id="缓存更新问题"><a href="#缓存更新问题" class="headerlink" title="缓存更新问题"></a>缓存更新问题</h3><p>在使用 sw.js 的时候，一定要注意它缓存头的设置，这里给大家一个通用的做法，就是通过 cache-control 来设置缓存头。即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cache-control: no-cache</div></pre></td></tr></table></figure></p>
+<p>并且，除了这个设置外，还需要注意个点，即，sw.js 也有可能会被 ServiceWorker 捕获（只针对多个 SW）。所以，在设置缓存策略的时候，请一定要把 sw.js 过滤掉，否则，你会永远的看到 200 OK (from disk cache) 这样的 Status Code。</p>
+<p>通常的解决办法有两种，一种是通过 url 匹配，还有一种是通过 referrer 解决。</p>
+<ul>
+<li>url: 直接利用 self.location 对象，获得当前 sw.js 的域名信息。比如，href、pathname 等。通过匹配 request.url 信息来判断。</li>
+<li>referrer: 浏览器在发送 sw.js 文件时，默认是直接通过 SW domain 发送的，即它的 referrer 为 self.location.href。例如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 注册了一个 https://now.qq.com/qq/sw.js 文件，在其它路径 SW 能够捕获到的文件 referrer 为：</div><div class="line">Referer: https://now.qq.com/qq/sw.js</div></pre></td></tr></table></figure>
+<p>如果你的 SW 只是作用于当前的页面，不存在多路径的 SW 话，可以不需要管 SW 资源，默认是不会触发 serviceWorker Fetch 事件的。</p>
+<p>总的来说，referrer 用的会多一下，不同的 SW 有独特的 self.location，这样会造成匹配上的复杂度。最有效的规则就是，直接通过 referrer 检查其是否是通过 HTML 发送的即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">isHTML(request.referrer);</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这里放一张<a href="http://static.zybuluo.com/jimmythr/wmxtwclpwx7r53wfgkgokddh/Service+Worker.svg" target="_blank" rel="external">总结图</a>：<br><img src="http://static.zhyjor.com/201807191055_355.png" alt=""></p>
+<p><strong>参考资料</strong><br><a href="https://www.villainhr.com/page/2017/01/08/Service%20Worker%20%E5%85%A8%E9%9D%A2%E8%BF%9B%E9%98%B6" target="_blank" rel="external">Service Worker 全面进阶</a><br><a href="https://lavas.baidu.com/pwa/offline-and-cache-loading/service-worker/how-to-use-service-worker" target="_blank" rel="external">怎么使用 Service Worker</a><br><a href="https://juejin.im/post/5abba6a7f265da239706ec60" target="_blank" rel="external">PWA超简单入门</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/">PWA探索与实践之二：深入理解ServiceWorker</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2017年05月10日 - 16:05</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/" title="PWA探索与实践之二：深入理解ServiceWorker">https://zhyjor.github.io/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2017/05/10/PWA探索与实践之二：深入理解ServiceWorker/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/PWA/" rel="tag"># PWA</a>
+          
+            <a href="/tags/PWA探索与实践/" rel="tag"># PWA探索与实践</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/09/前端通信方式探索之二：fetch通信/" rel="next" title="前端通信方式探索之二：fetch通信">
+                <i class="fa fa-chevron-left"></i> 前端通信方式探索之二：fetch通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/11/PWA探索与实践之三：WebWorkers的使用/" rel="prev" title="PWA探索与实践之三：WebWorkers的使用">
+                PWA探索与实践之三：WebWorkers的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册与使用"><span class="nav-number">1.</span> <span class="nav-text">注册与使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SW-的生命周期"><span class="nav-number">2.</span> <span class="nav-text">SW 的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用关键"><span class="nav-number">2.1.</span> <span class="nav-text">使用关键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Install"><span class="nav-number">2.1.1.</span> <span class="nav-text">Install</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不稳定加载"><span class="nav-number">2.1.2.</span> <span class="nav-text">不稳定加载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存捕获（fetch）"><span class="nav-number">2.2.</span> <span class="nav-text">缓存捕获（fetch）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">2.3.</span> <span class="nav-text">Update</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SW-js-的更新"><span class="nav-number">2.3.1.</span> <span class="nav-text">SW.js 的更新</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#skipWaiting"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">skipWaiting</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#手动更新"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">手动更新</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件更新"><span class="nav-number">2.3.2.</span> <span class="nav-text">文件更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户更新"><span class="nav-number">2.3.3.</span> <span class="nav-text">用户更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Message-通信"><span class="nav-number">3.</span> <span class="nav-text">Message 通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sync-离线处理"><span class="nav-number">4.</span> <span class="nav-text">Sync 离线处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Caches"><span class="nav-number">5.</span> <span class="nav-text">Caches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络缓存同时进行"><span class="nav-number">5.1.</span> <span class="nav-text">网络缓存同时进行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总是更新"><span class="nav-number">5.2.</span> <span class="nav-text">总是更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先返回后更新"><span class="nav-number">5.3.</span> <span class="nav-text">先返回后更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳实践更新"><span class="nav-number">5.4.</span> <span class="nav-text">最佳实践更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sw-使用的相关问题"><span class="nav-number">6.</span> <span class="nav-text">sw 使用的相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存更新问题"><span class="nav-number">6.1.</span> <span class="nav-text">缓存更新问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

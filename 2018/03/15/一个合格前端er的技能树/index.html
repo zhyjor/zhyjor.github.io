@@ -1,0 +1,1060 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端,技术路线," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前端涉及到知识点整理">
+<meta name="keywords" content="前端,技术路线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个合格前端er的技能树">
+<meta property="og:url" content="https://zhyjor.github.io/2018/03/15/一个合格前端er的技能树/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="前端涉及到知识点整理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个合格前端er的技能树">
+<meta name="twitter:description" content="前端涉及到知识点整理">
+<meta name="twitter:image" content="http://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/03/15/一个合格前端er的技能树/"/>
+
+
+
+
+
+  <title> 一个合格前端er的技能树 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/03/15/一个合格前端er的技能树/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一个合格前端er的技能树
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T06:12:57+00:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/15/一个合格前端er的技能树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/15/一个合格前端er的技能树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前端涉及到知识点整理<br><a id="more"></a></p>
+<h2 id="css-css3"><a href="#css-css3" class="headerlink" title="css/css3"></a>css/css3</h2><p>涉及到canvas,svg等知识<br><a href="https://bbs.csdn.net/topics/340204423" target="_blank" rel="external">说说标准——CSS中非常重要的可视化格式模型</a><br><a href="https://www.aliyun.com/jiaocheng/656339.html" target="_blank" rel="external">CSS 值的解析</a><br><a href="https://www.w3cplus.com/blog/tags/325.html" target="_blank" rel="external">编写模块化CSS：BEM</a><br><a href="https://segmentfault.com/a/1190000010780991" target="_blank" rel="external">个人总结（css3新特性）</a></p>
+<h2 id="Js-ES6-TypeSctipt"><a href="#Js-ES6-TypeSctipt" class="headerlink" title="Js/ES6/TypeSctipt"></a>Js/ES6/TypeSctipt</h2><p><a href="https://zhyjor.github.io/2018/02/25/InterviewSource%E4%B9%8B%E5%89%8D%E7%AB%AF/">source</a><br><a href="https://www.richang.be/" target="_blank" rel="external">一枚学霸的赴日经历</a><br><a href="https://juejin.cn/post/6902556452721229837" target="_blank" rel="external">微信面试官不讲武德，一上来就问我Chrome原理和HTTP协议</a></p>
+<h3 id="相关博客"><a href="#相关博客" class="headerlink" title="相关博客"></a>相关博客</h3><p><strong><a href="https://github.com/frontend9/fe9-library/blob/master/MEMBERS.md" target="_blank" rel="external">九部知识库</a></strong><br><a href="https://github.com/davideuler/architecture.of.internet-product" target="_blank" rel="external">互联网公司技术架构，微信/淘宝/微博/腾讯/阿里/美团点评/百度/Google/Facebook/Amazon/eBay的架构，欢迎PR补充</a><br><a href="https://neal1991.github.io/articles-translator/" target="_blank" rel="external">(articles-translator)一个前端相关的博客，翻译一些文章</a><br><a href="https://github.com/dt-fe/weekly" target="_blank" rel="external">前端精读周刊dt-fe/weekly</a><br><a href="https://github.com/mqyqingfeng/Blog" target="_blank" rel="external">冴羽写博客的地方，预计写四个系列：JavaScript深入系列、JavaScript专题系列、ES6系列、React系列</a><br><a href="https://github.com/ElemeFE/node-interview" target="_blank" rel="external">饿了么大前端Node interview of ElemeFE</a><br><a href="https://github.com/youngwind/blog" target="_blank" rel="external">梁少峰的个人博客,js浏览器兼容，v8等很多内容</a><br><a href="https://github.com/Aaaaaaaty/blog" target="_blank" rel="external">Aaaaaaaty/blog,里面的很多细节不错，很深入（0.1+0.2问题）</a><br><a href="https://github.com/amandakelake/blog" target="_blank" rel="external">amandakelake/blog·参与过前端图谱</a><br><a href="https://github.com/berwin/Blog" target="_blank" rel="external">野生的一个前端大佬·360·博文·前端·后端</a><br><a href="https://github.com/jawil/blog" target="_blank" rel="external">https://github.com/jawil/blog</a><br><strong><a href="https://github.com/camsong/blog" target="_blank" rel="external">camsong/blog（阿里）</a></strong><br><a href="https://leohxj.gitbooks.io/front-end-database/html-and-css-basic/css3-news.html" target="_blank" rel="external">前端工程师手册</a></p>
+<p><a href="https://github.com/FrankKai/FrankKai.github.io" target="_blank" rel="external">趁你还年轻的博客</a></p>
+<p><a href="https://juejin.im/post/5b10b46df265da6e2a08a724" target="_blank" rel="external">前端路由简介以及vue-router实现原理</a><br><a href="https://github.com/trekhleb/javascript-algorithms/blob/master/README.zh-CN.md" target="_blank" rel="external">JavaScript 算法与数据结构·很全</a><br><a href="https://github.com/Troland/how-javascript-works" target="_blank" rel="external">how-javascript-works·语言引擎，运行时和调用栈概述·如何在 V8 引擎中书写最优代码的 5 条小技巧·网页消息推送通知机制</a><br><a href="https://juejin.im/user/585b9ec961ff4b0063e76dbe/posts" target="_blank" rel="external">chenhongdong·发布订阅模式，在工作中它的能量超乎你的想象·不好意思！耽误你的十分钟，让MVVM原理还给你</a><br><a href="https://violetjack.github.io/tags/Vue-js%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" target="_blank" rel="external">Vue.js源码学习</a><br><a href="https://github.com/markyun/My-blog/issues" target="_blank" rel="external">markyun/My-blog·马云云·高赞</a></p>
+<p><a href="https://github.com/rccoder/blog/issues?page=2&amp;q=is%3Aissue+is%3Aopen" target="_blank" rel="external">rccoder/blog·react·js基础·一般</a><br><a href="https://github.com/pengliheng/pengliheng.github.io/issues" target="_blank" rel="external">pengliheng/pengliheng.github.io·一般·技术栈比较乱</a></p>
+<p><a href="http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html" target="_blank" rel="external">汤姆大叔的博客·深入理解JavaScript系列</a></p>
+<p><a href="https://github.com/TalkingData/fsd/issues" target="_blank" rel="external">TalkingData/fsd 浏览器相关较多</a><br><a href="https://github.com/wy-ei/notebook/issues" target="_blank" rel="external">wy-ei/notebook浏览器相关以及优化</a></p>
+<p><a href="https://github.com/qq449245884/xiaozhi" target="_blank" rel="external">qq449245884/xiaozhi侧重于react、vue、react native 与底层原理分析</a></p>
+<p><a href="https://www.yuque.com/docs/share/157434e7-1bee-4bbd-88e5-2cc2cbc1511c#2019.05" target="_blank" rel="external">2019 - 写在一起学习群的未公开文章</a></p>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p><a href="https://juejin.im/post/5b10ba336fb9a01e66164346" target="_blank" rel="external">JavaScript 内存机制（前端同学进阶必备）</a></p>
+<h3 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h3><p><a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">ECMAScript 6 入门(阮一峰)</a><br><a href="https://juejin.im/post/5aa78fe66fb9a028d2079ca4" target="_blank" rel="external">深度解析原型中的各个难点</a><br><a href="https://juejin.im/post/5aa631ab5188255587233214?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="external">JavaScript变量的生命周期：为什么let不被提升</a><br><a href="https://juejin.im/post/5b2a186cf265da596d04a648" target="_blank" rel="external">[译] ES2018（ES9）的新特性</a></p>
+<p><a href="http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html" target="_blank" rel="external">深入理解JavaScript系列-汤姆大叔的博客</a><br><a href="https://github.com/mqyqingfeng/Blog" target="_blank" rel="external">js深入系列目录/专题系列目录</a><br><a href="https://juejin.im/post/5aa78fe66fb9a028d2079ca4" target="_blank" rel="external">深度解析原型中的各个难点</a><br><a href="https://zhuanlan.zhihu.com/p/35080324" target="_blank" rel="external">抱歉，学会 Proxy 真的可以为所欲为</a></p>
+<p><a href="https://juejin.im/post/5ac23113f265da23906c2fbc" target="_blank" rel="external">[译] 一些ES6的小技巧</a></p>
+<p><a href="https://juejin.im/post/5b002766518825429d1f90bc" target="_blank" rel="external">[译] JavaScript 是如何工作的：Web 推送通知的机制</a></p>
+<h3 id="编码风格"><a href="#编码风格" class="headerlink" title="编码风格"></a>编码风格</h3><p><a href="https://juejin.im/post/5b2903ce51882574a86cd288" target="_blank" rel="external">JavaScript编码风格指南</a></p>
+<h3 id="zepto"><a href="#zepto" class="headerlink" title="zepto"></a>zepto</h3><p><a href="https://github.com/yeyuqiudeng/reading-zepto" target="_blank" rel="external">读 Zepto 源码，分析 Zepto 源码</a></p>
+<h3 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h3><p><a href="https://juejin.im/post/5ac1c5bf518825558949f898" target="_blank" rel="external">入门babel–实现一个es6的class转换器</a><br><a href="https://juejin.im/post/5ab9f2f3f265da239b4174f0" target="_blank" rel="external">babel插件入门-AST</a><br><a href="https://www.chyingp.com/posts/understanding-babel-polyfill/" target="_blank" rel="external">babel-polyfill使用与性能优化</a></p>
+<h3 id="BOM与DOM相关api"><a href="#BOM与DOM相关api" class="headerlink" title="BOM与DOM相关api"></a>BOM与DOM相关api</h3><p><a href="https://juejin.im/post/5af43bd5f265da0b8336c6f7" target="_blank" rel="external">JavaScript操作DOM常用的API</a></p>
+<h3 id="js中的奇怪问题"><a href="#js中的奇怪问题" class="headerlink" title="js中的奇怪问题"></a>js中的奇怪问题</h3><p><a href="https://juejin.im/post/5ad5c104518825558002bdc0" target="_blank" rel="external">JavaScript 赌运气的四舍五入</a></p>
+<h2 id="算法与数据结构"><a href="#算法与数据结构" class="headerlink" title="算法与数据结构"></a>算法与数据结构</h2><p><a href="https://github.com/hustcc/JS-Sorting-Algorithm" target="_blank" rel="external">十大经典排序算法</a><br><a href="https://github.com/Jack-Lee-Hiter/AlgorithmsByPython" target="_blank" rel="external">算法/数据结构/Python/剑指offer/机器学习/leetcode</a><br><a href="https://github.com/nibnait/algorithms" target="_blank" rel="external">《算法 (第4版)》、牛课堂、《剑指Offer》</a><br><a href="https://github.com/Wang-Jun-Chao/leetcode" target="_blank" rel="external">LeetCode算法题典</a><br><a href="https://github.com/nonstriater/Learn-Algorithms" target="_blank" rel="external">算法学习笔记</a><br><a href="https://juejin.im/post/5ab9ae9cf265da23830ae617" target="_blank" rel="external">八大基础排序总结</a></p>
+<p><a href="http://www.cnblogs.com/skywang12345/p/3603935.html" target="_blank" rel="external">数据结构与算法系列_目录</a><br><a href=""></a></p>
+<h2 id="TCP-http-TSL-SSL"><a href="#TCP-http-TSL-SSL" class="headerlink" title="TCP/http/TSL/SSL/"></a>TCP/http/TSL/SSL/</h2><p><a href="https://juejin.im/entry/5a40777df265da4322416cf0" target="_blank" rel="external">面试时如何优雅的谈论HTTP／1.0／1.1／2.0</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzI0MDQ4MTM5NQ==&amp;mid=2247485835&amp;idx=1&amp;sn=87ff45f07020e69dbc4ea2196ed5cc1b&amp;chksm=e91b6c97de6ce581fd290de33dbe9a00c56181290d26984975d3fbeb220d5b5a7a2419385751&amp;mpshare=1&amp;scene=23&amp;srcid=0530cWO1Xz8D5iIZaB9qlHUc#rd" target="_blank" rel="external">科普扫盲，HTTP Status Code详解，从此排错无忧！</a></p>
+<h3 id="jwt"><a href="#jwt" class="headerlink" title="jwt"></a>jwt</h3><p><a href="https://toutiao.io/posts/p6goeb" target="_blank" rel="external">理解JWT的使用场景和优劣</a></p>
+<h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><p><a href="https://juejin.im/post/5ae3f17ef265da0ba062e7e3" target="_blank" rel="external">Node HTTP/2 Server Push 从了解到放弃</a><br><a href="https://juejin.im/entry/5a5246c6f265da3e347b15ad" target="_blank" rel="external">Http协议</a></p>
+<h3 id="https"><a href="#https" class="headerlink" title="https"></a>https</h3><p><a href="https://juejin.im/post/5ad6ad575188255c272273c4" target="_blank" rel="external">分分钟让你理解HTTPS</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">图解SSL/TLS协议</a><br><a href="https://juejin.im/post/5aa9e0906fb9a028bc2d7644" target="_blank" rel="external">Node.js 部署免费/自动续订 HTTPS</a><br><a href="https://tasaid.com/blog/20161003001126.html" target="_blank" rel="external">从 HTTP 到 HTTPS</a></p>
+<h2 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h2><p>sql/mongo<br><a href="https://juejin.im/entry/5a935d6f6fb9a06361089806" target="_blank" rel="external">开工献礼 技术胖21集原创MongoDB基础视频教程</a><br><a href="https://juejin.im/entry/599b8867518825241f787cae" target="_blank" rel="external">HTML5 indexedDB 前端本地存储数据库实例教程</a><br><a href="https://juejin.im/entry/5ac95b6ef265da237a4d4629" target="_blank" rel="external">彻底捋一捋缓存（三）——数据存储：cookie、Storage、indexedDB</a></p>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p><a href="https://juejin.im/post/599e4beb5188252428610762" target="_blank" rel="external">翻译连载 | JavaScript 轻量级函数式编程-第2章:函数基础 |《你不知道的JS》姊妹篇</a></p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p><a href="http://www.cnblogs.com/chenxizhang/archive/2013/05/20/3088196.html" target="_blank" rel="external">优化网站设计系列文章总结和导读(雅虎35条)</a><br><a href="https://juejin.im/post/5aaf1d4c6fb9a028bc2d89d6" target="_blank" rel="external">前端优化系列 - JS混淆引入性能天坑</a><br><a href="https://juejin.im/post/5ac1d117f265da2396128b9f" target="_blank" rel="external">2018 前端性能检查表</a><br><a href="https://juejin.im/post/59ff2dbe5188254dd935c8ab" target="_blank" rel="external">「前端那些事儿」② 极限性能优化</a><br><a href="https://juejin.im/post/5a6941e1f265da3e33048429" target="_blank" rel="external">web前端性能优化</a><br><a href="https://juejin.im/post/5b0b7d74518825158e173a0c" target="_blank" rel="external">网站性能优化实战——从12.67s到1.06s的故事</a><br><a href="https://github.com/wy-ei/notebook/issues/34#issuecomment-266946255" target="_blank" rel="external">前端性能优化相关</a></p>
+<h2 id="浏览器的渲染机制"><a href="#浏览器的渲染机制" class="headerlink" title="浏览器的渲染机制"></a>浏览器的渲染机制</h2><p><a href="https://zhuanlan.zhihu.com/p/34453198?group_id=957277540147056640" target="_blank" rel="external">从输入URL到页面加载的过程？如何由一道题完善自己的前端知识体系！</a><br><a href="http://fex.baidu.com/blog/2014/05/what-happen/" target="_blank" rel="external">从输入 URL 到页面加载完成的过程中都发生了什么事情？</a><br><a href="https://juejin.im/post/5aa5dcabf265da239c7afe1e?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="external">浏览器和Node不同的事件循环（Event Loop）</a><br><strong><a href="https://segmentfault.com/a/1190000012925872" target="_blank" rel="external">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a></strong><br><strong><a href="https://juejin.im/post/59e85eebf265da430d571f89" target="_blank" rel="external">这一次，彻底弄懂 JavaScript 执行机制</a></strong><br><a href="https://zhuanlan.zhihu.com/p/33816534" target="_blank" rel="external">V8 内存浅析</a><br><a href="https://github.com/ruanyf/es6tutorial/issues/362#issuecomment-292109104" target="_blank" rel="external">关于WeakMap的一个问题</a><br>GC，垃圾回收机制，强弱引用的应用，nodejs，浏览器进行内存分析的方式<br><a href="https://juejin.im/post/5ab9a8006fb9a028db58b354" target="_blank" rel="external">浏览器渲染流水线解析</a></p>
+<p><a href="https://juejin.im/post/5a6547d0f265da3e283a1df7" target="_blank" rel="external">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a><br><a href="https://blog.csdn.net/lin_credible/article/details/40143961" target="_blank" rel="external">【朴灵评注】JavaScript 运行机制详解：再谈Event Loop</a><br><a href="https://zhuanlan.zhihu.com/p/34182184" target="_blank" rel="external">Event Loop 必知必会（六道题）</a></p>
+<p><a href="https://blog.csdn.net/lxcao/article/category/6472061" target="_blank" rel="external">浏览器工作原理(10篇)</a><br><a href="https://www.oschina.net/translate/chrome-accelerated-rendering" target="_blank" rel="external">Chrome 渲染优化 - 层模型</a></p>
+<p><a href="https://www.jianshu.com/p/0b75dbf7af36" target="_blank" rel="external">“浏览器工作原理:现代网络浏览器幕后揭秘”文章分析</a><br><a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/" target="_blank" rel="external">浏览器的工作原理：新式网络浏览器幕后揭秘</a></p>
+<p><a href="http://blog.jobbole.com/12749/" target="_blank" rel="external">现代浏览器的工作原理</a></p>
+<h3 id="js垃圾回收"><a href="#js垃圾回收" class="headerlink" title="js垃圾回收"></a>js垃圾回收</h3><p><a href="https://juejin.im/post/5b1f7e62e51d45068a6cb98f" target="_blank" rel="external">javascript 垃圾回收算法了解一下</a></p>
+<h2 id="图形相关-canvas-webgl-three-js"><a href="#图形相关-canvas-webgl-three-js" class="headerlink" title="图形相关/canvas/webgl/three.js"></a>图形相关/canvas/webgl/three.js</h2><h3 id="canvas"><a href="#canvas" class="headerlink" title="canvas"></a>canvas</h3><p><a href="https://juejin.im/post/5b25e3396fb9a00e7a3d5161" target="_blank" rel="external">用canvas画一个进度盘</a><br>[]</p>
+<h2 id="网络安全"><a href="#网络安全" class="headerlink" title="网络安全"></a>网络安全</h2><p>xss/csrf<br>加密算法，aes,rsa等，这些合https也有结合<br><a href="https://juejin.im/post/59e6b21bf265da43247f861d" target="_blank" rel="external">Web安全的三个攻防姿势</a><br><a href="http://www.cnblogs.com/lovesong/p/5199623.html" target="_blank" rel="external">前端安全之XSS攻击</a><br><a href="http://www.cnblogs.com/lovesong/p/5248483.html" target="_blank" rel="external">Web安全之点击劫持（ClickJacking）</a><br><a href="https://www.cnbeta.com/articles/tech/732595.htm" target="_blank" rel="external">令人惊叹的CSS漏洞攻击 Firefox 和 Chrome 中枪</a><br><a href="https://www.evonide.com/side-channel-attacking-browsers-through-css3-features/" target="_blank" rel="external">利用css攻击</a><br><a href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html" target="_blank" rel="external">前端安全系列（二）：如何防止CSRF攻击？</a></p>
+<h2 id="MVVM框架的使用、原理及源码阅读"><a href="#MVVM框架的使用、原理及源码阅读" class="headerlink" title="MVVM框架的使用、原理及源码阅读"></a>MVVM框架的使用、原理及源码阅读</h2><p><a href="https://juejin.im/post/5b1fa77451882513ea5cc2ca" target="_blank" rel="external">50行代码的MVVM，感受闭包的艺术</a><br><a href="https://juejin.im/post/5b2a5368f265da595c0cf6d5" target="_blank" rel="external">Airbnb: React Native 从选择到放弃</a></p>
+<h2 id="优秀框架与开源项目"><a href="#优秀框架与开源项目" class="headerlink" title="优秀框架与开源项目"></a>优秀框架与开源项目</h2><p><a href="https://blog.fundebug.com/2018/05/29/30-amazing-vuejs-open-source/" target="_blank" rel="external">2018年最值得关注的30个Vue开源项目</a><br><a href="https://shimo.im/doc/LkpdnWxM1j40BDJj/" target="_blank" rel="external">『收藏』VUE优秀UI组件库合集</a><br><a href="https://juejin.im/post/5b28fc7751882574e202b461" target="_blank" rel="external">Vue + Koa 搭建 ACM OJ</a><br><a href="https://juejin.im/post/5b28efefe51d4558cf6e75dd" target="_blank" rel="external">原生JS实现一个无缝轮播图插件(支持vue)</a><br><a href="http://doc.huangsw.com/vue-easytable/app.html#/intro" target="_blank" rel="external">vue-easytablevue table 组件，支持 单元格合并、单元格编辑、多表头固定、多列固定、列拖动、排序、自定义列、条件过滤、分页</a><br><a href="http://www.css88.com/archives/9631" target="_blank" rel="external">2018年你应该知道的 15个 JavaScript 实用程序库</a><br><a href="https://juejin.im/entry/59b202e96fb9a0249b487fd5" target="_blank" rel="external">67 个拯救前端开发者的工具、库和资源</a></p>
+<h3 id="domDIFF"><a href="#domDIFF" class="headerlink" title="domDIFF"></a>domDIFF</h3><p><a href="https://juejin.im/post/5ad550f06fb9a028b4118d99" target="_blank" rel="external">浅入浅出图解domDIff</a></p>
+<h3 id="vue的难点"><a href="#vue的难点" class="headerlink" title="vue的难点"></a>vue的难点</h3><p><a href="https://juejin.im/post/5aae19aa6fb9a028d4445d1a?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="external">为什么使用v-for时必须添加唯一的key?</a><br><a href="https://segmentfault.com/a/1190000014804826" target="_blank" rel="external">vue-cli脚手架中webpack配置基础文件详解</a><br><a href="https://juejin.im/post/5b10b46df265da6e2a08a724" target="_blank" rel="external">前端路由简介以及vue-router实现原理</a></p>
+<h3 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h3><p><a href="https://github.com/berwin/Blog/issues/17" target="_blank" rel="external">深入浅出 - vue变化侦测原理</a><br><a href="https://github.com/berwin/Blog/issues/18?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">Vue 模板编译原理</a><br><a href="https://github.com/livoras/blog/issues/13" target="_blank" rel="external">深度剖析：如何实现一个 Virtual DOM 算法</a><br><a href="https://juejin.im/post/5acc17cb51882555745a03f8" target="_blank" rel="external">面试题：你能写一个Vue的双向数据绑定吗？</a><br><a href="https://cloud.tencent.com/developer/article/1004551" target="_blank" rel="external">Vue.js 2.0源码解析之前端渲染篇</a><br><a href="https://juejin.im/post/5ad550f06fb9a028b4118d99" target="_blank" rel="external">浅入浅出图解domDIff</a><br><a href="https://juejin.im/post/5ad56d86518825556534ff4b" target="_blank" rel="external">vue中需要注意的问题总结(上)</a><br><a href="http://www.open-open.com/lib/view/open1524302857219.html" target="_blank" rel="external">Vue 2.0学习笔记：Vue的render函数</a><br><a href="http://www.open-open.com/lib/view/open1517624196942.html" target="_blank" rel="external">你不知道的Vuejs - 深入浅出响应式系统</a></p>
+<h3 id="源码学习"><a href="#源码学习" class="headerlink" title="源码学习"></a>源码学习</h3><p><a href="http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" target="_blank" rel="external">Vue2.1.7源码学习</a><br><a href="https://www.zhihu.com/question/36986850" target="_blank" rel="external">阅读vue.js源码可以从哪几方面入手？</a><br><a href="https://www.jianshu.com/p/5449f51ca90f" target="_blank" rel="external">Vue.js 作者尤大知乎 live 笔记</a><br><a href="https://cloud.tencent.com/developer/article/1004551" target="_blank" rel="external">Vue.js 2.0源码解析之前端渲染篇</a><br><a href="http://jiongks.name/blog/vue-code-review/" target="_blank" rel="external">Vue.js 源码学习笔记</a><br><a href="https://gist.github.com/lygaret/a68220defa69174bdec5" target="_blank" rel="external">React中jsx模板语法的具体实现</a><br><a href="http://www.cnblogs.com/iovec/p/vue_catalog.html" target="_blank" rel="external">大白话Vue源码系列目录</a><br><a href="https://github.com/youngwind/blog/labels/Vue" target="_blank" rel="external">vue源码学习系列</a><br><a href="https://juejin.im/post/5825874ad203090055311b30" target="_blank" rel="external">Vue 源码解析：深入响应式原理</a></p>
+<p><a href="https://segmentfault.com/a/1190000013975247" target="_blank" rel="external">走进Vue-cli源码，自己动手搭建前端脚手架工具</a><br><a href="https://juejin.im/post/5ae3f0956fb9a07ac90cf43e" target="_blank" rel="external">Vue nextTick 机制</a><br><a href="https://github.com/monkeyWangs/blogs" target="_blank" rel="external">解读Vue源码-系列</a><br><a href="https://funteas.com/topic/5a8dc7c8f7f37aa60a177bb7" target="_blank" rel="external">【Vue源码】Vue中DOM的异步更新策略以及nextTick机制</a><br><a href="https://juejin.im/post/5adff30f518825672d33d596" target="_blank" rel="external">【大型干货】手拉手带你过一遍vue部分源码</a><br><a href="https://juejin.im/post/5ae1abfdf265da0b7c06fbb3" target="_blank" rel="external">【大型干货】来看看vue对template做了什么</a><br><a href="https://juejin.im/post/5adf0085518825673123da9a" target="_blank" rel="external">当面试官问你Vue响应式原理，你可以这么回答他</a><br><a href="https://juejin.im/post/5afbfce56fb9a07ac0226f21" target="_blank" rel="external">深入理解Vue的computed实现原理及其实现方式</a></p>
+<h2 id="vue项目"><a href="#vue项目" class="headerlink" title="vue项目"></a>vue项目</h2><p><a href="https://molunerfinn.com/Vue+Koa/#%E7%AE%80%E4%BB%8B" target="_blank" rel="external">全栈开发实战：用Vue2+Koa1开发完整的前后端项目</a><br><a href="https://juejin.im/entry/5b04ca0f6fb9a07ac162c66a" target="_blank" rel="external">Vue页面骨架屏</a></p>
+<h2 id="react"><a href="#react" class="headerlink" title="react"></a>react</h2><p><a href="http://huziketang.mangojuice.top/books/react/lesson1" target="_blank" rel="external">React.js 小书</a><br><a href="https://zhuanlan.zhihu.com/p/41127320" target="_blank" rel="external">一统江湖的大前端React.js-从开发者到工程师</a></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="Hybrid-混合开发"><a href="#Hybrid-混合开发" class="headerlink" title="Hybrid 混合开发"></a>Hybrid 混合开发</h2><p><a href="https://juejin.im/entry/5aae67ba6fb9a028b86dccfc?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="external">极致的 Hybrid 混合式开发</a></p>
+<h2 id="前端工程化自动化"><a href="#前端工程化自动化" class="headerlink" title="前端工程化自动化"></a>前端工程化自动化</h2><p>webpack的使用，webpack4.0升级指南<br>gulp的插件与任务的编写<br><a href="https://juejin.im/post/5ad1980e6fb9a028c42ea1be" target="_blank" rel="external">实战笔记：Jenkins打造强大的前端自动化工作流</a><br><a href="https://juejin.im/post/5aab8b3c5188255579186a51" target="_blank" rel="external">前端流程自动化(很全，但是估计操作性不强)</a><br><a href="https://my.oschina.net/wanjubang/blog/1580050" target="_blank" rel="external">为什么我们的代码难以维护</a></p>
+<h3 id="领域驱动开发"><a href="#领域驱动开发" class="headerlink" title="领域驱动开发"></a>领域驱动开发</h3><p><a href="https://juejin.im/post/5b1c71ad6fb9a01e5918398d" target="_blank" rel="external">前端开发-领域驱动设计</a></p>
+<h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><p><a href="https://juejin.im/post/5adea0106fb9a07a9d6ff6de" target="_blank" rel="external">webpack4-用之初体验，一起敲它十一遍</a><br><a href="https://www.cnblogs.com/sloong/p/5826818.html" target="_blank" rel="external">Webpack 常见静态资源处理 - 模块加载器（Loaders）+ExtractTextPlugin插件</a><br><a href="https://juejin.im/post/5b192afde51d45069c2efe5a" target="_blank" rel="external">手把手教你撸一个简易的 webpack</a><br><a href="https://juejin.im/post/5b2872516fb9a00e8626e34f" target="_blank" rel="external">这可能是vue-cli最全的解析了……</a></p>
+<h2 id="计算机原理相关"><a href="#计算机原理相关" class="headerlink" title="计算机原理相关"></a>计算机原理相关</h2><h3 id="字符集与字符编码"><a href="#字符集与字符编码" class="headerlink" title="字符集与字符编码"></a>字符集与字符编码</h3><p><a href="http://www.freebuf.com/articles/others-articles/25623.html" target="_blank" rel="external">学点编码知识又不会死：Unicode的流言终结者和编码大揭秘</a><br><a href="http://www.cnblogs.com/BHfeimao/p/7410537.html" target="_blank" rel="external">常见几种校验方法（CS和校验、CRC16、CRC32、BCC异或校验）</a><br><a href="http://www.codeceo.com/article/encoding-problems.html" target="_blank" rel="external">字符编码常识及问题解析</a></p>
+<h2 id="23种设计模式"><a href="#23种设计模式" class="headerlink" title="23种设计模式"></a>23种设计模式</h2><p><a href="https://juejin.im/post/5afe6430518825428630bc4d" target="_blank" rel="external">JavaScript 中常见设计模式整理</a><br><a href="https://www.cnblogs.com/lovesong/p/5272752.html" target="_blank" rel="external">设计模式（三）：观察者模式与发布/订阅模式区别</a></p>
+<h2 id="PWA应用及其他相关技术"><a href="#PWA应用及其他相关技术" class="headerlink" title="PWA应用及其他相关技术"></a>PWA应用及其他相关技术</h2><h3 id="pwa"><a href="#pwa" class="headerlink" title="pwa"></a>pwa</h3><p><a href="https://juejin.im/entry/5a1c394a5188255851326da5" target="_blank" rel="external">第一本 PWA 中文书</a><br><a href="https://toutiao.io/posts/d9j4uf" target="_blank" rel="external">百度在 PWA 方面的探索与最佳实践</a><br><a href="https://juejin.im/post/5ae2f82f6fb9a07acd4d761e" target="_blank" rel="external">PWA介绍及快速上手搭建一个PWA应用</a><br><a href="https://juejin.im/post/5ae2f82f6fb9a07acd4d761e#comment" target="_blank" rel="external">PWA介绍及快速上手搭建一个PWA应用</a><br><a href="https://zhuanlan.zhihu.com/p/27853228" target="_blank" rel="external">饿了么的 PWA 升级实践</a><br><a href="https://zhuanlan.zhihu.com/p/25800461" target="_blank" rel="external">PWA 在饿了么的实践经验</a><br><a href="https://www.villainhr.com/page/2017/01/08/Service%20Worker%20%E5%85%A8%E9%9D%A2%E8%BF%9B%E9%98%B6" target="_blank" rel="external">Service Worker 全面进阶</a><br><a href="https://github.com/ljinkai/pwa-collection" target="_blank" rel="external">pwa-collection</a><br><a href="https://juejin.im/post/58dba0b3a22b9d00647db6c3" target="_blank" rel="external">改造你的网站，变身 PWA</a><br><a href="https://blog.csdn.net/qinyuanpei/article/details/78574205" target="_blank" rel="external">迁移Hexo博客到Google渐进式Web应用(PWA)</a><br><a href="https://zhuanlan.zhihu.com/p/25459319" target="_blank" rel="external">PWA 入门: 写个非常简单的 PWA 页面</a></p>
+<p><a href="http://www.codedata.cn/hacknews/152721517217630198" target="_blank" rel="external">PWA笔记(各种相关点不详细，但是启发性强)</a><br><a href="https://juejin.im/post/5aca14b6f265da237c692e6f" target="_blank" rel="external">【PWA学习与实践】(3) 让你的WebApp离线可用</a></p>
+<h3 id="快应用"><a href="#快应用" class="headerlink" title="快应用"></a>快应用</h3><p><a href="https://juejin.im/post/5abdc774f265da23953117eb" target="_blank" rel="external">快应用入门，看这篇就够了</a></p>
+<h2 id="黑科技"><a href="#黑科技" class="headerlink" title="黑科技"></a>黑科技</h2><p>jhipster<br><a href="https://juejin.im/post/5ae292c86fb9a07a9c03efab" target="_blank" rel="external">用flow.js提升前端健壮性</a><br><a href="https://sspai.com/post/42361" target="_blank" rel="external">JSBox: 一个创造工具的工具</a></p>
+<h3 id="JSBox"><a href="#JSBox" class="headerlink" title="JSBox"></a>JSBox</h3><p><a href="https://juejin.im/post/5b1a21bb5188254fbb756b23" target="_blank" rel="external">如何实现一个乞丐版JSBox (一) 引擎篇</a></p>
+<h3 id="Taro"><a href="#Taro" class="headerlink" title="Taro"></a>Taro</h3><p><a href="https://juejin.im/entry/5b19155bf265da6e083be667" target="_blank" rel="external">多端统一开发框架 - Taro</a><br><a href="https://juejin.im/post/5b1f8bd96fb9a01e2c6987d6" target="_blank" rel="external">Taro 学习笔记</a></p>
+<h3 id="mpvue"><a href="#mpvue" class="headerlink" title="mpvue"></a>mpvue</h3><p><a href="https://www.awesomes.cn/repo/Meituan-Dianping/mpvue" target="_blank" rel="external">基于 Vue.js 的小程序开发框架，从底层支持 Vue.js 语法和构建工具体系</a></p>
+<h2 id="合集"><a href="#合集" class="headerlink" title="合集"></a>合集</h2><p><a href="https://juejin.im/post/5a961d496fb9a06356314a36" target="_blank" rel="external">前端知识集锦</a><br><a href="https://juejin.im/post/5aae076d6fb9a028cc6100a9?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="external">前端面试考点多？看这几篇文章就够了</a><br><a href="https://juejin.im/post/5abb22925188255c4c1050e0" target="_blank" rel="external">3月前端知识集锦</a><br><strong><a href="http://hpoenixf.com/%E5%89%8D%E7%AB%AF%E8%BF%9B%E9%98%B6%E7%B3%BB%E5%88%97-%E7%9B%AE%E5%BD%95.html" target="_blank" rel="external">前端进阶系列-目录</a></strong><br><a href="https://zhuanlan.zhihu.com/p/22229868" target="_blank" rel="external">送给前端的你，推荐几篇前端汇总文章。</a></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p><a href="http://jartto.wang/2018/03/29/audition-of-f2e/" target="_blank" rel="external">前端反思录（一）－技术就是核心竞争力</a></p>
+<h2 id="优秀博客"><a href="#优秀博客" class="headerlink" title="优秀博客"></a>优秀博客</h2><p><a href="http://jartto.wang/" target="_blank" rel="external">Jartto()</a><br><a href="http://blog.404mzk.com/" target="_blank" rel="external">WEB开发积累</a></p>
+<p><strong>参考资料</strong></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/15/一个合格前端er的技能树/">一个合格前端er的技能树</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年03月15日 - 14:03</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/03/15/一个合格前端er的技能树/" title="一个合格前端er的技能树">https://zhyjor.github.io/2018/03/15/一个合格前端er的技能树/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/03/15/一个合格前端er的技能树/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/技术路线/" rel="tag"># 技术路线</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/15/npm实践之二：scripts的最优配置/" rel="next" title="npm实践之二：scripts的最优配置">
+                <i class="fa fa-chevron-left"></i> npm实践之二：scripts的最优配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/16/vue源码解读之四：initMixin做了什么/" rel="prev" title="vue源码解读之四：initMixin做了什么">
+                vue源码解读之四：initMixin做了什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#css-css3"><span class="nav-number">1.</span> <span class="nav-text">css/css3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Js-ES6-TypeSctipt"><span class="nav-number">2.</span> <span class="nav-text">Js/ES6/TypeSctipt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关博客"><span class="nav-number">2.1.</span> <span class="nav-text">相关博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存"><span class="nav-number">2.2.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#难点"><span class="nav-number">2.3.</span> <span class="nav-text">难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码风格"><span class="nav-number">2.4.</span> <span class="nav-text">编码风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zepto"><span class="nav-number">2.5.</span> <span class="nav-text">zepto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babel"><span class="nav-number">2.6.</span> <span class="nav-text">babel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BOM与DOM相关api"><span class="nav-number">2.7.</span> <span class="nav-text">BOM与DOM相关api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js中的奇怪问题"><span class="nav-number">2.8.</span> <span class="nav-text">js中的奇怪问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法与数据结构"><span class="nav-number">3.</span> <span class="nav-text">算法与数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-http-TSL-SSL"><span class="nav-number">4.</span> <span class="nav-text">TCP/http/TSL/SSL/</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jwt"><span class="nav-number">4.1.</span> <span class="nav-text">jwt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http"><span class="nav-number">4.2.</span> <span class="nav-text">http</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">4.3.</span> <span class="nav-text">https</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库知识"><span class="nav-number">5.</span> <span class="nav-text">数据库知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式编程"><span class="nav-number">6.</span> <span class="nav-text">函数式编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">7.</span> <span class="nav-text">性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器的渲染机制"><span class="nav-number">8.</span> <span class="nav-text">浏览器的渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#js垃圾回收"><span class="nav-number">8.1.</span> <span class="nav-text">js垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形相关-canvas-webgl-three-js"><span class="nav-number">9.</span> <span class="nav-text">图形相关/canvas/webgl/three.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#canvas"><span class="nav-number">9.1.</span> <span class="nav-text">canvas</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全"><span class="nav-number">10.</span> <span class="nav-text">网络安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM框架的使用、原理及源码阅读"><span class="nav-number">11.</span> <span class="nav-text">MVVM框架的使用、原理及源码阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优秀框架与开源项目"><span class="nav-number">12.</span> <span class="nav-text">优秀框架与开源项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#domDIFF"><span class="nav-number">12.1.</span> <span class="nav-text">domDIFF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue的难点"><span class="nav-number">12.2.</span> <span class="nav-text">vue的难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论基础"><span class="nav-number">12.3.</span> <span class="nav-text">理论基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码学习"><span class="nav-number">12.4.</span> <span class="nav-text">源码学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue项目"><span class="nav-number">13.</span> <span class="nav-text">vue项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react"><span class="nav-number">14.</span> <span class="nav-text">react</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">15.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hybrid-混合开发"><span class="nav-number">16.</span> <span class="nav-text">Hybrid 混合开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端工程化自动化"><span class="nav-number">17.</span> <span class="nav-text">前端工程化自动化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#领域驱动开发"><span class="nav-number">17.1.</span> <span class="nav-text">领域驱动开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack"><span class="nav-number">17.2.</span> <span class="nav-text">webpack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机原理相关"><span class="nav-number">18.</span> <span class="nav-text">计算机原理相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符集与字符编码"><span class="nav-number">18.1.</span> <span class="nav-text">字符集与字符编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23种设计模式"><span class="nav-number">19.</span> <span class="nav-text">23种设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWA应用及其他相关技术"><span class="nav-number">20.</span> <span class="nav-text">PWA应用及其他相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pwa"><span class="nav-number">20.1.</span> <span class="nav-text">pwa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快应用"><span class="nav-number">20.2.</span> <span class="nav-text">快应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#黑科技"><span class="nav-number">21.</span> <span class="nav-text">黑科技</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSBox"><span class="nav-number">21.1.</span> <span class="nav-text">JSBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Taro"><span class="nav-number">21.2.</span> <span class="nav-text">Taro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mpvue"><span class="nav-number">21.3.</span> <span class="nav-text">mpvue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合集"><span class="nav-number">22.</span> <span class="nav-text">合集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">23.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优秀博客"><span class="nav-number">24.</span> <span class="nav-text">优秀博客</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

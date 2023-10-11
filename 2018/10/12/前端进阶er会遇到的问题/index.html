@@ -1,0 +1,1117 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="遇到的一些常见的问题的总结，大概记录一下，查漏补缺">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端进阶er会遇到的问题">
+<meta property="og:url" content="https://zhyjor.github.io/2018/10/12/前端进阶er会遇到的问题/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="遇到的一些常见的问题的总结，大概记录一下，查漏补缺">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201809141647_927.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端进阶er会遇到的问题">
+<meta name="twitter:description" content="遇到的一些常见的问题的总结，大概记录一下，查漏补缺">
+<meta name="twitter:image" content="http://static.zhyjor.com/201809141647_927.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/10/12/前端进阶er会遇到的问题/"/>
+
+
+
+
+
+  <title> 前端进阶er会遇到的问题 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/10/12/前端进阶er会遇到的问题/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端进阶er会遇到的问题
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-12T00:50:51+00:00">
+                2018-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/12/前端进阶er会遇到的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/12/前端进阶er会遇到的问题/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>遇到的一些常见的问题的总结，大概记录一下，查漏补缺<br><a id="more"></a></p>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><h3 id="es6"><a href="#es6" class="headerlink" title="es6"></a>es6</h3><h3 id="js基础"><a href="#js基础" class="headerlink" title="js基础"></a>js基础</h3><h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><h3 id="常见布局"><a href="#常见布局" class="headerlink" title="常见布局"></a>常见布局</h3><h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><p>浏览器的渲染<br>响应式页面怎么做</p>
+<h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><h3 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h3><h3 id="jquery"><a href="#jquery" class="headerlink" title="jquery"></a>jquery</h3><h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><h3 id="https"><a href="#https" class="headerlink" title="https"></a>https</h3><h3 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h3><h3 id="http2-0"><a href="#http2-0" class="headerlink" title="http2.0"></a>http2.0</h3><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><h3 id="html语义化的理解，有什么好处"><a href="#html语义化的理解，有什么好处" class="headerlink" title="html语义化的理解，有什么好处"></a>html语义化的理解，有什么好处</h3><p>根据内容的结构化（内容语义化），选择合适的标签（代码语义化）便于开发者阅读和写出更优雅的代码的同时让浏览器的爬虫和机器很好地解析。 注意：<br>1.尽可能少的使用无语义的标签div和span；<br>2.在语义不明显时，既可以使用div或者p时，尽量用p,<br>因为p在默认情况下有上下间距，对兼容特殊终端有利；<br>3.不要使用纯样式标签，如：b、font、u等，改用css设置。<br>4.需要强调的文本，可以包含在strong或者em标签中（浏览器预设样式，能用CSS指定就不用他们），strong默认样式是加粗（不要用b），em是斜体（不用i）；<br>5.使用表格时，标题要用caption，表头用thead，主体部分用tbody包围，尾部用tfoot包围。表头和一般单元格要区分开，表头用th，单元格用td；<br>6.表单域要用fieldset标签包起来，并用legend标签说明表单的用途；<br>7.每个input标签对应的说明文本都需要使用label标签，并且通过为input设置id属性，在lable标签中设置for=someld来让说明文本和相对应的input关联起来。</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h3><p>ie盒模型算上border、padding及自身（不算margin），标准的只算上自身窗体的大小 css设置方法如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/* 标准模型 */</div><div class="line">box-sizing:content-box;</div><div class="line"> /*IE模型*/</div><div class="line">box-sizing:border-box;</div></pre></td></tr></table></figure></p>
+<h3 id="css优先级确定"><a href="#css优先级确定" class="headerlink" title="css优先级确定"></a>css优先级确定</h3><ul>
+<li>每个选择器都有权值，权值越大越优先</li>
+<li>继承的样式优先级低于自身指定样式</li>
+<li>！important优先级最高 js也无法修改</li>
+<li>权值相同时，靠近元素的样式优先级高 顺序为内联样式表（标签内部）&gt; * 内部样式表（当前文件中）&gt; 外部样式表（外部文件中）</li>
+</ul>
+<h3 id="CSS实现水平垂直居中"><a href="#CSS实现水平垂直居中" class="headerlink" title="CSS实现水平垂直居中"></a>CSS实现水平垂直居中</h3><p>仅居中元素定宽高适用</p>
+<ul>
+<li>absolute + 负margin</li>
+<li>absolute + margin auto</li>
+<li>absolute + calc</li>
+</ul>
+<p>居中元素不定宽高</p>
+<ul>
+<li>absolute + transform</li>
+<li>lineheight</li>
+<li>writing-mode</li>
+<li>table</li>
+<li>css-table</li>
+<li>flex</li>
+<li>grid</li>
+</ul>
+<h3 id="如何清除浮动-为什么要清除"><a href="#如何清除浮动-为什么要清除" class="headerlink" title="如何清除浮动,为什么要清除"></a>如何清除浮动,为什么要清除</h3><p>不清除浮动会发生高度塌陷：浮动元素父元素高度自适应（父元素不写高度时，子元素写了浮动后，父元素会发生高度塌陷）</p>
+<ul>
+<li>clear清除浮动（添加空div法）在浮动元素下方添加空div,并给该元素写css样式：   {clear:both;height:0;overflow:hidden;}</li>
+<li>给浮动元素父级设置高度</li>
+<li>父级同时浮动（需要给父级同级元素添加浮动）</li>
+<li>父级设置成inline-block，其margin: 0 auto居中方式失效</li>
+<li>给父级添加overflow:hidden 清除浮动方法</li>
+<li>万能清除法 after伪类 清浮动（现在主流方法，推荐使用）</li>
+</ul>
+<h2 id="js-1"><a href="#js-1" class="headerlink" title="js"></a>js</h2><h3 id="什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行"><a href="#什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行" class="headerlink" title="什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行"></a>什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行</h3><p>常见两种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1.(function()&#123;...&#125;)()</div><div class="line">  (function(x)&#123;</div><div class="line">	  console.log(x);</div><div class="line">  &#125;)(12345)</div><div class="line">2.(function()&#123;...&#125;())</div><div class="line">  (function(x)&#123;</div><div class="line">	  console.log(x);</div><div class="line">  &#125;(12345))</div></pre></td></tr></table></figure></p>
+<p>作用 不破坏污染全局的命名空间，若需要使用，将其用变量传入如<br>（function(window){…}(window)）</p>
+<p>正常的js解析器遇到圆括号会当成表达式来执行，所以可以立即执行。</p>
+<h3 id="什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？"><a href="#什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？" class="headerlink" title="什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？"></a>什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？</h3><p>NaN属性表示“不是数字”的值。这个特殊值是由于一个操作数是非数字的（例如“abc”/ 4）或者因为操作的结果是非数字而无法执行的。</p>
+<p>虽然这看起来很简单，但NaN有一些令人惊讶的特征，如果人们没有意识到这些特征，就会导致bug。</p>
+<p>一方面，虽然NaN的意思是“不是数字”，但它的类型是，数字：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(typeof NaN === &quot;number&quot;); // logs &quot;true&quot;</div></pre></td></tr></table></figure></p>
+<p>测试数字是否等于NaN的半可靠方法是使用内置函数isNaN()，但即使使用 isNaN()也不是一个好的解决方案。</p>
+<p>此外，NaN相比任何事情 - 甚至本身！ - 是false：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(NaN === NaN); // logs &quot;false&quot;</div></pre></td></tr></table></figure></p>
+<p>一个更好的解决方案要么是使用value!==value，如果该值等于NaN，那么只会生成true。另外，ES6提供了一个新的Number.isNaN()函数 ，它与旧的全局isNaN()函数不同，也更加可靠。</p>
+<h3 id="Promise的原理"><a href="#Promise的原理" class="headerlink" title="Promise的原理"></a>Promise的原理</h3><p>在Promise的内部，有一个状态管理器的存在，有三种状态：pending、fulfilled、rejected。　　　　<br>(1) promise 对象初始化状态为 pending。　　　　<br>(2) 当调用resolve(成功)，会由pending =&gt; fulfilled。　　　　<br>(3) 当调用reject(失败)，会由pending =&gt; rejected。</p>
+<p><strong>promise.race()</strong>方法也可以处理一个promise实例数组但它和<strong>promise.all()</strong>不同，从字面意思上理解就是竞速，那么理解起来上就简单多了，也就是说在数组中的元素实例那个率先改变状态，就向下传递谁的状态和异步结果。但是，其余的还是会继续进行的。</p>
+<h2 id="http-1"><a href="#http-1" class="headerlink" title="http"></a>http</h2><h3 id="http中的状态码302代表的是什么意思"><a href="#http中的状态码302代表的是什么意思" class="headerlink" title="http中的状态码302代表的是什么意思"></a>http中的状态码302代表的是什么意思</h3><p>302重定向表示临时性转移(Temporarily Moved )，当一个网页URL需要短期变化时使用。</p>
+<p>301重定向/跳转一般，表示本网页永久性转移到另一个地址。    </p>
+<p>301是永久性转移(Permanently Moved),SEO常用的招式，会把旧页面的PR等信息转移到新页面301重定向与302重定向的区别   301重定向是永久的重定向，搜索引擎在抓取新内容的同时也将旧的网址替换为重定向之后的网址。<br>302重定向是临时的重定向，搜索引擎会抓取新的内容而保留旧的网址。因为服务器返回302代码，搜索引擎认为新的网址只是暂时的。</p>
+<h3 id="缓存-1"><a href="#缓存-1" class="headerlink" title="缓存"></a>缓存</h3><ul>
+<li>Expires在http1.0中使用，与服务器时间有误差，在1.1中由Cache-control替代</li>
+</ul>
+<h3 id="Cookie-sessionStorage-localStorage"><a href="#Cookie-sessionStorage-localStorage" class="headerlink" title="Cookie sessionStorage localStorage"></a>Cookie sessionStorage localStorage</h3><p>共同点：都是保存在浏览器端，且同源的。</p>
+<p>区别：</p>
+<ul>
+<li>cookie数据始终在同源的http请求中携带，即cookie在浏览器和服务器间来回传递。而sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存。</li>
+<li>cookie数据不能超过4k(适合保存小数据)。sessionStorage和localStorage容量较大</li>
+<li>数据有效期不同sessionStorage：仅在当前浏览器窗口关闭前有效。localStorage：始终有效，窗口或浏览器关闭也一直保存，需手动清楚；cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭。</li>
+<li>作用域不同。sessionStorage不在不同的浏览器窗口中共享；localStorage 在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。</li>
+<li>应用场景：localStorage：常用于长期登录（+判断用户是否已登录），适合长期保存在本地的数据。sessionStorage ：敏感账号一次性登录； cookies与服务器交互。</li>
+</ul>
+<h2 id="dom"><a href="#dom" class="headerlink" title="dom"></a>dom</h2><h3 id="请描述dom事件的流程，即从触发到结束的整个过程"><a href="#请描述dom事件的流程，即从触发到结束的整个过程" class="headerlink" title="请描述dom事件的流程，即从触发到结束的整个过程"></a>请描述dom事件的流程，即从触发到结束的整个过程</h3><p>事件流包括三个阶段:事件捕获阶段、处于目标阶段和事件冒泡阶段。首先发生的是事件捕获，</p>
+<p>为截获事件提供了机会。然后是实际的目标接收到事件。最后一个阶段是冒泡阶 段，可以在这个阶段对事件做出响应。单击<code>&lt;div&gt;</code>元素会按照如下图：<br><img src="http://static.zhyjor.com/201809141647_927.png" alt=""></p>
+<h3 id="script标签到defer和async属性有什么作用和区别"><a href="#script标签到defer和async属性有什么作用和区别" class="headerlink" title="script标签到defer和async属性有什么作用和区别"></a>script标签到defer和async属性有什么作用和区别</h3><p>async属性，表示后续文档的加载和渲染与js脚本的加载和执行是并行进行的，即异步执行。defer属性，加载后续文档的过程和js脚本的加载(此时仅加载不执行)是并行进行的(异步)，js脚本的执行需要等到文档所有元素解析完成之后，DOMContentLoaded事件触发执行之前。</p>
+<p>区别：</p>
+<ul>
+<li>defer和async在网络加载过程是一致的，都是异步执行的；</li>
+<li>.两者的区别在于脚本加载完成之后何时执行，defer更符合大多数场景对应用脚本加载和执行的要求；</li>
+<li>如果存在多个有defer属性的脚本，那么它们是按照加载顺序执行脚本的；而对于async，它的加载和执行是紧紧挨着的，无论声明顺序如何，只要加载完成就立刻执行，它对于应用脚本用处不大，因为它完全不考虑依赖。</li>
+</ul>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>跨网站指令码（英语：Cross-site scripting，通常简称为：XSS）是一种网站应用程式的安全漏洞攻击，是代码注入的一种。它允许恶意使用者将程式码注入到网页上，其他使用者在观看网页时就会受到影响。这类攻击通常包含了 HTML 以及使用者端脚本语言。</p>
+<p><strong>XSS 分为三种：反射型，存储型和 DOM-based</strong></p>
+<p><strong>最普遍的做法是转义输入输出的内容，对于引号，尖括号，斜杠进行转义</strong></p>
+<h3 id="什么是CSRF攻击，如何预防"><a href="#什么是CSRF攻击，如何预防" class="headerlink" title="什么是CSRF攻击，如何预防"></a>什么是CSRF攻击，如何预防</h3><p>跨站请求伪造（英语：Cross-site request forgery），也被称为 one-click attack 或者 session riding，通常缩写为 CSRF 或者 XSRF， 是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。</p>
+<p>简单点说，CSRF 就是利用用户的登录态发起恶意请求。</p>
+<p><strong>如何防御</strong><br>Get 请求不对数据进行修改<br>不让第三方网站访问到用户 Cookie<br>阻止第三方网站请求接口<br>请求时附带验证信息，比如验证码或者 token</p>
+<h3 id="密码安全"><a href="#密码安全" class="headerlink" title="密码安全"></a>密码安全</h3><p>对于密码存储来说，必然是不能明文存储在数据库中的，否则一旦数据库泄露，会对用户造成很大的损失。并且不建议只对密码单纯通过加密算法加密，因为存在彩虹表的关系。</p>
+<p>通常需要对密码加盐，然后进行几次不同加密算法的加密。</p>
+<h2 id="浏览器-1"><a href="#浏览器-1" class="headerlink" title="浏览器"></a>浏览器</h2><h3 id="什么是跨域，如何解决"><a href="#什么是跨域，如何解决" class="headerlink" title="什么是跨域，如何解决"></a>什么是跨域，如何解决</h3><p>因为浏览器出于安全考虑，有同源策略。也就是说，如果协议、域名或者端口有一个不同就是跨域，Ajax 请求会失败。</p>
+<p>我们可以通过以下几种常用方法解决跨域的问题</p>
+<ul>
+<li>JSONP，JSONP 使用简单且兼容性不错，但是只限于 get 请求。</li>
+<li>CORS，服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</li>
+<li>document.domain ，该方式只能用于二级域名相同的情况下，比如 a.test.com 和 b.test.com 适用于该方式。</li>
+<li>postMessage 这种方式通常用于获取嵌入页面中的第三方页面数据。一个页面发送消息，另一个页面判断来源并接收消息</li>
+</ul>
+<h3 id="Event-loop"><a href="#Event-loop" class="headerlink" title="Event loop"></a>Event loop</h3><p>众所周知 JS 是门非阻塞单线程语言，因为在最初 JS 就是为了和浏览器交互而诞生的。如果 JS 是门多线程的语言话，我们在多个线程中处理 DOM 就可能会发生问题（一个线程中新加节点，另一个线程中删除节点），当然可以引入读写锁解决这个问题。</p>
+<p>JS 在执行的过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 Task（有多种 task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以本质上来说 JS 中的异步还是同步行为。</p>
+<p>不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task。</p>
+<p>微任务包括 process.nextTick ，promise ，Object.observe ，MutationObserver</p>
+<p>宏任务包括 script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering</p>
+<p><strong>所以正确的一次 Event loop 顺序是这样的</strong></p>
+<ul>
+<li>执行同步代码，这属于宏任务</li>
+<li>执行栈为空，查询是否有微任务需要执行</li>
+<li>执行所有微任务</li>
+<li>必要的话渲染 UI</li>
+<li>然后开始下一轮 Event loop，执行宏任务中的异步代码</li>
+</ul>
+<h3 id="Load-和-DOMContentLoaded-区别"><a href="#Load-和-DOMContentLoaded-区别" class="headerlink" title="Load 和 DOMContentLoaded 区别"></a>Load 和 DOMContentLoaded 区别</h3><p>Load 事件触发代表页面中的 DOM，CSS，JS，图片已经全部加载完毕。</p>
+<p>DOMContentLoaded 事件触发代表初始的 HTML 被完全加载和解析，不需要等待 CSS，JS，图片加载。</p>
+<h3 id="重绘（Repaint）和回流（Reflow）"><a href="#重绘（Repaint）和回流（Reflow）" class="headerlink" title="重绘（Repaint）和回流（Reflow）"></a>重绘（Repaint）和回流（Reflow）</h3><p>重绘是当节点需要更改外观而不会影响布局的，比如改变 color 就叫称为重绘<br>回流是布局或者几何属性需要改变就称为回流。<br>回流必定会发生重绘，重绘不一定会引发回流。回流所需的成本比重绘高的多，改变深层次的节点很可能导致父节点的一系列回流。</p>
+<p><strong>所以以下几个动作可能会导致性能问题：</strong></p>
+<ul>
+<li>改变 window 大小</li>
+<li>改变字体</li>
+<li>添加或删除样式</li>
+<li>文字改变</li>
+<li>定位或者浮动</li>
+<li>盒模型</li>
+</ul>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>你做过什么优化性能的举动</p>
+<h2 id="vue-1"><a href="#vue-1" class="headerlink" title="vue"></a>vue</h2><h3 id="生命周期分析"><a href="#生命周期分析" class="headerlink" title="生命周期分析"></a>生命周期分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">beforeCreate: function () &#123;</div><div class="line">        console.group(&apos;beforeCreate 创建前状态===============》&apos;);</div><div class="line">&#125;,</div><div class="line">created: function () &#123;</div><div class="line">    console.group(&apos;created 创建完毕状态===============》&apos;);           </div><div class="line">&#125;,</div><div class="line">beforeMount: function () &#123;</div><div class="line">    console.group(&apos;beforeMount 挂载前状态===============》&apos;);          </div><div class="line">&#125;,</div><div class="line">mounted: function () &#123;</div><div class="line">    console.group(&apos;mounted 挂载结束状态===============》&apos;);        </div><div class="line">&#125;,</div><div class="line">beforeUpdate: function () &#123;</div><div class="line">    console.group(&apos;beforeUpdate 更新前状态===============》&apos;);          </div><div class="line">&#125;,</div><div class="line">updated: function () &#123;</div><div class="line">    console.group(&apos;updated 更新完成状态===============》&apos;);           </div><div class="line">&#125;,</div><div class="line">beforeDestroy: function () &#123;</div><div class="line">    console.group(&apos;beforeDestroy 销毁前状态===============》&apos;);          </div><div class="line">&#125;,</div><div class="line">destroyed: function () &#123;</div><div class="line">    console.group(&apos;destroyed 销毁完成状态===============》&apos;);      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Vue组件间通信"><a href="#Vue组件间通信" class="headerlink" title="Vue组件间通信"></a>Vue组件间通信</h3><h4 id="父组件向子组件通信"><a href="#父组件向子组件通信" class="headerlink" title="父组件向子组件通信"></a>父组件向子组件通信</h4><ul>
+<li>使用props，父组件可以使用props向子组件传递数据。</li>
+<li>使用$children可以在父组件中访问子组件。</li>
+</ul>
+<h4 id="子组件向父组件通信"><a href="#子组件向父组件通信" class="headerlink" title="子组件向父组件通信"></a>子组件向父组件通信</h4><ul>
+<li>子组件通过$emit触发事件，回调给父组件。</li>
+<li>通过修改父组件传递的props来修改父组件数据,<strong>但是并不推荐这么做，并不建议直接修改props的值</strong></li>
+<li>使用$parent可以访问父组件的数据。</li>
+</ul>
+<h4 id="非父子组件、兄弟组件之间的数据传递"><a href="#非父子组件、兄弟组件之间的数据传递" class="headerlink" title="非父子组件、兄弟组件之间的数据传递"></a>非父子组件、兄弟组件之间的数据传递</h4><ul>
+<li>非父子组件通信，Vue官方推荐使用一个Vue实例作为中央事件总线。新建中央事件线,$emit 发送数据, $on 监听并接受数据</li>
+<li>使用vuex</li>
+</ul>
+<p><strong>参考资料</strong><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/10/12/前端进阶er会遇到的问题/">前端进阶er会遇到的问题</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年10月12日 - 08:10</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/10/12/前端进阶er会遇到的问题/" title="前端进阶er会遇到的问题">https://zhyjor.github.io/2018/10/12/前端进阶er会遇到的问题/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/10/12/前端进阶er会遇到的问题/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/11/css进阶之十六：img标签的真面目/" rel="next" title="css进阶之十六：img标签的真面目">
+                <i class="fa fa-chevron-left"></i> css进阶之十六：img标签的真面目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/14/react深入理解之二：状态管理/" rel="prev" title="react深入理解之二：状态管理">
+                react深入理解之二：状态管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js"><span class="nav-number">1.</span> <span class="nav-text">js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#es6"><span class="nav-number">1.1.</span> <span class="nav-text">es6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js基础"><span class="nav-number">1.2.</span> <span class="nav-text">js基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css"><span class="nav-number">2.</span> <span class="nav-text">css</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见布局"><span class="nav-number">2.1.</span> <span class="nav-text">常见布局</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器"><span class="nav-number">3.</span> <span class="nav-text">浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架"><span class="nav-number">4.</span> <span class="nav-text">框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue"><span class="nav-number">4.1.</span> <span class="nav-text">vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery"><span class="nav-number">4.2.</span> <span class="nav-text">jquery</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http"><span class="nav-number">5.</span> <span class="nav-text">http</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">5.1.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">5.2.</span> <span class="nav-text">https</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见状态码"><span class="nav-number">5.3.</span> <span class="nav-text">常见状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http2-0"><span class="nav-number">5.4.</span> <span class="nav-text">http2.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">6.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html"><span class="nav-number">7.</span> <span class="nav-text">html</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html语义化的理解，有什么好处"><span class="nav-number">7.1.</span> <span class="nav-text">html语义化的理解，有什么好处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">8.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#盒模型"><span class="nav-number">8.1.</span> <span class="nav-text">盒模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css优先级确定"><span class="nav-number">8.2.</span> <span class="nav-text">css优先级确定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS实现水平垂直居中"><span class="nav-number">8.3.</span> <span class="nav-text">CSS实现水平垂直居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何清除浮动-为什么要清除"><span class="nav-number">8.4.</span> <span class="nav-text">如何清除浮动,为什么要清除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js-1"><span class="nav-number">9.</span> <span class="nav-text">js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行"><span class="nav-number">9.1.</span> <span class="nav-text">什么是立即执行函数？使用立即执行函数的目的是什么？为什么立即执行函数可以立即执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？"><span class="nav-number">9.2.</span> <span class="nav-text">什么是NaN？它的类型是什么？如何可靠地测试一个值是否等于NaN？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise的原理"><span class="nav-number">9.3.</span> <span class="nav-text">Promise的原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-1"><span class="nav-number">10.</span> <span class="nav-text">http</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http中的状态码302代表的是什么意思"><span class="nav-number">10.1.</span> <span class="nav-text">http中的状态码302代表的是什么意思</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存-1"><span class="nav-number">10.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-sessionStorage-localStorage"><span class="nav-number">10.3.</span> <span class="nav-text">Cookie sessionStorage localStorage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dom"><span class="nav-number">11.</span> <span class="nav-text">dom</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请描述dom事件的流程，即从触发到结束的整个过程"><span class="nav-number">11.1.</span> <span class="nav-text">请描述dom事件的流程，即从触发到结束的整个过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#script标签到defer和async属性有什么作用和区别"><span class="nav-number">11.2.</span> <span class="nav-text">script标签到defer和async属性有什么作用和区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">12.</span> <span class="nav-text">安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS"><span class="nav-number">12.1.</span> <span class="nav-text">XSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是CSRF攻击，如何预防"><span class="nav-number">12.2.</span> <span class="nav-text">什么是CSRF攻击，如何预防</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码安全"><span class="nav-number">12.3.</span> <span class="nav-text">密码安全</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器-1"><span class="nav-number">13.</span> <span class="nav-text">浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是跨域，如何解决"><span class="nav-number">13.1.</span> <span class="nav-text">什么是跨域，如何解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-loop"><span class="nav-number">13.2.</span> <span class="nav-text">Event loop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-和-DOMContentLoaded-区别"><span class="nav-number">13.3.</span> <span class="nav-text">Load 和 DOMContentLoaded 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重绘（Repaint）和回流（Reflow）"><span class="nav-number">13.4.</span> <span class="nav-text">重绘（Repaint）和回流（Reflow）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">14.</span> <span class="nav-text">性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-1"><span class="nav-number">15.</span> <span class="nav-text">vue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期分析"><span class="nav-number">15.1.</span> <span class="nav-text">生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue组件间通信"><span class="nav-number">15.2.</span> <span class="nav-text">Vue组件间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#父组件向子组件通信"><span class="nav-number">15.2.1.</span> <span class="nav-text">父组件向子组件通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子组件向父组件通信"><span class="nav-number">15.2.2.</span> <span class="nav-text">子组件向父组件通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非父子组件、兄弟组件之间的数据传递"><span class="nav-number">15.2.3.</span> <span class="nav-text">非父子组件、兄弟组件之间的数据传递</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

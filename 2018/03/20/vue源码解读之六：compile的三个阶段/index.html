@@ -1,0 +1,1053 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vue,vue源码解读," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="template模板通过compile编译，最终得到render function，这里不是响应式式核心的内容，但是可以了解其大概的流程。compile主要分了parse、optimize、generate三个阶段。">
+<meta name="keywords" content="vue,vue源码解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue源码解读之六：compile的三个阶段">
+<meta property="og:url" content="https://zhyjor.github.io/2018/03/20/vue源码解读之六：compile的三个阶段/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="template模板通过compile编译，最终得到render function，这里不是响应式式核心的内容，但是可以了解其大概的流程。compile主要分了parse、optimize、generate三个阶段。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201806071047_559.png">
+<meta property="og:image" content="http://static.zhyjor.com/201806071115_814.png">
+<meta property="og:image" content="http://static.zhyjor.com/201806071125_530.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue源码解读之六：compile的三个阶段">
+<meta name="twitter:description" content="template模板通过compile编译，最终得到render function，这里不是响应式式核心的内容，但是可以了解其大概的流程。compile主要分了parse、optimize、generate三个阶段。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201806071047_559.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/03/20/vue源码解读之六：compile的三个阶段/"/>
+
+
+
+
+
+  <title> vue源码解读之六：compile的三个阶段 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/03/20/vue源码解读之六：compile的三个阶段/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue源码解读之六：compile的三个阶段
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T02:43:58+00:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/20/vue源码解读之六：compile的三个阶段/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/20/vue源码解读之六：compile的三个阶段/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>template模板通过compile编译，最终得到render function，这里不是响应式式核心的内容，但是可以了解其大概的流程。compile主要分了parse、optimize、generate三个阶段。<br><a id="more"></a><br>借一张图表示一下编译的三个阶段如下：<br><img src="http://static.zhyjor.com/201806071047_559.png" alt=""></p>
+<h2 id="parse函数生成AST"><a href="#parse函数生成AST" class="headerlink" title="parse函数生成AST"></a>parse函数生成AST</h2><p>compile 函数（src/compiler/index.js）就是将 template 编译成 render function 的字符串形式。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/index.js</span></div><div class="line"></div><div class="line"><span class="comment">// 1.parse</span></div><div class="line">  <span class="keyword">const</span> ast = parse(template.trim(), options)</div></pre></td></tr></table></figure></p>
+<p>接下来就详细讲解这个函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/index</span></div><div class="line"></div><div class="line"><span class="comment">// `createCompilerCreator` allows creating compilers that use alternative</span></div><div class="line"><span class="comment">// parser/optimizer/codegen, e.g the SSR optimizing compiler.</span></div><div class="line"><span class="comment">// Here we just export a default compiler using the default parts.</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> createCompiler = createCompilerCreator(<span class="function"><span class="keyword">function</span> <span class="title">baseCompile</span> (<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  template: string,</span></span></div><div class="line"><span class="function"><span class="params">  options: CompilerOptions</span></span></div><div class="line"><span class="function"><span class="params"></span>): <span class="title">CompiledResult</span> </span>&#123;</div><div class="line">  <span class="comment">// 1.parse</span></div><div class="line">  <span class="keyword">const</span> ast = parse(template.trim(), options)</div><div class="line">  <span class="comment">// 2.optimize</span></div><div class="line">  optimize(ast, options)</div><div class="line">  <span class="comment">// 3.generate</span></div><div class="line">  <span class="keyword">const</span> code = generate(ast, options)</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    ast,</div><div class="line">    render: code.render,</div><div class="line">    staticRenderFns: code.staticRenderFns</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>createCompiler 函数主要通过3个步骤：parse、optimize、generate来生成一个包含ast、render、staticRenderFns的对象。</p>
+<h3 id="parse函数"><a href="#parse函数" class="headerlink" title="parse函数"></a>parse函数</h3><h4 id="AST"><a href="#AST" class="headerlink" title="AST"></a>AST</h4><p>在说parse函数之前，我们先来了解一个概念：AST(Abstract Syntax Tree)抽象语法树:</p>
+<blockquote>
+<p>AST 的全称是 Abstract Syntax Tree（抽象语法树），是源代码的抽象语法结构的树状表现形式，计算机学科中编译原理的概念。Vue 源码中借鉴 jQuery 作者 John Resig 的 HTML Parser 对模板进行解析，得到的就是 AST 代码。</p>
+</blockquote>
+<p>接着我们看一下Vue中对AST数据的定义：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 为什么在flow文件夹下</span></div><div class="line"><span class="comment">// vue/flow/compiler</span></div><div class="line"></div><div class="line">declare type ASTNode = ASTElement | ASTText | ASTExpression;</div><div class="line"></div><div class="line">declare type ASTElement = &#123;</div><div class="line">  type: <span class="number">1</span>;</div><div class="line">  tag: string;</div><div class="line">  attrsList: <span class="built_in">Array</span>&lt;&#123; <span class="attr">name</span>: string; value: string &#125;&gt;;</div><div class="line">  attrsMap: &#123; [key: string]: string | <span class="literal">null</span> &#125;;</div><div class="line">  parent: ASTElement | <span class="keyword">void</span>;</div><div class="line">  children: <span class="built_in">Array</span>&lt;ASTNode&gt;;</div><div class="line">  ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">declare type ASTExpression = &#123;</div><div class="line">  type: <span class="number">2</span>;</div><div class="line">  expression: string;</div><div class="line">  text: string;</div><div class="line">  <span class="keyword">static</span>?: boolean;</div><div class="line">  <span class="comment">// 2.4 ssr optimization</span></div><div class="line">  <span class="comment">// 2.4+ 增加了对ssr的标识</span></div><div class="line">  ssrOptimizability?: number;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">declare type ASTText = &#123;</div><div class="line">  type: <span class="number">3</span>;</div><div class="line">  text: string;</div><div class="line">  <span class="keyword">static</span>?: boolean;</div><div class="line">  isComment?: boolean;</div><div class="line">  <span class="comment">// 2.4 ssr optimization</span></div><div class="line">  <span class="comment">// 2.4+ 增加了对ssr的标识</span></div><div class="line">  ssrOptimizability?: number;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>可以看到 ASTNode 有三种形式：ASTElement，ASTExpression，ASTText。通过属性type来进行标识。 </p>
+<h4 id="函数功能"><a href="#函数功能" class="headerlink" title="函数功能"></a>函数功能</h4><p>下面我们正式进入parse函数功能：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/index</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">parse</span>(<span class="params">template</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">const</span> stack = [];</div><div class="line">    <span class="keyword">let</span> currentParent;    <span class="comment">//当前父节点</span></div><div class="line">    <span class="keyword">let</span> root;            <span class="comment">//最终返回出去的AST树根节点</span></div><div class="line">    ...</div><div class="line">    parseHTML(template, &#123;</div><div class="line">        start: <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params">tag, attrs, unary</span>) </span>&#123;</div><div class="line">           ......</div><div class="line">        &#125;,</div><div class="line">        end: <span class="function"><span class="keyword">function</span> <span class="title">end</span>(<span class="params"></span>) </span>&#123;</div><div class="line">          ......</div><div class="line">        &#125;,</div><div class="line">        chars: <span class="function"><span class="keyword">function</span> <span class="title">chars</span>(<span class="params">text</span>) </span>&#123;</div><div class="line">           ......</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    <span class="keyword">return</span> root</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们省略了parse的相关内容，只看一下大体的功能，其主要的功能函数应该是parseHTML方法。接受了2个参数，一个使我们的模板template，另一个是包含start、end、chars的方法。 </p>
+<h4 id="相关正则表达式"><a href="#相关正则表达式" class="headerlink" title="相关正则表达式"></a>相关正则表达式</h4><p>在看parseHTML之前，我们需要先了解一下下面这几个正则：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/html-parser.js</span></div><div class="line"></div><div class="line"><span class="comment">// 该正则式可匹配到 &lt;div id="index"&gt; 的 id="index" 属性部分</span></div><div class="line"><span class="keyword">const</span> attribute = <span class="regexp">/^\s*([^\s"'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=&lt;&gt;`]+)))?/</span></div><div class="line"><span class="keyword">const</span> ncname = <span class="string">'[a-zA-Z_][\\w\\-\\.]*'</span></div><div class="line"><span class="keyword">const</span> qnameCapture = <span class="string">`((?:<span class="subst">$&#123;ncname&#125;</span>\\:)?<span class="subst">$&#123;ncname&#125;</span>)`</span></div><div class="line"><span class="comment">// 匹配起始标签</span></div><div class="line"><span class="keyword">const</span> startTagOpen = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`^&lt;<span class="subst">$&#123;qnameCapture&#125;</span>`</span>)</div><div class="line"><span class="keyword">const</span> startTagClose = <span class="regexp">/^\s*(\/?)&gt;/</span></div><div class="line"><span class="comment">// 匹配结束标签</span></div><div class="line"><span class="keyword">const</span> endTag = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`^&lt;\\/<span class="subst">$&#123;qnameCapture&#125;</span>[^&gt;]*&gt;`</span>)</div><div class="line"><span class="comment">// 匹配DOCTYPE、注释等特殊标签</span></div><div class="line"><span class="keyword">const</span> doctype = <span class="regexp">/^&lt;!DOCTYPE [^&gt;]+&gt;/i</span></div><div class="line"><span class="keyword">const</span> comment = <span class="regexp">/^&lt;!\--/</span></div><div class="line"><span class="keyword">const</span> conditionalComment = <span class="regexp">/^&lt;!\[/</span></div></pre></td></tr></table></figure></p>
+<p>Vue 通过上面几个正则表达式去匹配开始结束标签、标签名、属性等等。</p>
+<h4 id="parseHtml函数"><a href="#parseHtml函数" class="headerlink" title="parseHtml函数"></a>parseHtml函数</h4><p>有了上面这些基础，我们再来看看parseHtml的内部实行：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/html-parser.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">parseHTML</span> (<span class="params">html, options</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> stack = []</div><div class="line">  <span class="keyword">const</span> expectHTML = options.expectHTML</div><div class="line">  <span class="keyword">const</span> isUnaryTag = options.isUnaryTag || no</div><div class="line">  <span class="keyword">const</span> canBeLeftOpenTag = options.canBeLeftOpenTag || no</div><div class="line">  <span class="keyword">let</span> index = <span class="number">0</span></div><div class="line">  <span class="keyword">let</span> last, lastTag</div><div class="line">  <span class="keyword">while</span> (html) &#123;</div><div class="line">    <span class="comment">// 保留 html 副本</span></div><div class="line">    last = html</div><div class="line">    <span class="comment">// 如果没有lastTag，并确保我们不是在一个纯文本内容元素中：script、style、textarea</span></div><div class="line">    <span class="keyword">if</span> (!lastTag || !isPlainTextElement(lastTag)) &#123;</div><div class="line">      <span class="keyword">let</span> textEnd = html.indexOf(<span class="string">'&lt;'</span>)</div><div class="line">      <span class="keyword">if</span> (textEnd === <span class="number">0</span>) &#123;</div><div class="line">        <span class="comment">// Comment:</span></div><div class="line">        <span class="keyword">if</span> (comment.test(html)) &#123;</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (conditionalComment.test(html)) &#123;</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Doctype:</span></div><div class="line">        <span class="keyword">const</span> doctypeMatch = html.match(doctype)</div><div class="line">        <span class="keyword">if</span> (doctypeMatch) &#123;</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// End tag:</span></div><div class="line">        <span class="keyword">const</span> endTagMatch = html.match(endTag)</div><div class="line">        <span class="keyword">if</span> (endTagMatch) &#123;</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Start tag:</span></div><div class="line">        <span class="keyword">const</span> startTagMatch = parseStartTag()</div><div class="line">        <span class="keyword">if</span> (startTagMatch) &#123;</div><div class="line">          ...</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">let</span> text, rest, next</div><div class="line">      <span class="keyword">if</span> (textEnd &gt;= <span class="number">0</span>) &#123;</div><div class="line">        ...</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (textEnd &lt; <span class="number">0</span>) &#123;</div><div class="line">        text = html</div><div class="line">        html = <span class="string">''</span></div><div class="line">      &#125;</div><div class="line">      <span class="comment">// 绘制文本内容，使用 options.char 方法。</span></div><div class="line">      <span class="keyword">if</span> (options.chars &amp;&amp; text) &#123;</div><div class="line">        options.chars(text)</div><div class="line">      &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>上面只看一下代码的大概意思：</p>
+<ul>
+<li>首先通过while (html)去循环判断html内容是否存在。</li>
+<li>再判断文本内容是否在script/style标签中</li>
+<li>上述条件都满足的话，开始解析html字符串</li>
+</ul>
+<p>假设我们传递这样一个html字符串<code>&lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;</code>。我们来看其中一段关于Start tag解析的方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/html-parser.js</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> startTagMatch = parseStartTag()</div><div class="line"><span class="keyword">if</span> (startTagMatch) &#123;</div><div class="line">  handleStartTag(startTagMatch)</div><div class="line">  <span class="keyword">if</span> (shouldIgnoreFirstNewline(lastTag, html)) &#123;</div><div class="line">    advance(<span class="number">1</span>)</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">continue</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里面有parseStartTag 和 handleStartTag两个方法值得关注一下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/html-parser.js</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseStartTag</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">//判断html中是否存在开始标签</span></div><div class="line">  <span class="keyword">const</span> start = html.match(startTagOpen)</div><div class="line">  <span class="keyword">if</span> (start) &#123;</div><div class="line">    <span class="comment">// 定义 match 结构</span></div><div class="line">    <span class="keyword">const</span> match = &#123;</div><div class="line">      tagName: start[<span class="number">1</span>], <span class="comment">// 标签名</span></div><div class="line">      attrs: [], <span class="comment">// 属性名</span></div><div class="line">      start: index <span class="comment">// 起点位置</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 通过传入变量n来截取字符串，这也是Vue解析的重要方法，通过不断地蚕食掉html字符串，一步步完成对他的解析过程</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    advance(start[<span class="number">0</span>].length)</div><div class="line">    <span class="keyword">let</span> end, attr</div><div class="line"></div><div class="line">    <span class="comment">// 如果还没有到结束标签的位置</span></div><div class="line">    <span class="comment">// 存入属性</span></div><div class="line">    <span class="keyword">while</span> (!(end = html.match(startTagClose)) &amp;&amp; (attr = html.match(attribute))) &#123;</div><div class="line">      advance(attr[<span class="number">0</span>].length)</div><div class="line">      match.attrs.push(attr)</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 返回处理后的标签match结构</span></div><div class="line">    <span class="keyword">if</span> (end) &#123;</div><div class="line">      match.unarySlash = end[<span class="number">1</span>]</div><div class="line">      advance(end[<span class="number">0</span>].length)</div><div class="line">      match.end = index</div><div class="line">      <span class="keyword">return</span> match</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>经过上面一步的解析，我们得到了一个起始标签match的数据结构：</p>
+<p><img src="http://static.zhyjor.com/201806071115_814.png" alt=""></p>
+<p>再看一下handleStartTag函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/html-parser.js</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleStartTag</span> (<span class="params">match</span>) </span>&#123;</div><div class="line">  <span class="comment">// match 是上面调用方法的时候传递过来的数据结构</span></div><div class="line">  <span class="keyword">const</span> tagName = match.tagName</div><div class="line">  <span class="keyword">const</span> unarySlash = match.unarySlash</div><div class="line">  ...</div><div class="line">  <span class="keyword">const</span> unary = isUnaryTag(tagName) || !!unarySlash</div><div class="line"></div><div class="line">  <span class="comment">// 备份属性数组的长度</span></div><div class="line">  <span class="keyword">const</span> l = match.attrs.length</div><div class="line">  <span class="comment">// 构建长度为1的空数组</span></div><div class="line">  <span class="keyword">const</span> attrs = <span class="keyword">new</span> <span class="built_in">Array</span>(l)</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; l; i++) &#123;</div><div class="line">    <span class="keyword">const</span> args = match.attrs[i]</div><div class="line">    ...</div><div class="line">    <span class="comment">// 取定义属性的值</span></div><div class="line">    <span class="keyword">const</span> value = args[<span class="number">3</span>] || args[<span class="number">4</span>] || args[<span class="number">5</span>] || <span class="string">''</span></div><div class="line"></div><div class="line">    <span class="comment">// 改变attr的格式为 [&#123;name: 'id', value: 'demo'&#125;]</span></div><div class="line">    attrs[i] = &#123;</div><div class="line">      name: args[<span class="number">1</span>],</div><div class="line">      value: decodeAttr(</div><div class="line">        value,</div><div class="line">        options.shouldDecodeNewlines</div><div class="line">      )</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// stack中记录当前解析的标签</span></div><div class="line">  <span class="comment">// 如果不是自闭和标签</span></div><div class="line">  <span class="comment">// 这里的stack这个变量在parseHTML中定义，作用是为了存放标签名 为了和结束标签进行匹配的作用。</span></div><div class="line">  <span class="keyword">if</span> (!unary) &#123;</div><div class="line">    stack.push(&#123; <span class="attr">tag</span>: tagName, <span class="attr">lowerCasedTag</span>: tagName.toLowerCase(), <span class="attr">attrs</span>: attrs &#125;)</div><div class="line">    lastTag = tagName</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// parse 函数传入的 start 方法</span></div><div class="line">  options.start(tagName, attrs, unary, match.start, match.end)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>到这里似乎一切明朗了许多，parseHTML主要用来蚕食html字符串，解析出字符串中的tagName，attrs，match等元素，传回parseHTML函数中的start方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/index.js</span></div><div class="line"></div><div class="line">start (tag, attrs, unary) &#123;</div><div class="line">  ...</div><div class="line">  <span class="comment">// 创建基础的 ASTElement</span></div><div class="line">  <span class="keyword">let</span> element: ASTElement = createASTElement(tag, attrs, currentParent)</div><div class="line">  <span class="keyword">if</span> (ns) &#123;</div><div class="line">    element.ns = ns</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!inVPre) &#123;</div><div class="line">    <span class="comment">// 判断有没有 v-pre 指令的元素。如果有的话 element.pre = true</span></div><div class="line">    <span class="comment">// 官网有介绍：&lt;span v-pre&gt;&#123;&#123; this will not be compiled &#125;&#125;&lt;/span&gt;</span></div><div class="line">    <span class="comment">// 跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的节点会加快编译。</span></div><div class="line">    processPre(element)</div><div class="line">    <span class="keyword">if</span> (element.pre) &#123;</div><div class="line">      inVPre = <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (platformIsPreTag(element.tag)) &#123;</div><div class="line">    inPre = <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (inVPre) &#123;</div><div class="line">    <span class="comment">// 处理原始属性</span></div><div class="line">    processRawAttrs(element)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!element.processed) &#123;</div><div class="line">    <span class="comment">// structural directives</span></div><div class="line">    <span class="comment">// v-for v-if v-once</span></div><div class="line">    processFor(element)</div><div class="line">    processIf(element)</div><div class="line">    processOnce(element)</div><div class="line">    <span class="comment">// element-scope stuff</span></div><div class="line">    processElement(element, options)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 检查根节点约束</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">checkRootConstraints</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>) &#123;</div><div class="line">      <span class="keyword">if</span> (el.tag === <span class="string">'slot'</span> || el.tag === <span class="string">'template'</span>) &#123;</div><div class="line">        warnOnce(</div><div class="line">          <span class="string">`Cannot use &lt;<span class="subst">$&#123;el.tag&#125;</span>&gt; as component root element because it may `</span> +</div><div class="line">          <span class="string">'contain multiple nodes.'</span></div><div class="line">        )</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (el.attrsMap.hasOwnProperty(<span class="string">'v-for'</span>)) &#123;</div><div class="line">        warnOnce(</div><div class="line">          <span class="string">'Cannot use v-for on stateful component root element because '</span> +</div><div class="line">          <span class="string">'it renders multiple elements.'</span></div><div class="line">        )</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// tree management</span></div><div class="line">  <span class="keyword">if</span> (!root) &#123;</div><div class="line">    <span class="comment">// 如果不存在根节点</span></div><div class="line">    root = element</div><div class="line">    checkRootConstraints(root)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!stack.length) &#123;</div><div class="line">    <span class="comment">// 允许有 v-if, v-else-if 和 v-else 的根元素</span></div><div class="line">    ...</div><div class="line">  <span class="keyword">if</span> (currentParent &amp;&amp; !element.forbidden) &#123;</div><div class="line">    <span class="keyword">if</span> (element.elseif || element.else) &#123;</div><div class="line">      processIfConditions(element, currentParent)</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (element.slotScope) &#123; <span class="comment">// scoped slot</span></div><div class="line">      currentParent.plain = <span class="literal">false</span></div><div class="line">      <span class="keyword">const</span> name = element.slotTarget || <span class="string">'"default"'</span></div><div class="line">      ;(currentParent.scopedSlots || (currentParent.scopedSlots = &#123;&#125;))[name] = element</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="comment">// 将元素插入 children 数组中</span></div><div class="line">      currentParent.children.push(element)</div><div class="line">      element.parent = currentParent</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (!unary) &#123;</div><div class="line">    currentParent = element</div><div class="line">    stack.push(element)</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    endPre(element)</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// apply post-transforms</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; postTransforms.length; i++) &#123;</div><div class="line">    postTransforms[i](element, options)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实start方法就是处理 element 元素的过程。确定命名空间；创建AST元素 element；执行预处理；定义root；处理各类 v- 标签的逻辑；最后更新 root、currentParent、stack 的结果。 最终通过 createASTElement 方法定义了一个新的 AST 对象:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/parser/index.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createASTElement</span> (<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  tag: string,</span></span></div><div class="line"><span class="function"><span class="params">  attrs: Array&lt;Attr&gt;,</span></span></div><div class="line"><span class="function"><span class="params">  parent: ASTElement | void</span></span></div><div class="line"><span class="function"><span class="params"></span>): <span class="title">ASTElement</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    type: <span class="number">1</span>,</div><div class="line">    tag,</div><div class="line">    attrsList: attrs,</div><div class="line">    attrsMap: makeAttrsMap(attrs),</div><div class="line">    parent,</div><div class="line">    children: []</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>下面我们来屡一下parse整体的过程：</p>
+<ul>
+<li>通过parseHtml来一步步解析传入html字符串的标签、元素、文本、注释..</li>
+<li>parseHtml解析过程中，调用传入的start，end，chars方法来生成AST语法树</li>
+</ul>
+<p>我们看一下最终生成的AST语法树对象： </p>
+<p><img src="http://static.zhyjor.com/201806071125_530.png" alt=""></p>
+<h2 id="optimize标记节点"><a href="#optimize标记节点" class="headerlink" title="optimize标记节点"></a>optimize标记节点</h2><p>上一节主要关注了compile的parse部分，我们完成了一个字符串模板解析成一个AST语法树的过程，接下来这一步是优化的关键，我们需要通过optimize方法，将AST节点进行静态节点标记。为后面 patch 过程中对比新旧 VNode 树形结构做优化。被标记为 static 的节点在后面的 diff 算法中会被直接忽略，不做详细的比较。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/index.js</span></div><div class="line"></div><div class="line"> <span class="comment">// 2.optimize</span></div><div class="line">  optimize(ast, options)</div></pre></td></tr></table></figure></p>
+<h3 id="optimize功能"><a href="#optimize功能" class="headerlink" title="optimize功能"></a>optimize功能</h3><p>我们去简单分析一下optimize功能<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/optimizer.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">optimize</span> (<span class="params">root: ?ASTElement, options: CompilerOptions</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span></div><div class="line">  <span class="comment">// staticKeys 是那些认为不会被更改的ast的属性</span></div><div class="line">  isStaticKey = genStaticKeysCached(options.staticKeys || <span class="string">''</span>)</div><div class="line">  isPlatformReservedTag = options.isReservedTag || no</div><div class="line">  <span class="comment">// first pass: mark all non-static nodes.</span></div><div class="line">  <span class="comment">// 第一步 标记 AST 所有静态节点</span></div><div class="line">  markStatic(root)</div><div class="line">  <span class="comment">// second pass: mark static roots.</span></div><div class="line">  <span class="comment">// 第二步 标记 AST 所有父节点（即子树根节点）</span></div><div class="line">  markStaticRoots(root, <span class="literal">false</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="isStatic"><a href="#isStatic" class="headerlink" title="isStatic"></a>isStatic</h4><p>首先标记所有静态节点：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/optimizer.js</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isStatic</span> (<span class="params">node: ASTNode</span>): <span class="title">boolean</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (node.type === <span class="number">2</span>) &#123; <span class="comment">// 表达式</span></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (node.type === <span class="number">3</span>) &#123; <span class="comment">// 文本节点</span></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 处理特殊标记</span></div><div class="line">  <span class="keyword">return</span> !!(node.pre || ( <span class="comment">// v-pre标记的</span></div><div class="line">    !node.hasBindings &amp;&amp; <span class="comment">// no dynamic bindings</span></div><div class="line">    !node.if &amp;&amp; !node.for &amp;&amp; <span class="comment">// not v-if or v-for or v-else</span></div><div class="line">    !isBuiltInTag(node.tag) &amp;&amp; <span class="comment">// not a built-in</span></div><div class="line">    isPlatformReservedTag(node.tag) &amp;&amp; <span class="comment">// not a component</span></div><div class="line">    !isDirectChildOfTemplateFor(node) &amp;&amp;</div><div class="line">    <span class="built_in">Object</span>.keys(node).every(isStaticKey)</div><div class="line">  ))</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ASTNode 的 type 字段用于标识节点的类型，可查看上一篇的 AST 节点定义：type 为 1 表示元素，type 为 2 表示插值表达式，type 为 3 表示普通文本。可以看到，在标记 ASTElement 时会依次检查所有子元素节点的静态标记，从而得出该元素是否为 static。</p>
+<h4 id="markStaticRoots"><a href="#markStaticRoots" class="headerlink" title="markStaticRoots"></a>markStaticRoots</h4><p>上面 markStatic 函数使用的是树形数据结构的深度优先遍历算法，使用递归实现。 接下来继续标记静态树：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/optimizer.js</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">markStaticRoots</span> (<span class="params">node</span>) </span>&#123;</div><div class="line">   <span class="keyword">if</span> (node.type === <span class="number">1</span>) &#123;</div><div class="line">       <span class="comment">// 用以标记在v-for内的静态节点。这个属性用以告诉renderStatic(_m)对这个节点生成新的key，避免patch error</span></div><div class="line">       <span class="keyword">if</span> (node.static || node.once) &#123;</div><div class="line">         node.staticInFor = isInFor</div><div class="line">       &#125;</div><div class="line">       <span class="comment">// For a node to qualify as a static root, it should have children that</span></div><div class="line">       <span class="comment">// are not just static text. Otherwise the cost of hoisting out will</span></div><div class="line">       <span class="comment">// outweigh the benefits and it's better off to just always render it fresh.</span></div><div class="line">       <span class="comment">// 一个节点如果想要成为静态根，它的子节点不能单纯只是静态文本。否则，把它单独提取出来还不如重渲染时总是更新它性能高。</span></div><div class="line">       <span class="keyword">if</span> (node.static &amp;&amp; node.children.length &amp;&amp; !(</div><div class="line">               node.children.length === <span class="number">1</span> &amp;&amp;</div><div class="line">               node.children[<span class="number">0</span>].type === <span class="number">3</span></div><div class="line">           )) &#123;</div><div class="line"></div><div class="line">           node.staticRoot = <span class="literal">true</span></div><div class="line">           <span class="keyword">return</span></div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           node.staticRoot = <span class="literal">false</span></div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; node.children.length; i++) &#123;</div><div class="line">           markStaticRoots(node.children[i])</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>markStaticRoots 函数里并没有什么特别的地方，仅仅是对静态节点又做了一层筛选。</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>optimizer旨在为语法树的节点标上static和staticRoot属性。 遍历第一轮，标记static属性：</p>
+<ul>
+<li>判断node是否为static(有诸多条件)</li>
+<li>标记node的children是否为static，若存在non static子节点，父节点更改为static = false</li>
+</ul>
+<p>遍历第二轮，标记staticRoot</p>
+<ul>
+<li>标记static或节点为staticRoot，这个节点type === 1(一般是含有tag属性的节点)</li>
+<li>具有v-once指令的节点同样被标记staticRoot</li>
+<li>为了避免过度优化，只有static text为子节点的节点不被标记为staticRoot</li>
+<li>标记节点children的staticRoot</li>
+</ul>
+<h2 id="generate生成渲染函数过程"><a href="#generate生成渲染函数过程" class="headerlink" title="generate生成渲染函数过程"></a>generate生成渲染函数过程</h2><h3 id="generate-函数"><a href="#generate-函数" class="headerlink" title="generate 函数"></a>generate 函数</h3><p>generate 函数（src/compiler/codegen/index.js）主要功能就是根据 AST 结构拼接生成 render function 的字符串。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// src/compiler/codegen/index.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">generate</span> (<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  ast: ASTElement | void,</span></span></div><div class="line"><span class="function"><span class="params">  options: CompilerOptions</span></span></div><div class="line"><span class="function"><span class="params"></span>): <span class="title">CodegenResult</span> </span>&#123;</div><div class="line">  <span class="keyword">const</span> state = <span class="keyword">new</span> CodegenState(options)</div><div class="line">  <span class="keyword">const</span> code = ast ? genElement(ast, state) : <span class="string">'_c("div")'</span></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="comment">// 最外层包一个 with(this) 之后返回</span></div><div class="line">    render: <span class="string">`with(this)&#123;return <span class="subst">$&#123;code&#125;</span>&#125;`</span>,</div><div class="line">    <span class="comment">// 这个数组中的函数与 VDOM 中的 diff 算法优化相关</span></div><div class="line">    <span class="comment">// 我们会在编译阶段给后面不会发生变化的 VNode 节点打上 staticRoot 为 true 的标</span></div><div class="line">    <span class="comment">// 那些被标记为 staticRoot 节点的 VNode 就会单独生成 staticRenderFns</span></div><div class="line">    staticRenderFns: state.staticRenderFns</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中 genElement 函数（src/compiler/codegen/index.js）是会根据 AST 的属性调用不同的方法生成字符串返回。也就是拼接字符串了：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// src/compiler/codegen/index.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">genElement</span> (<span class="params">el: ASTElement, state: CodegenState</span>): <span class="title">string</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (el.staticRoot &amp;&amp; !el.staticProcessed) &#123;</div><div class="line">    <span class="keyword">return</span> genStatic(el, state)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.once &amp;&amp; !el.onceProcessed) &#123;</div><div class="line">    <span class="keyword">return</span> genOnce(el, state)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.for &amp;&amp; !el.forProcessed) &#123;</div><div class="line">    <span class="keyword">return</span> genFor(el, state)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.if &amp;&amp; !el.ifProcessed) &#123;</div><div class="line">    <span class="keyword">return</span> genIf(el, state)</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.tag === <span class="string">'template'</span> &amp;&amp; !el.slotTarget) &#123;</div><div class="line">    <span class="keyword">return</span> genChildren(el, state) || <span class="string">'void 0'</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.tag === <span class="string">'slot'</span>) &#123;</div><div class="line">    <span class="keyword">return</span> genSlot(el, state)</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// component or element</span></div><div class="line">    <span class="keyword">let</span> code</div><div class="line">    <span class="keyword">if</span> (el.component) &#123;</div><div class="line">      code = genComponent(el.component, el, state)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">const</span> data = el.plain ? <span class="literal">undefined</span> : genData(el, state)</div><div class="line"></div><div class="line">      <span class="keyword">const</span> children = el.inlineTemplate ? <span class="literal">null</span> : genChildren(el, state, <span class="literal">true</span>)</div><div class="line">      code = <span class="string">`_c('<span class="subst">$&#123;el.tag&#125;</span>'<span class="subst">$&#123;</span></span></div><div class="line"><span class="string"><span class="subst">        data ? <span class="string">`,<span class="subst">$&#123;data&#125;</span>`</span> : <span class="string">''</span> <span class="regexp">//</span> data</span></span></div><div class="line"><span class="string"><span class="subst">      &#125;</span><span class="subst">$&#123;</span></span></div><div class="line"><span class="string"><span class="subst">        children ? <span class="string">`,<span class="subst">$&#123;children&#125;</span>`</span> : <span class="string">''</span> <span class="regexp">//</span> children</span></span></div><div class="line"><span class="string"><span class="subst">      &#125;</span>)`</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// module transforms</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; state.transforms.length; i++) &#123;</div><div class="line">      code = state.transforms[i](el, code)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> code</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上就是 compile 函数中三个核心步骤的介绍，compile 之后我们得到了 render function 的字符串形式，后面通过 new Function 得到真正的渲染函数。DOM 初始化过程最后一步是根据渲染函数生成 Vnode，根据此 Vnode 生成真实 DOM，插入 DOM 树中，并将该 Vnode 记录为 preVnode。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经历过这些过程以后，我们已经把 template 顺利转成了 render function 了，接下来我们将介绍 patch 的过程，来看一下具体 VNode 节点如何进行差异的比对。</p>
+<p><strong>参考资料</strong><br><a href="http://blog.cgsdream.org/2016/11/23/vue-source-analysis-3/" target="_blank" rel="external">Vue源码浅析（三）-render函数</a><br><a href="https://zhouweicsu.github.io/blog/2017/04/21/vue-2-0-template/" target="_blank" rel="external">Vue2.0 源码阅读：模板渲染</a><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/20/vue源码解读之六：compile的三个阶段/">vue源码解读之六：compile的三个阶段</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年03月20日 - 10:03</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/03/20/vue源码解读之六：compile的三个阶段/" title="vue源码解读之六：compile的三个阶段">https://zhyjor.github.io/2018/03/20/vue源码解读之六：compile的三个阶段/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/03/20/vue源码解读之六：compile的三个阶段/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/vue源码解读/" rel="tag"># vue源码解读</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/ES6探索之四：Generator函数/" rel="next" title="ES6探索之四：Generator函数">
+                <i class="fa fa-chevron-left"></i> ES6探索之四：Generator函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/22/css进阶之五：length长度单位/" rel="prev" title="css进阶之五：length长度单位">
+                css进阶之五：length长度单位 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#parse函数生成AST"><span class="nav-number">1.</span> <span class="nav-text">parse函数生成AST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parse函数"><span class="nav-number">1.1.</span> <span class="nav-text">parse函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AST"><span class="nav-number">1.1.1.</span> <span class="nav-text">AST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数功能"><span class="nav-number">1.1.2.</span> <span class="nav-text">函数功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关正则表达式"><span class="nav-number">1.1.3.</span> <span class="nav-text">相关正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parseHtml函数"><span class="nav-number">1.1.4.</span> <span class="nav-text">parseHtml函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">1.1.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimize标记节点"><span class="nav-number">2.</span> <span class="nav-text">optimize标记节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimize功能"><span class="nav-number">2.1.</span> <span class="nav-text">optimize功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#isStatic"><span class="nav-number">2.1.1.</span> <span class="nav-text">isStatic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#markStaticRoots"><span class="nav-number">2.1.2.</span> <span class="nav-text">markStaticRoots</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-1"><span class="nav-number">2.2.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generate生成渲染函数过程"><span class="nav-number">3.</span> <span class="nav-text">generate生成渲染函数过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#generate-函数"><span class="nav-number">3.1.</span> <span class="nav-text">generate 函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

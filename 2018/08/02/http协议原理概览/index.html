@@ -1,0 +1,1065 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="经典五层模型">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http协议原理概览">
+<meta property="og:url" content="https://zhyjor.github.io/2018/08/02/http协议原理概览/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="经典五层模型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201808021108_947.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http协议原理概览">
+<meta name="twitter:description" content="经典五层模型">
+<meta name="twitter:image" content="http://static.zhyjor.com/201808021108_947.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/08/02/http协议原理概览/"/>
+
+
+
+
+
+  <title> http协议原理概览 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/08/02/http协议原理概览/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                http协议原理概览
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T03:05:15+00:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/02/http协议原理概览/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/02/http协议原理概览/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>经典五层模型<br><a id="more"></a></p>
+<h2 id="经典五层模型"><a href="#经典五层模型" class="headerlink" title="经典五层模型"></a>经典五层模型</h2><p><img src="http://static.zhyjor.com/201808021108_947.png" alt=""></p>
+<h3 id="低三层"><a href="#低三层" class="headerlink" title="低三层"></a>低三层</h3><ul>
+<li>物理层：物理设备如何传输数据</li>
+<li>数据链路层，通信实体件建立数据链路连接</li>
+<li>网络层，为数据再节点之间传输建立逻辑链路</li>
+</ul>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>tcp/ip<br>提供可靠的端到端的服务，分包分片，传输与组装。</p>
+<p>向高层屏蔽了下层数据通信的细节。</p>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>http<br>为应用软件提供了很多服务，构建于tcp协议之上，屏蔽网络传输的相关细节。</p>
+<h2 id="http发展历史"><a href="#http发展历史" class="headerlink" title="http发展历史"></a>http发展历史</h2><h3 id="http-0-9"><a href="#http-0-9" class="headerlink" title="http/0.9"></a>http/0.9</h3><p>只有一个get,没有header<br>服务器发送完毕，就关闭tcp连接，同一个tcp连接中现在可以发送多个请求，在http2中游更大的优化。</p>
+<h3 id="http-1-0"><a href="#http-1-0" class="headerlink" title="http/1.0"></a>http/1.0</h3><p>添加了很多命令<br>增加了status code和header<br>多字符集支持，多部分发送请求，权限，缓存</p>
+<h3 id="http-1-1"><a href="#http-1-1" class="headerlink" title="http/1.1"></a>http/1.1</h3><p>优化链接，支持持久链接，一个链接多个请求<br>增加了pipeline，服务端对于请求需要按照顺序，串行并行优化<br>添加了host，和其他命令。有了host可以一台物理服务器提供多个web服务，提高效率</p>
+<h3 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h3><p>数据都通过二进制帧传输<br>同一个连连接里发送请求可以不按照顺序，可以并行<br>头信息压缩以及推送等提高效率的功能（头信息占用带宽很大）</p>
+<h2 id="http的三次握手"><a href="#http的三次握手" class="headerlink" title="http的三次握手"></a>http的三次握手</h2><p>tcp连接一直都在，可以发送多次请求，多个请求一个连接就可以了。connection中。<br>第一次：SYN=1,Seq=x<br>第二次：SYN=1,ACK=x+1,Seq=Y<br>第三次：ACK=Y+1,Seq=Z</p>
+<p>防止开启无用的连接，网络环境一般不稳定。<br>第三次握手，还是很必要的。</p>
+<h2 id="url、uri、urn"><a href="#url、uri、urn" class="headerlink" title="url、uri、urn"></a>url、uri、urn</h2><p>uniform resource locator<br>统一资源定位器<br><a href="http://user:pass@host.com:80/path/?query=string#hash" target="_blank" rel="external">http://user:pass@host.com:80/path/?query=string#hash</a></p>
+<p>unifrom resource indentfier<br>表示互联网上的唯一资源，包括了url,urn</p>
+<p>uniform resource<br>永久统一资源定位符，在资源移动之后，还能找到位置，业界还没有很好的解决方案</p>
+<h2 id="报文形式"><a href="#报文形式" class="headerlink" title="报文形式"></a>报文形式</h2><h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><p>首行 GET /test/hi-there.txt HTTP/1.0（换行）<br>首部 Accept:text/*<br>（空行）<br>主体</p>
+<p>方法的实现取决与你自己。</p>
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><p>起始行 HTTP/2.0 200 OK<br>首部</p>
+<p>主体</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>用来定义对于资源的操作，语义是定义上的<br>code: </p>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><h3 id="Access-Control-Allow-Origin"><a href="#Access-Control-Allow-Origin" class="headerlink" title="Access-Control-Allow-Origin"></a>Access-Control-Allow-Origin</h3><p>这里设置为”*”,所有网站都可以，也可以直接设置为域名。<br>跨域头，跨域针对的是浏览器，浏览器运行某些标签的跨域比如script,img,link等。</p>
+<p>有些情况下不能使用设置这个头来设置。</p>
+<h3 id="CORS预请求"><a href="#CORS预请求" class="headerlink" title="CORS预请求"></a>CORS预请求</h3><p>有些头需要服务器进行验证<br>Access-Control-Allow-Headers<br>Access-Control-Allow-Methods<br>Access-Control-Max-Age:’1000’允许跨域的时间</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><h3 id="代理缓存"><a href="#代理缓存" class="headerlink" title="代理缓存"></a>代理缓存</h3><p>vary头，告诉代理服务器根据不同的http客户端返回不同的信息</p>
+<h3 id="cache-control"><a href="#cache-control" class="headerlink" title="cache-control"></a>cache-control</h3><p>public:代理服务器，电脑浏览器，等http经过的地方都可以直接缓存<br>private:发起请求的客户端才可以缓存<br>no-cache：任何节点都不缓存，可以缓存，但是每次都要去服务器去验证</p>
+<h3 id="max-age"><a href="#max-age" class="headerlink" title="max-age"></a>max-age</h3><p>到期，xx seconds，多少秒</p>
+<h3 id="s-maxage"><a href="#s-maxage" class="headerlink" title="s-maxage"></a>s-maxage</h3><p>带代理服务器生效，专门为代理服务器设置</p>
+<h3 id="max-stale"><a href="#max-stale" class="headerlink" title="max-stale"></a>max-stale</h3><p>浏览器，发起请求的一方带的，假如缓存已经过期，但是还在这个设置内，就使用过期的，服务端无用</p>
+<h3 id="must-revalidate"><a href="#must-revalidate" class="headerlink" title="must-revalidate"></a>must-revalidate</h3><p>重新验证</p>
+<h3 id="proxy-revalidate"><a href="#proxy-revalidate" class="headerlink" title="proxy-revalidate"></a>proxy-revalidate</h3><p>缓存服务器过期，重新去验证，很少用到</p>
+<h3 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a>no-store</h3><p>严格的无本地，代理服务器的缓存</p>
+<h3 id="no-transform"><a href="#no-transform" class="headerlink" title="no-transform"></a>no-transform</h3><p>用在proxy服务器上，不改变传回的内容</p>
+<h2 id="资源验证（last-modifty和E-tag）"><a href="#资源验证（last-modifty和E-tag）" class="headerlink" title="资源验证（last-modifty和E-tag）"></a>资源验证（last-modifty和E-tag）</h2><h3 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h3><p>上次的修改时间，配合If-modified-since或者If-Unmodified-Since(很少用到)</p>
+<p>对比上次修改时间确定是否需要更新</p>
+<h3 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h3><p>数据签名，类似hash计算。标记这个资源，配合If-Match或者If-Non-Match使用</p>
+<p>根据资源的签名判断是否需要缓存。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>通过set-cookie设置，浏览器下次可以自动带上。使用max-age，expires设置过期时间，secure只有https使用，httponly无法通过document.cookie使用访问</p>
+<p>set-cookie可以使用多个，未设置过期时间的话cookie就在浏览器关闭的时候过期。</p>
+<p>过期后就不会在请求的时候带上。</p>
+<p>无法跨域访问，但是二级域名可以通过一些方式实现。这里可以通过服务器自己实现。可以通过domain设置。并且是在访问一级域名的时候设置domain，在访问二级域名的时候无法写入。cookie是session是不同的东西，但是我们通过用cookie来保存session,就是将sessionid保存到cookie中，可以通过cookie拿到这个key。</p>
+<p>session只要能定位到用户，就是一种方案。不一定用cookie实现。</p>
+<h2 id="http长连接（Connection-keep-alive-close）"><a href="#http长连接（Connection-keep-alive-close）" class="headerlink" title="http长连接（Connection:keep-alive/close）"></a>http长连接（Connection:keep-alive/close）</h2><p>连接立即就关闭，可以减少并发，但是假如并发很大的话，可能会开销更大。</p>
+<p>就是devtools上的connection id,同一个tcp上不能并发http请求。chrome一次性并发6个tcp连接，到了6个之后，剩余的就只能等着了。之后就是在这上面复用了。</p>
+<p>但是服务器可以用返回值来确定是否保持。</p>
+<p>使用close的话，每个connectionId都是不一样的，每次请求完成后就关闭了，没有进行复用。</p>
+<p>在http2中有<strong>信道复用</strong>的概念，可以并发的在一个tcp中进行http请求，这样，一个连接就可以完成一个网页加载的所有http请求，但是注意这个需要在同域的情况下进行。</p>
+<h2 id="数据协商"><a href="#数据协商" class="headerlink" title="数据协商"></a>数据协商</h2><h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p>Accept:我想要的数据类型<br>Accept-Encoding：压缩方式等<br>Accept-Language:语言<br>User-Agent：浏览器信息。</p>
+<h3 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h3><p>Content-type:<br>Content-Encoding:gzip<br>Content-Language:</p>
+<h3 id="MIME-types"><a href="#MIME-types" class="headerlink" title="MIME types"></a>MIME types</h3><p>注意规则</p>
+<h3 id="x-content-type-options-nosniff"><a href="#x-content-type-options-nosniff" class="headerlink" title="x-content-type-options:nosniff"></a>x-content-type-options:nosniff</h3><p>不要预测返回的内容</p>
+<h3 id="contend-encoding"><a href="#contend-encoding" class="headerlink" title="contend-encoding"></a>contend-encoding</h3><p>需要手动进行压缩。而且需要注意头部信息和body信息的大小。</p>
+<h2 id="Redirect"><a href="#Redirect" class="headerlink" title="Redirect"></a>Redirect</h2><p>服务器需要告诉浏览器你要请求的资源在哪个地方，不能直接返回404.</p>
+<p>添加一个<strong>code:302</strong>,只有302才会跳转，临时跳转。假如你能确认以后都是新的地方了，就返回<strong>code:301，永久转移</strong>。</p>
+<p>两者的区别是301就是永久的转移，以后就直接去新的url就可以，302每次都要去服务器访问一下，而且从301那里都是从浏览器缓存中读取的。301需要慎重。</p>
+<p>Location:’./new/index.html’</p>
+<h2 id="Content-Security-Policy（CSP）"><a href="#Content-Security-Policy（CSP）" class="headerlink" title="Content-Security-Policy（CSP）"></a>Content-Security-Policy（CSP）</h2><p>内容安全策略<br>限制资源获取，报告资源获取越权</p>
+<h3 id="限制方式"><a href="#限制方式" class="headerlink" title="限制方式"></a>限制方式</h3><p>default-src限制全局，可以资源类型来限制。img-src,media-src…等等，只要外链加载的都可以在这里限制。</p>
+<p>内联的js代码禁用，可以通过default-src: http: https:等等类似的限制。</p>
+<p>还可以限制外链的域名限制，可以只允许同域的连接。</p>
+<p>还可一限制form表单的限制。不能提交到别的域名。</p>
+<p>mdn:csp</p>
+<h3 id="越权报告"><a href="#越权报告" class="headerlink" title="越权报告"></a>越权报告</h3><p>report-uri /report</p>
+<h3 id="meta的方式来写"><a href="#meta的方式来写" class="headerlink" title="meta的方式来写"></a>meta的方式来写</h3><p>不仅仅可以通过header来写，还可以通过meta来写，但是这个时候不好用report，而且<strong>推荐使用header的方式。</strong></p>
+<h2 id="https"><a href="#https" class="headerlink" title="https"></a>https</h2><h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>私钥：只放在服务器上，通过公钥加密的只能通过私钥解密</p>
+<p>公钥私钥只出现在握手的时候，传送加密字符串。两边通过这个字符串进行加密解密。</p>
+<p>1：随机数1+加密套件<br>2：随机数2+加密套件选择+公钥（证书）<br>3：随机数3（公钥加密过的），中间人已经拿不到了<br>4：三个随机数和加密套件生成两边的加密方式</p>
+<h2 id="http2-1"><a href="#http2-1" class="headerlink" title="http2"></a>http2</h2><p>开启了https才能使用http2,演化与spdy（这个必须有https）,本身的http2并没有限制。</p>
+<h3 id="信道复用"><a href="#信道复用" class="headerlink" title="信道复用"></a>信道复用</h3><p>对于http/1.1并发连接数限制，chrome限制6个，就需要6次完整的握手，对服务器的tcp连接数也是制约。单个tcp是串行的<br>单个tcp链接就可以</p>
+<h3 id="分帧传输"><a href="#分帧传输" class="headerlink" title="分帧传输"></a>分帧传输</h3><p>数据接收完后，可以根据帧顺序重新组合。</p>
+<h4 id="server-push"><a href="#server-push" class="headerlink" title="server push"></a>server push</h4><p>link标签 rel=preload</p>
+<p><strong>参考资料</strong><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/08/02/http协议原理概览/">http协议原理概览</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年08月02日 - 11:08</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/08/02/http协议原理概览/" title="http协议原理概览">https://zhyjor.github.io/2018/08/02/http协议原理概览/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/08/02/http协议原理概览/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/css进阶之十四：BEM好用吗/" rel="next" title="css进阶之十四：BEM好用吗">
+                <i class="fa fa-chevron-left"></i> css进阶之十四：BEM好用吗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/02/PWA探索与实践之四：pwa升级vue应用/" rel="prev" title="PWA探索与实践之四：pwa升级vue应用">
+                PWA探索与实践之四：pwa升级vue应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#经典五层模型"><span class="nav-number">1.</span> <span class="nav-text">经典五层模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#低三层"><span class="nav-number">1.1.</span> <span class="nav-text">低三层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输层"><span class="nav-number">1.2.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层"><span class="nav-number">1.3.</span> <span class="nav-text">应用层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http发展历史"><span class="nav-number">2.</span> <span class="nav-text">http发展历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-0-9"><span class="nav-number">2.1.</span> <span class="nav-text">http/0.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-1-0"><span class="nav-number">2.2.</span> <span class="nav-text">http/1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-1-1"><span class="nav-number">2.3.</span> <span class="nav-text">http/1.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http2"><span class="nav-number">2.4.</span> <span class="nav-text">http2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http的三次握手"><span class="nav-number">3.</span> <span class="nav-text">http的三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url、uri、urn"><span class="nav-number">4.</span> <span class="nav-text">url、uri、urn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报文形式"><span class="nav-number">5.</span> <span class="nav-text">报文形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报文"><span class="nav-number">5.1.</span> <span class="nav-text">请求报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应报文"><span class="nav-number">5.2.</span> <span class="nav-text">响应报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">5.3.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域"><span class="nav-number">6.</span> <span class="nav-text">跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Control-Allow-Origin"><span class="nav-number">6.1.</span> <span class="nav-text">Access-Control-Allow-Origin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CORS预请求"><span class="nav-number">6.2.</span> <span class="nav-text">CORS预请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">7.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理缓存"><span class="nav-number">7.1.</span> <span class="nav-text">代理缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-control"><span class="nav-number">7.2.</span> <span class="nav-text">cache-control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-age"><span class="nav-number">7.3.</span> <span class="nav-text">max-age</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#s-maxage"><span class="nav-number">7.4.</span> <span class="nav-text">s-maxage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-stale"><span class="nav-number">7.5.</span> <span class="nav-text">max-stale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#must-revalidate"><span class="nav-number">7.6.</span> <span class="nav-text">must-revalidate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy-revalidate"><span class="nav-number">7.7.</span> <span class="nav-text">proxy-revalidate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-store"><span class="nav-number">7.8.</span> <span class="nav-text">no-store</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-transform"><span class="nav-number">7.9.</span> <span class="nav-text">no-transform</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源验证（last-modifty和E-tag）"><span class="nav-number">8.</span> <span class="nav-text">资源验证（last-modifty和E-tag）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Last-Modified"><span class="nav-number">8.1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Etag"><span class="nav-number">8.2.</span> <span class="nav-text">Etag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">9.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http长连接（Connection-keep-alive-close）"><span class="nav-number">10.</span> <span class="nav-text">http长连接（Connection:keep-alive/close）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据协商"><span class="nav-number">11.</span> <span class="nav-text">数据协商</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求"><span class="nav-number">11.1.</span> <span class="nav-text">请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应"><span class="nav-number">11.2.</span> <span class="nav-text">响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIME-types"><span class="nav-number">11.3.</span> <span class="nav-text">MIME types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-content-type-options-nosniff"><span class="nav-number">11.4.</span> <span class="nav-text">x-content-type-options:nosniff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contend-encoding"><span class="nav-number">11.5.</span> <span class="nav-text">contend-encoding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redirect"><span class="nav-number">12.</span> <span class="nav-text">Redirect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Content-Security-Policy（CSP）"><span class="nav-number">13.</span> <span class="nav-text">Content-Security-Policy（CSP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#限制方式"><span class="nav-number">13.1.</span> <span class="nav-text">限制方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#越权报告"><span class="nav-number">13.2.</span> <span class="nav-text">越权报告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#meta的方式来写"><span class="nav-number">13.3.</span> <span class="nav-text">meta的方式来写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https"><span class="nav-number">14.</span> <span class="nav-text">https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密"><span class="nav-number">14.1.</span> <span class="nav-text">加密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http2-1"><span class="nav-number">15.</span> <span class="nav-text">http2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信道复用"><span class="nav-number">15.1.</span> <span class="nav-text">信道复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分帧传输"><span class="nav-number">15.2.</span> <span class="nav-text">分帧传输</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server-push"><span class="nav-number">15.2.1.</span> <span class="nav-text">server push</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

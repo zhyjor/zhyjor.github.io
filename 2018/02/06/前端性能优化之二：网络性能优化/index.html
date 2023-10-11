@@ -1,0 +1,1066 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端性能优化," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="网络优化是大有可为的，比如使用缓存、http传输压缩、减少http请求数目，以及dns发散与dns收敛的不同作用等等。">
+<meta name="keywords" content="前端性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端性能优化之二：网络性能优化">
+<meta property="og:url" content="https://zhyjor.github.io/2018/02/06/前端性能优化之二：网络性能优化/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="网络优化是大有可为的，比如使用缓存、http传输压缩、减少http请求数目，以及dns发散与dns收敛的不同作用等等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/15/165dd3619608be39?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端性能优化之二：网络性能优化">
+<meta name="twitter:description" content="网络优化是大有可为的，比如使用缓存、http传输压缩、减少http请求数目，以及dns发散与dns收敛的不同作用等等。">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/9/15/165dd3619608be39?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/02/06/前端性能优化之二：网络性能优化/"/>
+
+
+
+
+
+  <title> 前端性能优化之二：网络性能优化 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/02/06/前端性能优化之二：网络性能优化/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端性能优化之二：网络性能优化
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T04:15:23+00:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端性能/" itemprop="url" rel="index">
+                    <span itemprop="name">前端性能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/06/前端性能优化之二：网络性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/06/前端性能优化之二：网络性能优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网络优化是大有可为的，比如使用缓存、http传输压缩、减少http请求数目，以及dns发散与dns收敛的不同作用等等。<br><a id="more"></a></p>
+<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>浏览器在第一次访问页面时向服务器请求资源，并缓存起来，下次再访问时会判断在缓存中是否已有该资源且有没有更新过，如果已有该资源且未更新过，则直接从浏览器缓存中读取。关于缓存可看另外一篇文章<a href="https://zhyjor.github.io/2018/01/11/http%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%EF%BC%9A%E7%BC%93%E5%AD%98%EF%BC%88%E7%86%9F%E6%82%89%E7%9A%84304%EF%BC%89/">《http协议详解之一：缓存（熟悉的304）》</a>。</p>
+<p>已缓存资源不再发起http请求，即HTTP的Expires和Cache-Control。对一个网站而言，CSS、JavaScript、图片等静态资源更新的频率都比较低，而这些文件又几乎是每次HTTP请求都需要的，如果将这些文件缓存在浏览器中，可以极好的改善性能。通过设置http头中的cache-control和expires的属性，可设定浏览器缓存，将静态内容设为永不过期，或者很长时间后才过期。</p>
+<h2 id="http传输压缩"><a href="#http传输压缩" class="headerlink" title="http传输压缩"></a>http传输压缩</h2><p>我们在将css，js，图片等资源部署是会将文件压缩，比如js文件和css，会将空格，注释等信息完全删除掉。对http传输的压缩和这些压缩的目的相同，都是为了减少文件下载的时间，但是两者相互没有影响。</p>
+<p>从HTTP1.1开始，客户端可以通过Accept-Encoding头来声明浏览器支持的压缩方式，服务端通过content-Encoding来启用压缩，配置压缩的文件类型，压缩方式。当客户端的请求到达服务器，服务器对资源进行压缩后，返回给客户端，客户端按照相应的方式进行解析。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">客户端（HTTP请求头）——accept-encoding: gzip, deflate, sdch, br</div><div class="line">服务器（HTTP响应头）——content-encoding:gzip</div><div class="line"></div><div class="line">文件传输前的大小——通过属性查看</div><div class="line">文件传输过程中的大小——通过Network中的Size查看</div></pre></td></tr></table></figure>
+<p><strong>gzip是GUNzip的缩写，使用无损压缩，压缩效果最佳，已经成为使用最为普遍、支持的浏览器最多的数据压缩格式。天猫、淘宝、京东、苏宁、腾讯、百度等大型网站都使用gzip压缩方式。</strong></p>
+<p>客户端不用做任何配置，在服务端配置即可，不同服务器的配置方法也不尽相同。这种配置的好处是减少HTTP响应时间，提升传输效率，当然也有也负面影响：压缩过程占用服务器额外的CPU周期，客户端也要对压缩文件进行解压缩，这也需要占用部分时间。随着硬件性能不断提高，上述问题正在不断弱化，国内外大型网站都对HTTP传输进行压缩。</p>
+<h2 id="减少http的请求数"><a href="#减少http的请求数" class="headerlink" title="减少http的请求数"></a>减少http的请求数</h2><p>这个应该已经不是什么大的问题了</p>
+<ul>
+<li>图片地图允许在一个图片上关联多个URL，目标URL取决于用户单击的图片上的位置。</li>
+<li>CSS Sprites，CSS精灵，合并图片，通过指定CSS的backgroud-image和backgroud-position来显示元素。</li>
+<li>合并JS脚本和CSS样式表</li>
+<li>在用户不带缓存访问页面的时候，内联所有的js和css的效率更快，原因是外置js和css带来额外的http请求开销，1个http请求相对于3个http请求要更快一些。<br>其实，使用外部JS和CSS文件会产生更快的访问速度，这是由于外部JS和CSS文件能被浏览器缓存，当下次再请求相同的JS和CSS时，浏览器将不会再发出HTTP请求，而是使用缓存的JS和CSS文件，减少了HTTP请求数。</li>
+</ul>
+<h2 id="CDN内容分发网络"><a href="#CDN内容分发网络" class="headerlink" title="CDN内容分发网络"></a>CDN内容分发网络</h2><p>CDN是一组分布在多个不同地理位置的Web服务器，用于更加有效地向用户发布内容，在优化性能时，会根据距离的远近来选择。</p>
+<p>CDN将网站的资源发布到离用户最近的网络边缘，用户可以就近取得资源内容。</p>
+<p>CDN通常部署静态内容：JavaScript脚本、CSS样式表、图片、图标、Flash等，不包括html页面。</p>
+<p>浏览器是根据域(Domain)来缓存内容资源的，只要域(Domain)不一样，那么即使是同一个资源，也需要重复下载，且使用同样的方式缓存起来，这需要需要占用带宽和本地缓存空间。</p>
+<h3 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h3><p><strong>将静态资源缓存到离用户很近的相同网络运营商的CDN节点上</strong><br>如果服务器离用户更近，则HTTP请求和响应时间将缩短。</p>
+<p>不同地区的用户访问同一个域名能得到不同CDN节点的IP地址，这要依赖于CDN服务商提供的智能DNS服务，浏览器发起域名查询时，智能DNS服务会根据用户IP计算并返回离它最近的相同网络运营商的CDN节点IP。</p>
+<p>通过智能DNS服务获取最近的相同网络运营商的CDN节点IP后，不同地区的用户会向离自己最近的相同网络运营商的CDN节点发起请求，当请求达到CDN节点后，节点会判断自己的内容缓存是否有效，一个地区内只要有一个用户先加载资源，就会在CDN中建立缓存，该地区的其他后续用户都能直接读取缓存数据。</p>
+<p><strong>加载静态资源使用与页面不同的域名（不是用独立的二级或三级域名，而是用独立的一级域名）</strong><br>静态资源和主页面不同域，加载静态资源的HTTP请求就不会带上主页面中的cookie等数据，减少了数据传输量，节省流量，提升上传效率。</p>
+<h2 id="cookie优化"><a href="#cookie优化" class="headerlink" title="cookie优化"></a>cookie优化</h2><p>cookie存储在客户端，伴随着HTTP请求在浏览器和服务器之间传递。除了key-value外，cookie还有max-age，path，domain和httponly属性。</p>
+<h2 id="HTTP-压缩-Gzip"><a href="#HTTP-压缩-Gzip" class="headerlink" title="HTTP 压缩(Gzip)"></a>HTTP 压缩(Gzip)</h2><p>开启 Gzip具体的做法非常简单，只需要你在你的 request headers 中加上这么一句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">accept-encoding:gzip</div></pre></td></tr></table></figure></p>
+<p>先说一下和前端关系密切的http压缩：</p>
+<blockquote>
+<p>HTTP 压缩是一种内置到网页服务器和网页客户端中以改进传输速度和带宽利用率的方式。在使用 HTTP 压缩的情况下，HTTP 数据在从服务器发送前就已压缩：兼容的浏览器将在下载所需的格式前宣告支持何种方法给服务器；不支持压缩方法的浏览器将下载未经压缩的数据。最常见的压缩方案包括 Gzip 和 Deflate。</p>
+</blockquote>
+<p><strong>HTTP 压缩就是以缩小体积为目的，对 HTTP 内容进行重新编码的过程</strong>。Gzip 的内核就是 Deflate，目前我们压缩文件用得最多的就是 Gzip。可以说，Gzip 就是 HTTP 压缩的经典例题。</p>
+<h3 id="该不该用-Gzip"><a href="#该不该用-Gzip" class="headerlink" title="该不该用 Gzip"></a>该不该用 Gzip</h3><p>Gzip 是高效的，压缩后通常能帮我们减少响应 70% 左右的大小。但它并非万能。Gzip 并不保证针对每一个文件的压缩都会使其变小。</p>
+<p>Gzip 压缩背后的原理，<strong>是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小</strong>。根据这个原理，文件中代码的重复率越高，那么压缩的效率就越高，使用 Gzip 的收益也就越大。反之亦然。</p>
+<h3 id="webpack-的-Gzip-和服务端的-Gzip"><a href="#webpack-的-Gzip-和服务端的-Gzip" class="headerlink" title="webpack 的 Gzip 和服务端的 Gzip"></a>webpack 的 Gzip 和服务端的 Gzip</h3><p>一般来说，Gzip 压缩是服务器的活儿：服务器了解到我们这边有一个 Gzip 压缩的需求，它会启动自己的 CPU 去为我们完成这个任务。而压缩文件这个过程本身是需要耗费时间的，大家可以理解为我们以服务器压缩的时间开销和 CPU 开销（以及浏览器解析压缩文件的开销）为代价，省下了一些传输过程中的时间开销。</p>
+<p>既然存在着这样的交换，那么就要求我们学会权衡。服务器的 CPU 性能不是无限的，如果存在大量的压缩需求，服务器也扛不住的。服务器一旦因此慢下来了，用户还是要等。Webpack 中 Gzip 压缩操作的存在，事实上就是为了在构建过程中去做一部分服务器的工作，为服务器分压。</p>
+<p>因此，这两个地方的 Gzip 压缩，谁也不能替代谁。它们必须和平共处，好好合作。作为开发者，我们也应该结合业务压力的实际强度情况，去做好这其中的权衡。</p>
+<h2 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h2><p>《高性能网站建设指南》的作者 Steve Souders 曾在 2013 年的一篇 博客 中提到：</p>
+<blockquote>
+<p>图片是用户可以直观看到的。他们并不会关注 JS 和 CSS。确实，JS 和 CSS 会影响图片内容的展示，尤其是会影响图片的展示方式（比如图片轮播，CSS 背景图和媒体查询）。但是我认为 JS 和 CSS 只是展示图片的方式。在页面加载的过程中，应当先让图片和文字先展示，而不是试图保证 JS 和 CSS 更快下载完成。</p>
+</blockquote>
+<p><strong>雅虎军规和 Google 官方的最佳实践也都将图片优化列为前端性能优化必不可少的环节——图片优化的优先级可见一斑。</strong></p>
+<p>按照<a href="https://httparchive.org/reports/page-weight#bytesTotal" target="_blank" rel="external"> HTTP-Archive</a>网站的统计，不管是资源总量还是图片体积，都在往越来越轻量的方向演化。这是一种值得肯定的进步。</p>
+<h3 id="不同业务场景下的图片方案选型"><a href="#不同业务场景下的图片方案选型" class="headerlink" title="不同业务场景下的图片方案选型"></a>不同业务场景下的图片方案选型</h3><p>时下应用较为广泛的 Web 图片格式有 JPEG/JPG、PNG、WebP、Base64、SVG 等，这些格式都是很有故事的，值得我们好好研究一把。此外，老生常谈的雪碧图（CSS Sprites）至今也仍在一线的前端应用中发光发热。</p>
+<h4 id="JPEG-JPG，"><a href="#JPEG-JPG，" class="headerlink" title="JPEG/JPG，"></a>JPEG/JPG，</h4><p><strong>有损压缩、体积小、加载快、不支持透明。</strong>JPG 最大的特点是有损压缩。这种高效的压缩算法使它成为了一种非常轻巧的图片格式。另一方面，即使被称为“有损”压缩，JPG的压缩方式仍然是一种高质量的压缩方式：当我们把图片体积压缩至原有体积的 50% 以下时，JPG 仍然可以保持住 60% 的品质。</p>
+<p>JPG 适用于呈现色彩丰富的图片，在我们日常开发中，JPG 图片经常作为大的背景图、轮播图或 Banner 图出现。<strong>使用 JPG 呈现大图，既可以保住图片的质量，又不会带来令人头疼的图片体积，是当下比较推崇的一种方案。</strong></p>
+<p>有损压缩在上文所展示的轮播图上确实很难露出马脚，但当它处理矢量图形和 Logo 等线条感较强、颜色对比强烈的图像时，人为压缩导致的图片模糊会相当明显。此外，JPEG 图像不支持透明度处理，透明图片需要召唤 PNG 来呈现。</p>
+<h4 id="PNG-8-与-PNG-24"><a href="#PNG-8-与-PNG-24" class="headerlink" title="PNG-8 与 PNG-24"></a>PNG-8 与 PNG-24</h4><p><strong>无损压缩、质量高、体积大、支持透明</strong>。PNG（可移植网络图形格式）是一种无损压缩的高保真的图片格式。8 和 24，这里都是二进制数的位数。按照我们前置知识里提到的对应关系，8 位的 PNG 最多支持 256 种颜色，而 24 位的可以呈现约 1600 万种颜色。PNG 图片具有比 JPG 更强的色彩表现力，对线条的处理更加细腻，对透明度有良好的支持。<strong>它弥补了上文我们提到的 JPG 的局限性，唯一的 BUG 就是体积太大</strong>。</p>
+<p><strong>什么时候用 PNG-8，什么时候用 PNG-24，这是一个问题。</strong></p>
+<p>理论上来说，当你追求最佳的显示效果、并且不在意文件体积大小时，是推荐使用 PNG-24 的。</p>
+<p>但实践当中，为了规避体积的问题，我们一般不用PNG去处理较复杂的图像。当我们遇到适合 PNG 的场景时，也会优先选择更为小巧的 PNG-8。好的做法是把图片先按照这两种格式分别输出，看 PNG-8 输出的结果是否会带来肉眼可见的质量损耗，并且确认这种损耗是否在我们（尤其是你的 UI 设计师）可接受的范围内，基于对比的结果去做判断。</p>
+<p>考虑到 PNG 在处理线条和颜色对比度方面的优势，我们主要用它来呈现小的 Logo、颜色简单且对比强烈的图片或背景等。</p>
+<h4 id="SVG"><a href="#SVG" class="headerlink" title="SVG"></a>SVG</h4><p><strong>文本文件、体积小、不失真、兼容性好</strong>，SVG（可缩放矢量图形）是一种基于 XML 语法的图像格式。它和本文提及的其它图片种类有着本质的不同：SVG 对图像的处理不是基于像素点，而是是基于对图像的形状描述。</p>
+<p>和性能关系最密切的一点就是：SVG 与 PNG 和 JPG 相比，文件体积更小，可压缩性更强。当然，作为矢量图，它最显著的优势还是在于图片可无限放大而不失真这一点上。这使得 SVG 即使是被放到视网膜屏幕上，也可以一如既往地展现出较好的成像品质——1 张 SVG 足以适配 n 种分辨率。</p>
+<p>SVG 的局限性主要有两个方面，一方面是它的渲染成本比较高，这点对性能来说是很不利的。另一方面，SVG 存在着其它图片格式所没有的学习成本（它是可编程的）。</p>
+<p>SVG 是文本文件，开发中我们可以将 SVG 写入 HTML，也可以将 SVG 写入独立文件后引入 HTML。</p>
+<p>在实际开发中，我们更多用到的是后者。很多情况下设计师会给到我们 SVG 文件，就算没有设计师，我们还有非常好用的 在线矢量图形库。对于矢量图，我们无须深究过多，只需要对其核心特性有所掌握、日后在应用时做到有迹可循即可。</p>
+<h4 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h4><p><strong>文本文件、依赖编码、小图标解决方案，</strong>Base64 并非一种图片格式，而是一种编码方式。Base64 和雪碧图一样，是作为小图标解决方案而存在的。和雪碧图一样，Base64 图片的出现，也是为了减少加载网页图片时对服务器的请求次数，从而提升网页性能。Base64 是作为雪碧图的补充而存在的。</p>
+<p>Base64 是一种用于传输 8Bit 字节码的编码方式，通过对图片进行 Base64 编码，我们可以直接将编码结果写入 HTML 或者写入 CSS，从而减少 HTTP 请求的次数。</p>
+<p><strong>既然 Base64 这么棒，我们何不把大图也换成 Base64 呢？</strong><br>这是因为，Base64 编码后，图片大小会膨胀为原文件的 4/3（这是由 Base64 的编码原理决定的）。如果我们把大图也编码到 HTML 或 CSS 文件中，后者的体积会明显增加，即便我们减少了 HTTP 请求，也无法弥补这庞大的体积带来的性能开销，得不偿失。</p>
+<p>在传输非常小的图片的时候，Base64 带来的文件体积膨胀、以及浏览器解析 Base64 的时间开销，与它节省掉的 HTTP 请求开销相比，可以忽略不计，这时候才能真正体现出它在性能方面的优势。</p>
+<p>因此，Base64 并非万全之策，我们往往在一张图片满足以下条件时会对它应用 Base64 编码：</p>
+<ul>
+<li>图片的实际尺寸很小（大家可以观察一下掘金页面的 Base64 图，几乎没有超过 2kb 的）</li>
+<li>图片无法以雪碧图的形式与其它小图结合（合成雪碧图仍是主要的减少 HTTP 请求的途径，Base64 是雪碧图的补充）</li>
+<li>图片的更新频率非常低（不需我们重复编码和修改文件内容，维护成本较低）</li>
+</ul>
+<p><strong>推荐的是利用 webpack 来进行 Base64 的编码——webpack 的 url-loader 非常聪明，它除了具备基本的 Base64 转码能力，还可以结合文件大小，帮我们判断图片是否有必要进行 Base64 编码。</strong></p>
+<h4 id="WebP"><a href="#WebP" class="headerlink" title="WebP"></a>WebP</h4><p><strong>年轻的全能型选手，</strong>WebP 是今天在座各类图片格式中最年轻的一位，它于 2010 年被提出， 是 Google 专为 Web 开发的一种旨在加快图片加载速度的图片格式，它支持有损压缩和无损压缩。</p>
+<p>WebP 像 JPEG 一样对细节丰富的图片信手拈来，像 PNG 一样支持透明，像 GIF 一样可以显示动态图片——它集多种图片文件格式的优点于一身。WebP 的官方介绍对这一点有着更权威的阐述：</p>
+<blockquote>
+<p>与 PNG 相比，WebP 无损图像的尺寸缩小了 26％。在等效的 SSIM 质量指数下，WebP 有损图像比同类 JPEG 图像小 25-34％。 无损 WebP 支持透明度（也称为 alpha 通道），仅需 22％ 的额外字节。对于有损 RGB 压缩可接受的情况，有损 WebP 也支持透明度，与 PNG 相比，通常提供 3 倍的文件大小。</p>
+</blockquote>
+<p>WebP 纵有千般好，但它毕竟太年轻。我们知道，任何新生事物，都逃不开兼容性的大坑。此外，WebP 还会增加服务器的负担——和编码 JPG 文件相比，编码同样质量的 WebP 文件会占用更多的计算资源。<br><img src="https://user-gold-cdn.xitu.io/2018/9/15/165dd3619608be39?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>现在限制我们使用 WebP 的最大问题不是“这个图片是否适合用 WebP 呈现”的问题，而是“浏览器是否允许 WebP”的问题，即我们上文谈到的兼容性问题。</p>
+<p>WebP 格式的局限性确实比较明显，如果决定使用 WebP，兼容性处理是必不可少的。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>图片是电商平台的重要资源，甚至有人说“做电商就是做图片”。淘宝和京东，都是流量巨大、技术成熟的站点，它们在性能优化方面起步早、成效好，很多方面说是教科书般的案例也不为过。当我们不知道怎么切入的时候，或者说当我们面对一个具体的问题无从下手的时候，除了翻阅手中的书本（很可能是已经过时的）和网络上收藏的文章（也许没那么权威），现在是不是又多了“打开那些优秀的网站看一看”这条路可以走了呢？</p>
+<p><strong>参考资料</strong><br><a href="https://blog.csdn.net/zhouziyu2011/article/details/71335350" target="_blank" rel="external">浅谈前端性能优化（六）——CDN内容分发网络</a><br><a href="https://zhuanlan.zhihu.com/p/37429159" target="_blank" rel="external">前端性能优化-gzip压缩</a><br><a href="http://www.stevesouders.com/blog/2013/04/26/i/" target="_blank" rel="external">《高性能网站建设指南》作者Steve Souders</a><br><a href="https://httparchive.org/reports/page-weight#bytesTotal" target="_blank" rel="external"> HTTP-Archive</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/06/前端性能优化之二：网络性能优化/">前端性能优化之二：网络性能优化</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年02月06日 - 12:02</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/02/06/前端性能优化之二：网络性能优化/" title="前端性能优化之二：网络性能优化">https://zhyjor.github.io/2018/02/06/前端性能优化之二：网络性能优化/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/02/06/前端性能优化之二：网络性能优化/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端性能优化/" rel="tag"># 前端性能优化</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/05/html探索之一：html中标签的特殊属性配置及其意义/" rel="next" title="html探索之一：html中标签的特殊属性配置及其意义">
+                <i class="fa fa-chevron-left"></i> html探索之一：html中标签的特殊属性配置及其意义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/http协议详解之二：https连接前的几毫秒发生了什么/" rel="prev" title="http协议详解之二：https连接前的几毫秒发生了什么">
+                http协议详解之二：https连接前的几毫秒发生了什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用缓存"><span class="nav-number">1.</span> <span class="nav-text">使用缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http传输压缩"><span class="nav-number">2.</span> <span class="nav-text">http传输压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#减少http的请求数"><span class="nav-number">3.</span> <span class="nav-text">减少http的请求数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN内容分发网络"><span class="nav-number">4.</span> <span class="nav-text">CDN内容分发网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何优化"><span class="nav-number">4.1.</span> <span class="nav-text">如何优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie优化"><span class="nav-number">5.</span> <span class="nav-text">cookie优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-压缩-Gzip"><span class="nav-number">6.</span> <span class="nav-text">HTTP 压缩(Gzip)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#该不该用-Gzip"><span class="nav-number">6.1.</span> <span class="nav-text">该不该用 Gzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-的-Gzip-和服务端的-Gzip"><span class="nav-number">6.2.</span> <span class="nav-text">webpack 的 Gzip 和服务端的 Gzip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片优化"><span class="nav-number">7.</span> <span class="nav-text">图片优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不同业务场景下的图片方案选型"><span class="nav-number">7.1.</span> <span class="nav-text">不同业务场景下的图片方案选型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JPEG-JPG，"><span class="nav-number">7.1.1.</span> <span class="nav-text">JPEG/JPG，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PNG-8-与-PNG-24"><span class="nav-number">7.1.2.</span> <span class="nav-text">PNG-8 与 PNG-24</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVG"><span class="nav-number">7.1.3.</span> <span class="nav-text">SVG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Base64"><span class="nav-number">7.1.4.</span> <span class="nav-text">Base64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebP"><span class="nav-number">7.1.5.</span> <span class="nav-text">WebP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">7.2.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

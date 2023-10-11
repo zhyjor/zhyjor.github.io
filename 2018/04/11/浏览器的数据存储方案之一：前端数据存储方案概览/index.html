@@ -1,0 +1,1090 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="浏览器的数据存储方案," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="HTML5+的离线本地存储有如下多种方案：HTML5标准方案：cookie、localstorage、sessionstorage、websql、indexedDBHTML5Plus扩展方案：plus.navigator.setCookie、plus.storage、plus.io">
+<meta name="keywords" content="浏览器的数据存储方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器的数据存储方案之一：前端数据存储方案概览">
+<meta property="og:url" content="https://zhyjor.github.io/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="HTML5+的离线本地存储有如下多种方案：HTML5标准方案：cookie、localstorage、sessionstorage、websql、indexedDBHTML5Plus扩展方案：plus.navigator.setCookie、plus.storage、plus.io">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201805251118_153.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805251133_432.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805251341_383.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器的数据存储方案之一：前端数据存储方案概览">
+<meta name="twitter:description" content="HTML5+的离线本地存储有如下多种方案：HTML5标准方案：cookie、localstorage、sessionstorage、websql、indexedDBHTML5Plus扩展方案：plus.navigator.setCookie、plus.storage、plus.io">
+<meta name="twitter:image" content="http://static.zhyjor.com/201805251118_153.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/"/>
+
+
+
+
+
+  <title> 浏览器的数据存储方案之一：前端数据存储方案概览 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                浏览器的数据存储方案之一：前端数据存储方案概览
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T02:34:18+00:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>HTML5+的离线本地存储有如下多种方案：<br>HTML5标准方案：cookie、localstorage、sessionstorage、websql、indexedDB<br>HTML5Plus扩展方案：plus.navigator.setCookie、plus.storage、plus.io</p>
+<a id="more"></a>
+<p>浏览器在提供了多种数据存储的技术，包括HTTP文件缓存、LocalStorage、 sessionStorage、cookie、indexDB、webSQL 、CatheStorage、Application Cache。对这几种方案需要熟悉。通常不同的网站，数据存储于不同的区域，并且一个网站只能访问自身的数据，BTW，数据访问不能跨域,不同的网站不能使用相同的数据库</p>
+<h2 id="localStorage方式"><a href="#localStorage方式" class="headerlink" title="localStorage方式"></a>localStorage方式</h2><p>localStorage存储的数据没有时间限制，不会失效；在当前域下都可以直接获取                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//添加或修改</span></div><div class="line"><span class="built_in">window</span>.localStorage.setItem(<span class="string">"name"</span>,<span class="string">"zhyjor"</span>)</div><div class="line"><span class="comment">//获取</span></div><div class="line">alert(<span class="built_in">window</span>.localStorage.getItem(<span class="string">"name"</span>));</div><div class="line"><span class="comment">//删除</span></div><div class="line"><span class="built_in">window</span>.localStorage.removeItem(name)</div><div class="line"><span class="comment">//清空</span></div><div class="line"><span class="built_in">window</span>.localStorage.clear();</div><div class="line"></div><div class="line"><span class="comment">//也可与通过数组和“.”操作符来添加和获取</span></div><div class="line"><span class="built_in">window</span>.localStorage.name;</div><div class="line"><span class="built_in">window</span>.localStorage[<span class="string">"name"</span>]</div><div class="line"></div><div class="line"><span class="comment">//使用key()获取键的集合</span></div><div class="line"> <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i &lt; <span class="built_in">window</span>.localStorage.length;i++)&#123;</div><div class="line">   <span class="keyword">var</span> key=<span class="built_in">window</span>.localStorage.key(i);</div><div class="line">   <span class="built_in">console</span>.log(key);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li>localStorage只支持string类型的存储。无论存储的是什么数据结构，取出的都是string，Json数据需要经过stringfy（）转换。读取的时候需要解析parse()</li>
+<li>官方推荐的是getItem\setItem这两种方法对其进行存取</li>
+<li>localStorage拓展了cookie的4K限制,相当于一个5M大小的针对于前端页面的数据库。</li>
+<li>localStorage不能被爬虫抓取到</li>
+<li>IE8以上的IE版本才支持localStorage这个属性</li>
+<li>不同浏览器无法共享localStorage或sessionStorage中的信息。相同浏览器的不同页面间可以共享相同的localStorage（页面属于相同域名和端口）</li>
+</ul>
+<h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p><img src="http://static.zhyjor.com/201805251118_153.png" alt=""></p>
+<h2 id="sessionStorage-方法"><a href="#sessionStorage-方法" class="headerlink" title="sessionStorage 方法"></a>sessionStorage 方法</h2><p>localStorage与sessionStorage的唯一一点区别就是localStorage属于永久性存储，而sessionStorage属于当会话结束的时候，sessionStorage中的键值对会被清空。</p>
+<p>sessionStorage 方法针对一个 session 进行数据存储。当用户关闭浏览器窗口后，数据会被删除。</p>
+<p>两者的方法相同！</p>
+<h3 id="storage事件"><a href="#storage事件" class="headerlink" title="storage事件"></a>storage事件</h3><p>当储存的数据发生变化时，会触发storage事件。我们可以指定这个事件的回调函数。</p>
+<pre><code>
+window.addEventListener("storage",function onStorageChange(event) {  
+     console.log(event.key);      
+});  
+</code></pre>
+
+<p>event一个有四个属性</p>
+<ul>
+<li>key:发生变化的键名</li>
+<li>oldValue:更新前的值。如果该键为新增加，则这个属性为null</li>
+<li>newValue:更新后的值。如果该键被删除，则这个属性为null。 </li>
+<li>url：原始触发storage事件的那个网页的网址。 </li>
+</ul>
+<p>监听storage变更事件会发现，当数据发生变化时本页是监听不到storage事件变更消息的。而同域的其他打开的页面反而监听到了该消息。<strong>该事件不在导致数据变化的当前页面触发</strong>。一个页面改变sessionStorage或localStorage的数据时，同域的其他打开的页面的storage事件会被触发，而原始页面并不触发storage事件。可以通过这种机制，<strong>实现多个窗口之间的通信</strong>。IE浏览器除外，它会在所有页面触发storage事件。</p>
+<h3 id="storage事件当前界面捕获"><a href="#storage事件当前界面捕获" class="headerlink" title="storage事件当前界面捕获"></a>storage事件当前界面捕获</h3><p>如何在当前页响应这些修改数据库的事件呢？</p>
+<p>当前页面获取storage这个是有必要的，尤其是在<strong>单页面（SPA应用）开发时</strong>，这种限制几乎是致命的。单页面应用只在一个页面中渲染不同的内容，因此我们需要重写localStorage的方法来达到可以监听自己本身页面修改的效果。</p>
+<p>此时我们需要重写localStorage的方法，并设置自定义的事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> orignalSetItem = localStorage.setItem;</div><div class="line">localStorage.setItem = <span class="function"><span class="keyword">function</span>(<span class="params">key,newValue</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> setItemEvent = <span class="keyword">new</span> Event(<span class="string">"setItemEvent"</span>);</div><div class="line">    setItemEvent.newValue = newValue;</div><div class="line">    <span class="built_in">window</span>.dispatchEvent(setItemEvent);</div><div class="line">    orignalSetItem.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">&#125;</div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"setItemEvent"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    alert(e.newValue);</div><div class="line">&#125;);</div><div class="line">localStorage.setItem(<span class="string">"nm"</span>,<span class="string">"1234"</span>);</div></pre></td></tr></table></figure>
+<h2 id="Cookies方式"><a href="#Cookies方式" class="headerlink" title="Cookies方式"></a>Cookies方式</h2><p>cookie数据始终在同源的http请求中携带，cookie在浏览器和服务器之间进行传递，cookie的数据还有path的概念，可以限制cookies只属于某个路径下，cookie数据不能超过4k，同时因为每次http请求都会携cookie，所以cookie只适合保存很小的数据，如会话标识。</p>
+<h3 id="比较三者的不同"><a href="#比较三者的不同" class="headerlink" title="比较三者的不同"></a>比较三者的不同</h3><p>cookie，localStorage，sessionStorage都可以实现客户端存储，三者的区别有哪些了？</p>
+<p><strong>从出现目的看</strong></p>
+<ul>
+<li>cookie作为最早期的被设计web浏览器存储少量数据，从底层看，它是作为http协议的一种扩展实现。cookie数据会自动在web浏览器和web服务器之间传输数据。</li>
+<li>localStorage, sessionStorage是HTML5中新增的web存储的功能，它解决了客户端存储的一些缺点，并提供更强大的功能和操作API。</li>
+</ul>
+<p><strong>从有效时间看</strong></p>
+<ul>
+<li>cookie有效期：cookie默认有效期非常短暂，存在于web浏览器会话期间，当浏览器关闭，cookie也就消失了。如果要延长cookie的有效期，可以设置max-age属性（单位秒）</li>
+<li>localStorage有效期：永不失效，除非web应用主动删除。</li>
+<li>sessionStorage有效期：sessionStorage的有效期是和存储数据脚本所在的最顶层的窗口或者是浏览器标签是一样的，一旦窗口或者标签页被永久关闭了，存储的数据也就失效了。</li>
+</ul>
+<p><strong>从作用域看</strong></p>
+<ul>
+<li>cookie作用域：cookie作用域是通过domain文档源和path文档路径来确定的。默认情况下，cookie和创建它的web页面有关，并对web页面和该web页面同目录或者子目录的其他web页面可见。当设置path=”/“，它的作用域就变成文档源级别的了。</li>
+<li>localStorage作用域：localStorage的作用域是限定在文档源级别的。文档源通过协议、主机名以及端口三者来确定。</li>
+<li>sessionStorage作用域：sessionStorage的作用域也是限定在文档源级别。但需要注意的是，如果相同文档源的页面渲染在不同的标签中，sessionStorage的数据是无法共享的。</li>
+</ul>
+<p>除了上述列举的，cookie和localStorage、sessionStorage在存储大小的限制也不一样， 由于每个浏览器的实现标准都不一样，只说一下RFC 2965推荐标准（浏览器保存cookie不超过300个，为每个服务器保存的cookie不超过20个，每个cookie大小不超过4KB）。localStorage、sessionStorage设置值时可以达到8M。Web Storage拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie,getCookie。</p>
+<p>document.cookie可以读取到cookie, <strong>但是读取不到带有HTTPOnly 的参数的cookie，只能传输给服务器读写，这样就防止了前端的篡改</strong>，比如说：</p>
+<p>document.cookie 的操作比webStorage麻烦的多，它是由等号和分号分隔开的字符串；</p>
+<h2 id="HTTP文件缓存"><a href="#HTTP文件缓存" class="headerlink" title="HTTP文件缓存"></a>HTTP文件缓存</h2><p>对于浏览器缓存参见<a href="">《http协议详解之一：缓存》</a></p>
+<h2 id="webSQL"><a href="#webSQL" class="headerlink" title="webSQL"></a>webSQL</h2><h3 id="兼容性-1"><a href="#兼容性-1" class="headerlink" title="兼容性"></a>兼容性</h3><p><a href="http://caniuse.mojijs.com/Home/Html/item/key/sql-storage/index.html" target="_blank" rel="external">浏览器对 Web SQL 数据库的兼容表——引自Can I Use</a><br><img src="http://static.zhyjor.com/201805251133_432.png" alt=""></p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">window.onload = function () &#123;</div><div class="line">    //var db = window.openDatabase(&quot;Web Sql DB&quot;);</div><div class="line">    //判断浏览器是否支持</div><div class="line">    if (window.openDatabase) &#123;</div><div class="line">        //alert(&quot;浏览器支持&quot;);</div><div class="line">        //创建数据库</div><div class="line">        var db = window.openDatabase(&quot;Web_Sql_DB&quot;, &quot;1.0&quot;, &quot;Web SQL DB 测试&quot;, 20000);</div><div class="line">        if (db) &#123;</div><div class="line">            //alert(&quot;数据库创建成功！&quot;);</div><div class="line">            //创建表</div><div class="line">            db.transaction(function (tx) &#123;</div><div class="line">                tx.executeSql(&quot;Create Table tb1(id int,title Text)&quot;);</div><div class="line">            &#125;);</div><div class="line">            //插入数据</div><div class="line">            db.transaction(function (tin) &#123;</div><div class="line">                tin.executeSql(&quot;insert into tb1(id,title) values(?,?)&quot;, [2, &quot;WEB SQL&quot;]);</div><div class="line">            &#125;)</div><div class="line"></div><div class="line">            db.transaction(function (tin) &#123;</div><div class="line">                tin.executeSql(&quot;insert into tb1(id,title) values(?,?)&quot;, [3, &quot;JQuery&quot;]);</div><div class="line">            &#125;)</div><div class="line"></div><div class="line">            //删除</div><div class="line">            //db.transaction(function (tin) &#123;</div><div class="line">            //    tin.executeSql(&quot;delete from tb1 where title=&apos;WEB SQL&apos;&quot;);</div><div class="line">            //&#125;)</div><div class="line"></div><div class="line">            //查询</div><div class="line">            db.transaction(function (tx) &#123;</div><div class="line">                tx.executeSql(&quot;select * from tb1&quot;, [], function (x1, x2) &#123;</div><div class="line">                    for (var i = 0; i &lt; x2.rows.length; i++) &#123;</div><div class="line">                        document.write(&quot;&lt;b&gt;&quot; + x2.rows.item(i)[&apos;title&apos;] + &quot;&lt;/b&gt;&lt;br/&gt;&quot;)</div><div class="line">                    &#125;</div><div class="line">                &#125;, function (x3) &#123;</div><div class="line">                &#125;);</div><div class="line">            &#125;)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        alert(&quot;浏览器 不 支持！！！&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="indexDB"><a href="#indexDB" class="headerlink" title="indexDB"></a>indexDB</h2><p>IndexedDB 使用同源原则，所以它不能被任何其他源访问。进行大数据的存储，IndexedDB的储存空间比localStorage大得多，一般来说不少于250MB。IE的储存上限是250MB，Chrome和Opera是剩余空间的某个百分比.</p>
+<p>是一种轻量级NOSQL数据库;一个网站可能有一个或多个 IndexedDB 数据库，每个数据库必须具有惟一的名称。一个数据库可包含一个或多个对象存储。一个对象存储（由一个名称惟一标识）是一个记录集合。每个记录有一个键 和一个值。该值是一个对象，可拥有一个或多个属性。键可能基于某个键生成器，从一个键路径衍生出来，或者是显式设置。一个键生成器自动生成惟一的连续正整数。键路径定义了键值的路径。</p>
+<h3 id="兼容性-2"><a href="#兼容性-2" class="headerlink" title="兼容性"></a>兼容性</h3><p>使用indexedDB之前，最好使用以下代码，兼容不同浏览器<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//数据库对象</span></div><div class="line"><span class="built_in">window</span>.indexedDB =<span class="built_in">window</span>.indexedDB||<span class="built_in">window</span>.webikitIndexedDB||<span class="built_in">window</span>.mozIndexedDB||<span class="built_in">window</span>.msIndexedDB;</div><div class="line"><span class="comment">//数据库事务</span></div><div class="line"><span class="built_in">window</span>.IDBTransaction = <span class="built_in">window</span>.IDBTransaction||<span class="built_in">window</span>.webikitIDBTransaction||<span class="built_in">window</span>.mozIDBTransaction||<span class="built_in">window</span>.msIDBTransaction;</div><div class="line"><span class="comment">//数据库查询条件</span></div><div class="line"> <span class="built_in">window</span>.IDBKeyRange = <span class="built_in">window</span>.IDBKeyRange||<span class="built_in">window</span>.webkitIDBKeyRange||<span class="built_in">window</span>.mozIDBKeyRange||<span class="built_in">window</span>.msIDBKeyRange;</div><div class="line"><span class="comment">//游标</span></div><div class="line"><span class="built_in">window</span>.IBDCursor =  <span class="built_in">window</span>.IBDCursor ||<span class="built_in">window</span>.webkitIBDCursor ||<span class="built_in">window</span>.mozIBDCursor ||<span class="built_in">window</span>.msIBDCursor ;</div></pre></td></tr></table></figure></p>
+<p><img src="http://static.zhyjor.com/201805251341_383.png" alt=""></p>
+<h3 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = indexedDB.open(<span class="string">'dbName'</span>, <span class="number">1</span>);  <span class="comment">// 打开 dbName 数据库</span></div><div class="line">request.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;              <span class="comment">// 监听连接数据库失败时执行</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'连接数据库失败'</span>);</div><div class="line">&#125;</div><div class="line">request.onsuccess = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;            <span class="comment">// 监听连接数据库成功时执行</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'连接数据库成功'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="对比websql"><a href="#对比websql" class="headerlink" title="对比websql"></a>对比websql</h3><p>WebSQL也是一种在浏览器里存储数据的技术,跟IndexedDB不同的是,IndexedDB更像是一个NoSQL数据库,而WebSQL更像是关系型数据库,使用SQL查询数据。</p>
+<p>HTML5 indexedDB和Web SQL Database都是本地数据库数据存储，Web SQL Database数据库要出来的更早，然并卵。从2010年11月18日W3C宣布舍弃Web SQL database草案开始，就已经注定Web SQL Database数据库是明日黄花。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>在 IndexDB 中，我们可以创建多个数据库，一个数据库中创建多张表，一张表中存储多条数据——这足以 hold 住复杂的结构性数据。IndexDB 可以看做是 LocalStorage 的一个升级，当数据的复杂度和规模上升到了 LocalStorage 无法解决的程度，我们毫无疑问可以请出 IndexDB 来帮忙。</p>
+<h2 id="HTML5plus-Runtime"><a href="#HTML5plus-Runtime" class="headerlink" title="HTML5plus Runtime"></a>HTML5plus Runtime</h2><p>HTML5plus Runtime，简称5+ Runtime，是运行于手机端的强化web引擎，除了支持标准HTML5外，还支持更多扩展的js api.业内之前有phonegap/Cordova方案，但是他们自带js api太少了，扩展api需要用原生语言开发，更致命的是这类方案的性能不足。封装成跨平台的HTML5plus规范，并将规范公开于www.HTML5plus.org，不做厂商私有API。包括二维码、摇一摇、语音输入、地图、支付、分享、文件系统、通讯录等常用API，可以方便简单的编写，并且可跨平台。如这些接口：plus.navigator.setCookie、plus.storage、plus.io，都可以用来存储。</p>
+<p>mui是基于HTML5+ 的一套app前端UI框架。</p>
+<h2 id="Application-Cache-离线缓存"><a href="#Application-Cache-离线缓存" class="headerlink" title="Application Cache(离线缓存)"></a>Application Cache(离线缓存)</h2><p>上述的内容主要涉及的是数据的存储，接下来的两种主要就是用于离线应用的开发了。</p>
+<p>说得HTML5离线开发，我们通常第一反应是使用html5 manifest缓存技术，此技术已经出现很多年了。通过配置manifest 文件选择性的在本地存储，</p>
+<h3 id="使用方法-2"><a href="#使用方法-2" class="headerlink" title="使用方法"></a>使用方法</h3><p>当浏览器第二次打开页面的时候，会优先从 applictionCache 来加载，然后检查  app.manifest 是否更新，如果有更新则拉取更新文件并且更新app.manifest;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">manifest</span>=<span class="string">"app.manifest"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"test.css"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span> = <span class="string">'test.js'</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Manifest-文件："><a href="#Manifest-文件：" class="headerlink" title="Manifest 文件："></a>Manifest 文件：</h3><p>manifest 文件是简单的文本文件，它告知浏览器被缓存的内容（以及不缓存的内容）。manifest 文件可分为三个部分：</p>
+<ul>
+<li>CACHE MANIFEST - 在此标题下列出的文件将在首次下载后进行缓存</li>
+<li>NETWORK - 在此标题下列出的文件需要与服务器的连接，且不会被缓存</li>
+<li>FALLBACK - 在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#app.manifest</div><div class="line"></div><div class="line">CACHE MANIFEST</div><div class="line"># 2016-07-24 v1.0.0</div><div class="line">/theme.css</div><div class="line">/main.js</div><div class="line"> </div><div class="line">NETWORK:</div><div class="line">login.jsp</div><div class="line"> </div><div class="line">FALLBACK:</div><div class="line">/html/ /offline.html</div></pre></td></tr></table></figure>
+<p><strong>Application Cache 被标准弃用，浏览器不兼容， 不成熟, 被serviceWorkers(是事件驱动的 worker，生命周期与页面无关，关联页面未关闭时，它也可以退出，没有关联页面时，它也可以启动) 替代</strong></p>
+<h3 id="离线缓存与传统浏览器缓存区别"><a href="#离线缓存与传统浏览器缓存区别" class="headerlink" title="离线缓存与传统浏览器缓存区别"></a>离线缓存与传统浏览器缓存区别</h3><ul>
+<li>离线缓存是针对整个应用，浏览器缓存是单个文件</li>
+<li>离线缓存断网了还是可以打开页面，浏览器缓存不行</li>
+<li>离线缓存可以主动通知浏览器更新资源</li>
+</ul>
+<h2 id="cacheStorage"><a href="#cacheStorage" class="headerlink" title="cacheStorage"></a>cacheStorage</h2><p>用来替代Application cache的解决方案；通过window.caches 可以获取到Caches 对象，api 是下面的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.caches.open() <span class="comment">// 打开一个caches对象并且返回promise 对象；</span></div><div class="line"><span class="built_in">window</span>.caches.has( ) <span class="comment">//检查如果包含一个caches对象，则返回promise对象；</span></div><div class="line"><span class="built_in">window</span>.caches.delete()</div><div class="line"><span class="built_in">window</span>.caches.key()</div><div class="line"><span class="built_in">window</span>.caches.metch()</div></pre></td></tr></table></figure>
+<p>cacheStorage 是基于serviceWorker, serviceWorker是在后台独立线程运行的js脚本，通过 message/ postmessage 方法与页面进行通信；</p>
+<p>但是短期内兼容性还是很差的；</p>
+<h2 id="flash缓存"><a href="#flash缓存" class="headerlink" title="flash缓存"></a>flash缓存</h2><p>这种方式基本不用，这一方法主要基于flash有读写浏览器端本地目录的功能，同时也可以向js提供调用的api，则页面可以通过js调用flash去读写特定的磁盘目录，达到本地数据缓存的目的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>Web Storage / Web SQL Database / Indexed Database 的数据都存储在浏览器对应的用户配置文件目录(user profile directory)下，以 Windows 7 为例，Chrome 的数据存储在”C:\Users\your-account-name\AppData\Local\Google\Chrome\User Data\Default\”下，而 Firefox 的数据存储在”C:\Users\your-account-name\AppData\Local\Mozilla\Firefox\Profiles\”目录下。</strong></p>
+<p><strong>cookie文件存储于documents and settings\userName\cookie\文件夹下。通常的命名格式为：userName@domain.txt。</strong></p>
+<p><strong>较多的缓存机制目前主流浏览器并不兼容，不过可以使用polyfill的方法来处理</strong></p>
+<p><strong>参考资料</strong><br><a href="https://www.cnblogs.com/dujuncheng/p/6850246.html" target="_blank" rel="external">5分钟带你学习浏览器8大数据存储技术</a><br><a href="https://www.cnblogs.com/LuckyWinty/p/5699117.html" target="_blank" rel="external">前端HTML5几种存储方式的总结</a><br><a href="https://zhuanlan.zhihu.com/p/27264234" target="_blank" rel="external">深入了解 Service Worker ，看这篇就够了</a><br><a href="http://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/" target="_blank" rel="external">借助Service Worker和cacheStorage缓存及离线开发</a><br><a href="https://juejin.im/entry/5a3b1945518825256362d493" target="_blank" rel="external">9大浏览器端缓存机制分析</a><br><a href="https://juejin.im/post/59013d2c0ce46300614ebe70" target="_blank" rel="external">HTML5 进阶系列：indexedDB 数据库</a><br><a href="https://juejin.im/post/5a9d65916fb9a028e46e257a" target="_blank" rel="external">IndexedDB使用与出坑指南</a><br><strong><a href="https://juejin.im/entry/599b8867518825241f787cae" target="_blank" rel="external">HTML5 indexedDB 前端本地存储数据库实例教程</a></strong><br><a href="https://juejin.im/post/5b09a641f265da0dcd0b674f" target="_blank" rel="external">新一代的前端存储方案–indexedDB</a><br><a href="https://segmentfault.com/a/1190000012578794" target="_blank" rel="external">很全很全的前端本地存储讲解</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/">浏览器的数据存储方案之一：前端数据存储方案概览</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年04月11日 - 10:04</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/" title="浏览器的数据存储方案之一：前端数据存储方案概览">https://zhyjor.github.io/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/04/11/浏览器的数据存储方案之一：前端数据存储方案概览/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/浏览器的数据存储方案/" rel="tag"># 浏览器的数据存储方案</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/css常见布局之二：响应式栅栏布局/" rel="next" title="css常见布局之二：响应式栅栏布局">
+                <i class="fa fa-chevron-left"></i> css常见布局之二：响应式栅栏布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/15/数据结构与算法之六：图/" rel="prev" title="数据结构与算法之六：图">
+                数据结构与算法之六：图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#localStorage方式"><span class="nav-number">1.</span> <span class="nav-text">localStorage方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性"><span class="nav-number">1.1.</span> <span class="nav-text">兼容性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sessionStorage-方法"><span class="nav-number">2.</span> <span class="nav-text">sessionStorage 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#storage事件"><span class="nav-number">2.1.</span> <span class="nav-text">storage事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storage事件当前界面捕获"><span class="nav-number">2.2.</span> <span class="nav-text">storage事件当前界面捕获</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookies方式"><span class="nav-number">3.</span> <span class="nav-text">Cookies方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较三者的不同"><span class="nav-number">3.1.</span> <span class="nav-text">比较三者的不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP文件缓存"><span class="nav-number">4.</span> <span class="nav-text">HTTP文件缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webSQL"><span class="nav-number">5.</span> <span class="nav-text">webSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性-1"><span class="nav-number">5.1.</span> <span class="nav-text">兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">5.2.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#indexDB"><span class="nav-number">6.</span> <span class="nav-text">indexDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性-2"><span class="nav-number">6.1.</span> <span class="nav-text">兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法-1"><span class="nav-number">6.2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对比websql"><span class="nav-number">6.3.</span> <span class="nav-text">对比websql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">6.4.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5plus-Runtime"><span class="nav-number">7.</span> <span class="nav-text">HTML5plus Runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-Cache-离线缓存"><span class="nav-number">8.</span> <span class="nav-text">Application Cache(离线缓存)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法-2"><span class="nav-number">8.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manifest-文件："><span class="nav-number">8.2.</span> <span class="nav-text">Manifest 文件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离线缓存与传统浏览器缓存区别"><span class="nav-number">8.3.</span> <span class="nav-text">离线缓存与传统浏览器缓存区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cacheStorage"><span class="nav-number">9.</span> <span class="nav-text">cacheStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flash缓存"><span class="nav-number">10.</span> <span class="nav-text">flash缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1074 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css,css进阶," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="margin是css中常见且基础的概念，都是有套路可寻的，有时候只要把握住关键，很多玄学的点也都是可以解释的。">
+<meta name="keywords" content="css,css进阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css进阶之十三：margin合并与margin无效">
+<meta property="og:url" content="https://zhyjor.github.io/2018/06/26/css进阶之十三：margin崩塌/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="margin是css中常见且基础的概念，都是有套路可寻的，有时候只要把握住关键，很多玄学的点也都是可以解释的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201806261612_12.png">
+<meta property="og:image" content="http://static.zhyjor.com/201806271700_105.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css进阶之十三：margin合并与margin无效">
+<meta name="twitter:description" content="margin是css中常见且基础的概念，都是有套路可寻的，有时候只要把握住关键，很多玄学的点也都是可以解释的。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201806261612_12.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/06/26/css进阶之十三：margin崩塌/"/>
+
+
+
+
+
+  <title> css进阶之十三：margin合并与margin无效 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/06/26/css进阶之十三：margin崩塌/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                css进阶之十三：margin合并与margin无效
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-26T02:54:38+00:00">
+                2018-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/26/css进阶之十三：margin崩塌/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/26/css进阶之十三：margin崩塌/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>margin是css中常见且基础的概念，都是有套路可寻的，有时候只要把握住关键，很多玄学的点也都是可以解释的。<br><a id="more"></a></p>
+<h2 id="和padding为什么不同"><a href="#和padding为什么不同" class="headerlink" title="和padding为什么不同"></a>和padding为什么不同</h2><p>和 padding 属性一样， margin 的百分比值无论是水平方向还是垂直方向都是相对于宽度计算<br>的。不过相对于 padding， margin 的百分比值的应用价值就低了一截，根本原因在于和padding不同，元素设置 margin 在垂直方向上无法改变元素自身的内部尺寸，往往需要父元素作为载体，此外，由于 margin 合并的存在，垂直方向往往需要双倍尺寸才能和 padding 表现一致。例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">	<span class="attribute">background-color</span>: olive;</div><div class="line">	<span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.box</span> &gt; <span class="selector-tag">div</span> &#123;</div><div class="line">	<span class="attribute">margin</span>: <span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果<strong>.box 是一个宽高比为 2:1 的橄榄绿长方形。</strong>是不是有点儿奇怪： 50%+50%应该是 100%，应该上下一样，是 1:1 的正方形，怎么最后是 2:1 的长方形呢？这就涉及margin 合并的内容了。</p>
+<h2 id="什么是-margin-合并"><a href="#什么是-margin-合并" class="headerlink" title="什么是 margin 合并"></a>什么是 margin 合并</h2><p>块级元素的上外边距（ margin-top）与下外边距（margin-bottom）有时会合并为单个外边距，这样的现象称为“margin 合并”。从此定义上，我们可以捕获两点重要的信息。</p>
+<ul>
+<li>块级元素，但不包括浮动和绝对定位元素，尽管浮动和绝对定位可以让元素块状化。</li>
+<li>只发生在垂直方向，需要注意的是，这种说法在不考虑 writing-mode 的情况下才是正确的，严格来讲，应该是只发生在和当前文档流方向的相垂直的方向上。由于默认文档流是水平流，因此发生 margin 合并的就是垂直方向。</li>
+</ul>
+<h2 id="margin-合并的-3-种场景"><a href="#margin-合并的-3-种场景" class="headerlink" title="margin 合并的 3 种场景"></a>margin 合并的 3 种场景</h2><h3 id="相邻兄弟元素-margin-合并。"><a href="#相邻兄弟元素-margin-合并。" class="headerlink" title="相邻兄弟元素 margin 合并。"></a>相邻兄弟元素 margin 合并。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">p &#123; margin: 1em 0; &#125;</div><div class="line">&lt;p&gt;第一行&lt;/p&gt;</div><div class="line">&lt;p&gt;第二行&lt;/p&gt;</div></pre></td></tr></table></figure>
+<p>则第一行和第二行之间的间距还是 1em，因为第一行的 margin-bottom 和第二行的<br>margin-top 合并在一起了，并非上下相加。</p>
+<h3 id="父级和第一个-最后一个子元素"><a href="#父级和第一个-最后一个子元素" class="headerlink" title="父级和第一个/最后一个子元素"></a>父级和第一个/最后一个子元素</h3><p>在默认状态下，下面 3 种设置是等效的：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"father"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"son"</span> <span class="attr">style</span>=<span class="string">"margin-top:80px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"father"</span> <span class="attr">style</span>=<span class="string">"margin-top:80px;"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"son"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"father"</span> <span class="attr">style</span>=<span class="string">"margin-top:80px;"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"son"</span> <span class="attr">style</span>=<span class="string">"margin-top:80px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这个有个很神奇的现象，在实际开发的时候，给我们带来麻烦的多半就是这里的父子 margin 合并。</p>
+<h4 id="父子margin合并的玄学问题"><a href="#父子margin合并的玄学问题" class="headerlink" title="父子margin合并的玄学问题"></a>父子margin合并的玄学问题</h4><p>我们给值元素设置一个margin-top的值，结果发现父元素的北京掉下来了。<br>代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>我是标题<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> <span class="selector-class">.container</span> &#123;</div><div class="line">    <span class="attribute">max-width</span>: <span class="number">356px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">289px</span>;</div><div class="line">    <span class="attribute">background</span>: <span class="built_in">url</span>(../assets/3.jpg) no-repeat;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> &gt; <span class="selector-tag">h2</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">38px</span>;</div><div class="line">    <span class="attribute">margin-top</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果图：<br><img src="http://static.zhyjor.com/201806261612_12.png" alt=""></p>
+<p>问题产生的原因就是这里的父子 margin 合并。这里大家需要理清楚“合并”这个概念。如果我们按照中文释义理解，应该必须有多个对象才能进行合并，否则根本就没有“合”这一说，确实如此。但是，这样理解也有可能会带来这样一个误区，即你要出点儿力，我要出点儿力，才叫“合”，其实不然。放到我们这里，这个父子 margin 合并的案例上就是：父元素没有出一点力，子元素出了全部的力，然后最终的 margin 全部合到了父元素上。也就是虽然是在子元素上设置的 margin-top，但实际上就等同于在父元素上设置了 margin-top，我想这样大家就能理解为何头图会掉下来了吧。</p>
+<p>但是有一点需要注意，“等同于”并不是“就是”的意思，我们使用 getComputedStyle 方法获取父元素的 margin-top 值还是 CSS 属性中设置值，并非 margin 合并的表现值。</p>
+<h4 id="如何解决问题"><a href="#如何解决问题" class="headerlink" title="如何解决问题"></a>如何解决问题</h4><p>那该如何阻止这里 margin 合并的发生呢？对于 margin-top 合并，可以进行如下操作（满足一个条件即可）：</p>
+<ul>
+<li>父元素设置为块状格式化上下文元素；</li>
+<li>父元素设置 border-top 值；</li>
+<li>父元素设置 padding-top 值；</li>
+<li>父元素和第一个子元素之间添加内联元素进行分隔。</li>
+</ul>
+<p>对于 margin-bottom 合并，可以进行如下操作（满足一个条件即可）：</p>
+<ul>
+<li>父元素设置为块状格式化上下文元素；</li>
+<li>父元素设置 border-bottom 值；</li>
+<li>父元素设置 padding-bottom 值；</li>
+<li>父元素和最后一个子元素之间添加内联元素进行分隔；</li>
+<li>父元素设置 height、 min-height 或 max-height。</li>
+</ul>
+<p>所以，上面因为 margin 合并导致头图掉下来的问题可以添加下面的 CSS 代码进行<br>修复：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">	<span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其原理就是通过设置 overflow 属性让父级元素块状格式化上下文。</p>
+<p>说到此处，忍不住再多说几句。 jQuery 中有个$().slideUp()/$().slideDown()方法，如果在使用这个动画效果的时候，发现这内容在动画开始或结束的时候会跳一下，那八九不离十就是布局存在 margin 合并。 跳动之所以产生，就是因为 jQuery 的 slideUp 和 slideDown方法在执行的时候会被对象元素添加 overflow:hidden 设置，而 overflow: hidden 会阻止 margin 合并，于是一瞬间间距变大，产生了跳动。</p>
+<h3 id="空块级元素的-margin-合并"><a href="#空块级元素的-margin-合并" class="headerlink" title="空块级元素的 margin 合并"></a>空块级元素的 margin 合并</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.father &#123; overflow: hidden; &#125;</div><div class="line">.son &#123; margin: 1em 0; &#125;</div><div class="line">&lt;div class=&quot;father&quot;&gt;</div><div class="line">	&lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/d</div></pre></td></tr></table></figure>
+<p>结果，此时.father 所在的这个父级<code>&lt;div&gt;</code>元素高度仅仅是 1em，因为.son 这个空<code>&lt;div&gt;</code>元素的 margin-top 和 margin-bottom 合并在一起了。这也是上一节 margin:50%最终宽高比是 2:1 的原因，因为垂直方向的上下 margin 值合二为一了，所以垂直方向的外部尺寸只有水平方向的一半.</p>
+<p>这种空块级元素的 margin 合并特性即使自身没有设置 margin 也是会发生的，所谓“合”并不一定要自己出力，只要出人就可以。比方说，我们一开始的“相邻兄弟元素 margin 合并”，其实，就算兄弟不相邻，也是可以发生合并的，前提是中间插手的也是个会合并的家伙。比方说：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">p, div &#123;</div><div class="line">    margin: 1em 0;</div><div class="line">&#125;</div><div class="line">&lt;p&gt;第一行&lt;/p&gt;</div><div class="line">&lt;div&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;第二行&lt;/p&gt;</div></pre></td></tr></table></figure></p>
+<p>此时第一行和第二行之间的距离还是 1em，中间看上去隔了一个<code>&lt;div&gt;</code>元素，但对最终效果却<br>没有任何影响。如果非要细究，则实际上这里发生了 3 次 margin 合并， <code>&lt;div&gt;</code>和第一行<code>&lt;p&gt;</code>的 margin-bottom 合并，然后和第二行<code>&lt;p&gt;</code>的 margin-top 合并，这两次合并是相邻兄弟合并。由于自身是空<code>&lt;div&gt;</code>，于是前两次合并的 margin-bottom 和 margin-top 再次合并，这次合并是空块级元素合并，于是最终间距还是 1em。</p>
+<p>由于空块级元素的 margin 合并发生不愉快事情的情况非常之少。一来，我们很少会在页面上放置没什么用的空<code>&lt;div&gt;</code>；二来，即使使用空<code>&lt;div&gt;</code>也是画画分隔线之类的，一般都是使用 border 属性，正好可以阻断 margin 合并；三来， CSS 开发人员普遍没有 margin 上下同时开工的习惯，比方说一个列表，间距都是一样的，开发人员一般都是单独设定 margin-top 或 margin-bottom 值，因为这会让他们内心觉得更安全。于是，最终，空块级元素的 margin 合并就变成了一个对 CSS 世界有着具有巨大意义但大多数人都不知道的特性。</p>
+<h4 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h4><p>如果有人不希望空<code>&lt;div&gt;</code>元素有 margin 合并，可以进行如下操作：</p>
+<ul>
+<li>设置垂直方向的 border；</li>
+<li>设置垂直方向的 padding；</li>
+<li>里面添加内联元素（直接 Space 键空格是没用的）；</li>
+<li>设置 height 或者 min-height。</li>
+</ul>
+<h2 id="margin-合并的计算规则"><a href="#margin-合并的计算规则" class="headerlink" title="margin 合并的计算规则"></a>margin 合并的计算规则</h2><p>我把 margin 合并的计算规则总结为“正正取大值”“正负值相加”“负负最负值” 3 句话。<br>下面来分别举例说明。</p>
+<h3 id="如果是相邻兄弟合并"><a href="#如果是相邻兄弟合并" class="headerlink" title="如果是相邻兄弟合并"></a>如果是相邻兄弟合并</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;a&quot;&gt;&lt;/a&gt;</div><div class="line">&lt;div class=&quot;b&quot;&gt;&lt;/a&gt;</div><div class="line"></div><div class="line">.a &#123; margin-bottom: 50px; &#125;</div><div class="line">.b &#123; margin-top: 20px; &#125;</div><div class="line">此时.a 和.b 两个&lt;div&gt;之间的间距是 50px，取大的那个值。</div><div class="line"></div><div class="line">.a &#123; margin-bottom: 50px; &#125;</div><div class="line">.b &#123; margin-top: -20px; &#125;</div><div class="line">此时.a 和.b 两个&lt;div&gt;之间的间距是 30px，是-20px+50px 的计算值。</div><div class="line"></div><div class="line">.a &#123; margin-bottom: -50px; &#125;</div><div class="line">.b &#123; margin-top: -20px; &#125;</div><div class="line">此时.a 和.b 两个&lt;div&gt;之间的间距是-50px，取绝对负值最大的值。</div></pre></td></tr></table></figure>
+<h3 id="父子合并"><a href="#父子合并" class="headerlink" title="父子合并"></a>父子合并</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;father&quot;&gt;</div><div class="line">	&lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">.father &#123; margin-top: 20px; &#125;</div><div class="line">.son &#123; margin-top: 50px; &#125;</div><div class="line">此时.father 元素等同于设置了 margin-top:50px，取大的那个值。</div><div class="line"></div><div class="line"></div><div class="line">.father &#123; margin-top: -20px; &#125;</div><div class="line">.son &#123; margin-top: 50px; &#125;</div><div class="line">此时.father 元素等同于设置了 margin-top:30px，是-20px+50px 的计算值。</div><div class="line"></div><div class="line">.father &#123; margin-top: -20px; &#125;</div><div class="line">.son &#123; margin-top: -50px; &#125;</div><div class="line">则此时.a 元素的外部尺寸是-50px，取绝对负值最大的值。</div></pre></td></tr></table></figure>
+<h3 id="自身合并"><a href="#自身合并" class="headerlink" title="自身合并"></a>自身合并</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">.a &#123;</div><div class="line">	margin-top: 20px;</div><div class="line">	margin-bottom: 50px;</div><div class="line">&#125;</div><div class="line">则此时.a 元素的外部尺寸是 50px，取大的那个值。</div><div class="line"></div><div class="line">.a &#123;</div><div class="line">	margin-top: -20px;</div><div class="line">	margin-bottom: 50px;</div><div class="line">&#125;</div><div class="line">则此时.a 元素的外部尺寸是 30px，是-20px+50px 的计算值。</div><div class="line"></div><div class="line">.a &#123;</div><div class="line">	margin-top: -20px;</div><div class="line">	margin-bottom: -50px;</div><div class="line">&#125;</div><div class="line">则此时.a 元素的外部尺寸是-50px，取绝对负值最大的值。</div></pre></td></tr></table></figure>
+<h2 id="margin-合并的意义"><a href="#margin-合并的意义" class="headerlink" title="margin 合并的意义"></a>margin 合并的意义</h2><p>margin合并是bug吗，还是正常的？有何意义</p>
+<h3 id="bug？"><a href="#bug？" class="headerlink" title="bug？"></a>bug？</h3><p>这种特性是故意这么设计的，在实际内容呈现的时候是有着重要意义的，根本就不是 bug！不要遇到出乎自己意料或者自己无法理解的现象就称其为 bug</p>
+<h3 id="为何需要margin"><a href="#为何需要margin" class="headerlink" title="为何需要margin"></a>为何需要margin</h3><p>CSS 世界的设计本意就是图文信息展示，有了默认的 margin 值，我们的文章、新闻就不会挤在一起，垂直方向就会层次分明、段落有致，阅读体验就会好！为何使用 em 作为单位也很好理解，大家应该知道浏览器默认的字号大小是可以自定义的吧，例如，默认的是 16 像素，假如我们设置成更大号的字号，同时 HTML标签的 margin 是像素大小，则会发生文字变大但是间距不变的情况，原本段落有致的阅读体验必然又会变得令人窒息。 em 作为相对单位，则可以让我们的文章或新闻无论多大的字体都排版良好。可以看到， HTML 标签默认内置的 CSS 属性值完全就是为了更好地进行图文信息展示而设计的。</p>
+<p>我们平时进行网站开发的时候都会重置各种默认的 margin 尺寸，这是件需要好好审视的<br>事情，对于绝大多数网站，确实需要做这样的处理，因为这些网站鲜有传统的图文信息展示区<br>域。但是，如果你的站点是博客、新闻门户或公众号文章，我们应该做的是统一标签的 margin<br>大小，而不是一股脑地重置成 0。</p>
+<h3 id="margin合并的意义"><a href="#margin合并的意义" class="headerlink" title="margin合并的意义"></a>margin合并的意义</h3><p>下面说说 margin 合并的意义。</p>
+<h4 id="兄弟合并"><a href="#兄弟合并" class="headerlink" title="兄弟合并"></a>兄弟合并</h4><p>假如说没有 margin 合并这种说法，那么连续段落或列表之类首尾项间距会和其他兄弟标签成 1:2 关系；文章标题距离顶部会很近，而和下面的文章详情内容距离又会很开，就会造成内容上下间距不一致的情况。这些都是糟糕的排版体验。而合并机制可以保证元素上下间距一致。</p>
+<h4 id="父子合并-1"><a href="#父子合并-1" class="headerlink" title="父子合并"></a>父子合并</h4><p>在页面中任何地方嵌套或直接放入任何裸<code>&lt;div&gt;</code>，都不会影响原来的块状布局。 <code>&lt;div&gt;</code>是网页布局中非常常用的一个元素，其语义是没有语义，也就是不代表任何特定类型的内容，是一个通用型的具有流体特性的容器，可以用来分组或分隔。由于其作用就是分组的，因此，从行为表现上来看，一个纯粹的<code>&lt;div&gt;</code>元素是不能够也不可以影响原先的布局的。<strong>假如给原来可以正常合并的一个子元素加一个空的div就不能合并了，就会影响了原来的布局，这违背了div的设计初衷，</strong></p>
+<p>所以才有了父子 margin 合并，外面再嵌套一层<code>&lt;div&gt;</code>元素就跟没嵌套一样，表现为 <code>margin-top:20px</code> 就好像是设置在最外面的<code>&lt;div&gt;</code>元素上一样。</p>
+<h4 id="自身合并-1"><a href="#自身合并-1" class="headerlink" title="自身合并"></a>自身合并</h4><p>自身 margin 合并的意义在于可以避免不小心遗落或者生成的空标签影响排版和布局。知道了 margin 合并的意义以及作用，而且合并规则的兼容性良好，所以，平时网页制作的时候，遇到列表或者模块，大可全部保留上下 margin 设置。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list</span> &#123;</div><div class="line">	<span class="attribute">margin-top</span>: <span class="number">15px</span>;</div><div class="line">	<span class="attribute">margin-bottom</span>: <span class="number">15px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而不是战战兢兢地使用：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list</span> &#123;</div><div class="line">	<span class="attribute">margin-top</span>: <span class="number">15px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为 margin 合并特性，所以我们无须担心列表之间的间距会很大。不会的，就是 15px！相反，这种设置让我们的页面结构容错性更强了，比方说最后一个元素移除或位置调换，均不会破坏原来的布局，也就是我们的 CSS 无须做任何调整。</p>
+<h2 id="margin无效情形解析"><a href="#margin无效情形解析" class="headerlink" title="margin无效情形解析"></a>margin无效情形解析</h2><p>因为 margin 属性的诸多特异性，所以，我们在实际开发的时候，经常会遇到设置的margin 无效的情形。别等到出现状况了就吐槽出现bug了</p>
+<h3 id="inline元素"><a href="#inline元素" class="headerlink" title="inline元素"></a>inline元素</h3><p>display 计算值 inline 的非替换元素的垂直 margin 是无效的，虽然规范提到有渲染，但浏览器表现却未寻得一点踪迹，这和 padding 是有明显区别的。对于内联替换元素，垂直 margin 有效，并且没有 margin 合并的问题，所以图片永远不会发生 margin 合并。</p>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p>表格中的<code>&lt;tr&gt;</code>和<code>&lt;td&gt;</code>元素或者设置 display 计算值是 table-cell 或 table-row 的元素的 margin 都是无效的。但是，如果计算值是 table-caption、 table 或者 inline-table则没有此问题，可以通过 margin 控制外间距，甚至::first-letter 伪元素也可以解析 margin.</p>
+<h3 id="margin-合并的时候"><a href="#margin-合并的时候" class="headerlink" title="margin 合并的时候"></a>margin 合并的时候</h3><p>margin 合并的时候，更改 margin 值可能是没有效果的。以父子 margin 重叠为例，假设父元素设置有 margin-top:50px，则此时子元素设置 margin-top:30px 就没有任何效果表现，除非大小比 50px 大，或者是负值。</p>
+<h3 id="绝对定位元素非定位方位的-margin"><a href="#绝对定位元素非定位方位的-margin" class="headerlink" title="绝对定位元素非定位方位的 margin"></a>绝对定位元素非定位方位的 margin</h3><p>绝对定位元素非定位方位的 margin 值“无效”。什么意思呢？很多时候，我们对元<br>素进行绝对定位的时候，只会设置 1～2 个相邻方位。例如:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span> &#123; <span class="attribute">top</span>: <span class="number">10%</span>; <span class="attribute">left</span>: <span class="number">30%</span>;&#125;</div></pre></td></tr></table></figure></p>
+<p>此时 right 和 bottom 值属于 auto 状态，也就是右侧和底部没有进行定位，此时，这两个方向设置 margin 值我们在页面上是看不到定位变化的。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span> &#123;</div><div class="line">	<span class="attribute">top</span>: <span class="number">10%</span>; <span class="attribute">left</span>: <span class="number">30%</span>;</div><div class="line">	<span class="attribute">margin-right</span>: <span class="number">30px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>此时 margin-right:30px 几乎就是摆设。是 margin 没起作用吗？实际上不是的，绝对定位元素任意方位的 margin 值无论在什么场景下都一直有效。譬如这个例子，假设<code>&lt;img&gt;</code>宽度70%，同时父元素是具有定位属性，且 overflow 设置为 auto 的元素，则此时就会出现水平滚动条，因为 margin-right:30px 增加了图片的外部尺寸。</p>
+<p>那为什么一般情况下没有效果呢？主要是因为绝对定位元素的渲染是独立的，普通元素和兄弟元素是心连心，你动我也动，但是绝对定位元素由于独立渲染无法和兄弟元素插科打诨，因此，margin 无法影响兄弟元素定位，所以看上去就“无效”。</p>
+<h3 id="定高或定宽容器的子元素"><a href="#定高或定宽容器的子元素" class="headerlink" title="定高或定宽容器的子元素"></a>定高或定宽容器的子元素</h3><p>定高容器的子元素的 margin-bottom 或者宽度定死的子元素的 margin-right 的定位“失效”。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;box&quot;&gt;</div><div class="line">	&lt;div class=&quot;child&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">.box &#123;</div><div class="line">	height: 100px;</div><div class="line">&#125;</div><div class="line">.child &#123;</div><div class="line">	height: 80px;</div><div class="line">	margin-bottom: 100px;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个时候并不是无效，只是给人的感觉是无效。原因在于，若想使用 margin 属性改变自身的位置，必须是和当前元素定位方向一样的 margin 属性才可以，否则， margin 只能影响后面的元素或者父元素。<strong>也就是说这个时候的margin影响的是后面的元素，或者父元素，有渲染只是你看不到变化而已。</strong></p>
+<h3 id="与float相关的鞭长莫及"><a href="#与float相关的鞭长莫及" class="headerlink" title="与float相关的鞭长莫及"></a>与float相关的鞭长莫及</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;box&quot;&gt;</div><div class="line">	&lt;img src=&quot;mm1.jpg&quot;&gt;</div><div class="line">&lt;p&gt;内容&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">.box &gt; img &#123;</div><div class="line">	float: left;</div><div class="line">	width: 256px;</div><div class="line">&#125;</div><div class="line">.box &gt; p &#123;</div><div class="line">	overflow: hidden;</div><div class="line">	margin-left: 200px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中的 margin-left:200px 是无效的， 准确地讲，此时的<code>&lt;p&gt;</code>的 margin-left 从负无穷到256px 都是没有任何效果的。</p>
+<h3 id="内联特性导致的-margin-无效"><a href="#内联特性导致的-margin-无效" class="headerlink" title="内联特性导致的 margin 无效"></a>内联特性导致的 margin 无效</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;box&quot;&gt;</div><div class="line">	&lt;img src=&quot;mm1.jpg&quot;&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">.box &gt; img &#123;</div><div class="line">	height: 96px;</div><div class="line">	margin-top: -200px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的例子也很有代表性。一个容器里面有一个图片，然后这张图片设置 margin-top负值，让图片上偏移。但是，随着我们的负值越来越负，结果达到某一个具体负值的时候，图片不再往上偏移了。比方说，本例 margin-top 设置的是-200px，如果此时把 margin-top设置成-300px，图片会再往上偏移 100px 吗？不会！它会微丝不动， margin-top 变得无效了。要解释这里为何会无效，需要对 vertical-align 和内联盒模型有深入的理解。</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>此时，按照理解， -200px 远远超过图片的高度，图片应该完全跑到容器的外面，但是，图片依然有部分在.box 元素中，而且就算 margin-top 设置成-99999px，图片也不会继续往上移动，完全失效。其原理和上面图片底部留有间隙实际上是一样的，图片的前面有个“幽灵空白节点”，<strong>而在 CSS 世界中，非主动触发位移的内联元素是不可能跑到计算容器外面的，</strong>导致图片的位置被“幽灵空白节点”的 vertical-align:baseline 给限死了。我们不妨把看不见的“幽灵空白节点”使用字符 x 代替,原因就一目了然了。</p>
+<p><img src="http://static.zhyjor.com/201806271700_105.png" alt=""></p>
+<p>因为字符 x 下边缘和图片下边缘对齐，字符 x 非主动定位，不可能跑到容器外面，所以图片就被限死在此问题， margin-top 失效。</p>
+<p><strong>参考资料</strong><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/06/26/css进阶之十三：margin崩塌/">css进阶之十三：margin合并与margin无效</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年06月26日 - 10:06</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/06/26/css进阶之十三：margin崩塌/" title="css进阶之十三：margin合并与margin无效">https://zhyjor.github.io/2018/06/26/css进阶之十三：margin崩塌/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/06/26/css进阶之十三：margin崩塌/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/css进阶/" rel="tag"># css进阶</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/26/css常见布局之五：两栏自适应页面结构/" rel="next" title="css常见布局之五：两栏自适应页面结构">
+                <i class="fa fa-chevron-left"></i> css常见布局之五：两栏自适应页面结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/26/css技能之玄学开发/" rel="prev" title="css技能之玄学开发">
+                css技能之玄学开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#和padding为什么不同"><span class="nav-number">1.</span> <span class="nav-text">和padding为什么不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-margin-合并"><span class="nav-number">2.</span> <span class="nav-text">什么是 margin 合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#margin-合并的-3-种场景"><span class="nav-number">3.</span> <span class="nav-text">margin 合并的 3 种场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相邻兄弟元素-margin-合并。"><span class="nav-number">3.1.</span> <span class="nav-text">相邻兄弟元素 margin 合并。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父级和第一个-最后一个子元素"><span class="nav-number">3.2.</span> <span class="nav-text">父级和第一个/最后一个子元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#父子margin合并的玄学问题"><span class="nav-number">3.2.1.</span> <span class="nav-text">父子margin合并的玄学问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何解决问题"><span class="nav-number">3.2.2.</span> <span class="nav-text">如何解决问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空块级元素的-margin-合并"><span class="nav-number">3.3.</span> <span class="nav-text">空块级元素的 margin 合并</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何避免"><span class="nav-number">3.3.1.</span> <span class="nav-text">如何避免</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#margin-合并的计算规则"><span class="nav-number">4.</span> <span class="nav-text">margin 合并的计算规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果是相邻兄弟合并"><span class="nav-number">4.1.</span> <span class="nav-text">如果是相邻兄弟合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父子合并"><span class="nav-number">4.2.</span> <span class="nav-text">父子合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自身合并"><span class="nav-number">4.3.</span> <span class="nav-text">自身合并</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#margin-合并的意义"><span class="nav-number">5.</span> <span class="nav-text">margin 合并的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bug？"><span class="nav-number">5.1.</span> <span class="nav-text">bug？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为何需要margin"><span class="nav-number">5.2.</span> <span class="nav-text">为何需要margin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#margin合并的意义"><span class="nav-number">5.3.</span> <span class="nav-text">margin合并的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#兄弟合并"><span class="nav-number">5.3.1.</span> <span class="nav-text">兄弟合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父子合并-1"><span class="nav-number">5.3.2.</span> <span class="nav-text">父子合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自身合并-1"><span class="nav-number">5.3.3.</span> <span class="nav-text">自身合并</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#margin无效情形解析"><span class="nav-number">6.</span> <span class="nav-text">margin无效情形解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#inline元素"><span class="nav-number">6.1.</span> <span class="nav-text">inline元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格"><span class="nav-number">6.2.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#margin-合并的时候"><span class="nav-number">6.3.</span> <span class="nav-text">margin 合并的时候</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对定位元素非定位方位的-margin"><span class="nav-number">6.4.</span> <span class="nav-text">绝对定位元素非定位方位的 margin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定高或定宽容器的子元素"><span class="nav-number">6.5.</span> <span class="nav-text">定高或定宽容器的子元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与float相关的鞭长莫及"><span class="nav-number">6.6.</span> <span class="nav-text">与float相关的鞭长莫及</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内联特性导致的-margin-无效"><span class="nav-number">6.7.</span> <span class="nav-text">内联特性导致的 margin 无效</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">6.7.1.</span> <span class="nav-text">分析</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1040 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js,React," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="杭州已经不看健康码了，某种程度上来说YQ已经结束了，但某种程度上YQ又刚刚开始。无论是谁在这个冬天都要保护好自己，明年春暖花开的时候，肯定就是真正的春天到了 闲言少叙，开始正文">
+<meta name="keywords" content="js,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码的角度回答ReactHooks面试题">
+<meta property="og:url" content="https://zhyjor.github.io/2022/12/08/从源码的角度回答ReactHooks面试题/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="杭州已经不看健康码了，某种程度上来说YQ已经结束了，但某种程度上YQ又刚刚开始。无论是谁在这个冬天都要保护好自己，明年春暖花开的时候，肯定就是真正的春天到了 闲言少叙，开始正文">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从源码的角度回答ReactHooks面试题">
+<meta name="twitter:description" content="杭州已经不看健康码了，某种程度上来说YQ已经结束了，但某种程度上YQ又刚刚开始。无论是谁在这个冬天都要保护好自己，明年春暖花开的时候，肯定就是真正的春天到了 闲言少叙，开始正文">
+<meta name="twitter:image" content="https://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2022/12/08/从源码的角度回答ReactHooks面试题/"/>
+
+
+
+
+
+  <title> 从源码的角度回答ReactHooks面试题 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2022/12/08/从源码的角度回答ReactHooks面试题/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                从源码的角度回答ReactHooks面试题
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-12-08T05:47:37+00:00">
+                2022-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/12/08/从源码的角度回答ReactHooks面试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2022/12/08/从源码的角度回答ReactHooks面试题/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>杭州已经不看健康码了，某种程度上来说YQ已经结束了，但某种程度上YQ又刚刚开始。无论是谁在这个冬天都要保护好自己，明年春暖花开的时候，肯定就是真正的春天到了</p>
+<p>闲言少叙，开始正文<br><a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上篇文章<a href="https://juejin.cn/post/7172903844366516260" target="_blank" rel="external">《都React V18了，还不会正确使用React Hooks吗，万字长文解析Hooks的常见问题》</a>说到了React Hooks的一些常见问题，本文让我们继续深入react hooks，结合几个常见的面试题，从源码角度分析一下react hooks，从源码的角度回答一下这些问题。</p>
+<p>本文的React源码基于最新的版本 <a href="https://github.com/facebook/react/tree/v18.2.0" target="_blank" rel="external">V18.2.0</a></p>
+<h2 id="带着问题看源码"><a href="#带着问题看源码" class="headerlink" title="带着问题看源码"></a>带着问题看源码</h2><p>从React V16.8 发布以来 Hooks API 以来，社区出现了很多针对Hooks源码分析的文章。但是源码阅读本就是一个比较枯燥的事情，而且React源码也相对复杂，涉及了诸如Fiber、双缓冲之类相对不好整体理解的新概念，源码阅读起来没有那么顺畅。React Hooks又是面试会经常被问到的一个点，本文笔者不会长篇铺上代码，会结合几个面试中常见的问题，对 React Hooks 的源码进行分析，带着问题去分析源码，尽可能的使用更规范的答案，来回答这些面试题，同时对React Hooks源码有更深入的理解。</p>
+<h2 id="常见的React-Hooks面试题"><a href="#常见的React-Hooks面试题" class="headerlink" title="常见的React Hooks面试题"></a>常见的React Hooks面试题</h2><h3 id="为什么可以在Function-Component中使用使用私有状态"><a href="#为什么可以在Function-Component中使用使用私有状态" class="headerlink" title="为什么可以在Function Component中使用使用私有状态"></a>为什么可以在Function Component中使用使用私有状态</h3><p>Function Component 和 Class Component 不同，Function Component 不能实例化，所有就不可以将私有状态挂在到实例上，组件每次重新渲染都会把Function重新执行一遍，函数内的变量就会重新初始化，这些状态在React内是怎么维护的呢<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 组件re-render的时候name，setName保存在哪里</span></div><div class="line"><span class="keyword">const</span> Comp = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> [name, setName] = uesState(<span class="string">''</span>);</div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span>&#123;name&#125;<span class="tag">&lt;/&gt;</span></span></div><div class="line"><span class="xml">&#125;</span></div></pre></td></tr></table></figure></p>
+<h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><p>这个问题应该是所有人在使用hooks api的第一个疑惑，为什么React Function Component 每次渲染之后都能返回的之前的值，毋庸置疑的是React 肯定通过某种机制记录下来了更新操作，并将其结果记录并返回给下一次渲染了。但是这些状态记录在哪里了呢？这里先卖个关子，先看看下一个React Hooks的问题</p>
+<h3 id="为什么不要在循环，条件或嵌套函数中调用hooks"><a href="#为什么不要在循环，条件或嵌套函数中调用hooks" class="headerlink" title="为什么不要在循环，条件或嵌套函数中调用hooks"></a>为什么不要在循环，条件或嵌套函数中调用hooks</h3><p>React官方文档中明确说明了这条Hooks调用顺序的限制</p>
+<blockquote>
+<p>不要在循环，条件或嵌套函数中调用 Hook， 确保总是在你的 React 函数的最顶层以及任何 return 之前调用Hooks</p>
+</blockquote>
+<p>假如我们这样使用了就会遇到eslint的提醒，比如下面的🌰:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Comp = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">if</span>(props.disable) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">const</span> [name, setName] = useState(<span class="string">''</span>);</div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span>&#123;name&#125;<span class="tag">&lt;/&gt;</span></span></div><div class="line"><span class="xml">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>上面的例子不出意外的会出现一个警告<code>React Hook &quot;useState&quot; is called conditionally. React Hooks muse be called in the exact same order in every render</code></p>
+<p>这种用法也很常见，但是为什么React Hooks就能不兼容呢</p>
+<h4 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h4><p>这个问题Rudi Yardley有个回答笔者感觉特别好：<a href="https://medium.com/@ryardley/react-hooks-not-magic-just-arrays-cd4f1857236e" target="_blank" rel="external">React hooks: not magic, just arrays</a>；因为hooks维护了一系列的数组，假如在不同的render返回的返回的hooks不同，内部游标就无法做到正确的匹配。</p>
+<p>这个问题也刚好匹配到了第一个问题，函数组件的状态就是维护到了这些数组中，根据组件内书写的hooks的顺序，按顺序返回，这就解释了为什么Function Component 可以记录私有变量。</p>
+<p>下面从React源码的角度看看这个问题</p>
+<h4 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h4><p>首先我们不关注不相关的部分，react的源码逻辑很深，假如过于关注某些细节很容易陷入其中，找不到重点，我们直接跳到关键位置<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// react-reconciler/src/ReactFiberHooks.js</span></div><div class="line"><span class="comment">// HooksDispatcherOnMount，挂载阶段的useState</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountState</span>&lt;<span class="title">S</span>&gt;(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> hook = mountWorkInProgressHook();</div><div class="line">  <span class="comment">// ...</span></div><div class="line">  hook.memoizedState = hook.baseState = initialState;</div><div class="line">  <span class="keyword">const</span> queue: UpdateQueue&lt;S, BasicStateAction&lt;S&gt;&gt; = &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;;</div><div class="line">  <span class="keyword">const</span> dispatch = dispatchSetState.bind();</div><div class="line">  <span class="keyword">return</span> [hook.memoizedState, dispatch];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// HooksDispatcherOnUpdate，更新阶段的useState</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateState</span>&lt;<span class="title">S</span>&gt;(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> updateReducer(basicStateReducer, (initialState: any));</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateReducer</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">const</span> hook = updateWorkInProgressHook();</div><div class="line">      <span class="keyword">const</span> queue = hook.queue;</div><div class="line">      <span class="keyword">const</span> dispatch: Dispatch&lt;A&gt; = (queue.dispatch: any);</div><div class="line">      <span class="keyword">return</span> [hook.memoizedState, dispatch];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 关键点指向mountWorkInProgressHook</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountWorkInProgressHook</span>(<span class="params"></span>): <span class="title">Hook</span> </span>&#123;</div><div class="line">  <span class="comment">// 创建一个节点</span></div><div class="line">  <span class="keyword">const</span> hook: Hook = &#123;</div><div class="line">    memoizedState: <span class="literal">null</span>,</div><div class="line"></div><div class="line">    baseState: <span class="literal">null</span>,</div><div class="line">    baseQueue: <span class="literal">null</span>,</div><div class="line">    queue: <span class="literal">null</span>,</div><div class="line"></div><div class="line">    next: <span class="literal">null</span>,</div><div class="line">  &#125;;</div><div class="line">  <span class="comment">// 判断这是不是链表的第一个节点</span></div><div class="line">  <span class="keyword">if</span> (workInProgressHook === <span class="literal">null</span>) &#123;</div><div class="line">    <span class="comment">// 若这是链表的第一个节点，将链表指针memoizedState指向当前hook</span></div><div class="line">    <span class="comment">// currentlyRenderingFiber 是 workInProgress 指向的 fiber 节点，workInProgress本文就不做分解了，后续可以细说</span></div><div class="line">    currentlyRenderingFiber.memoizedState = workInProgressHook = hook;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// 若这不是链表的第一个节点，则直接添加节点放到列表的最后</span></div><div class="line">    workInProgressHook = workInProgressHook.next = hook;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> workInProgressHook;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在mount阶段，每调用一次创建 hook 的函数，不论是什么 hook，只要是在这个函数组件内定义的，都会添加到workInProgressHook链表中，<strong>一个Function Component中定义的所有的hooks节点都会放到链表内，并存放在通过指针memoizedState保持引用，可以从该属性中获取链表的指针。</strong>这些 hooks 的调用顺序，其实就是其添加在链表上的顺序。在re-render时，也会按照添加的顺序来执行，所以需要hooks在函数顶部声明，同时不能在判断语句中声明，否则可能会引起hooks的错乱</p>
+<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>组件在挂在阶段是通过mountWorkInProgressHook来生成hooks并挂载到链表上的，我们都知道组件的生命周期内，还包含更新，在mounted阶段，初始节点已经把所有的 hooks 都挂载在链表中了，在update阶段的更新操作是怎么处理的呢，这里不做详细说明了，可以去看看<code>updateWorkInProgressHook</code>。</p>
+<h3 id="hooks的依赖跟踪是怎么实现的"><a href="#hooks的依赖跟踪是怎么实现的" class="headerlink" title="hooks的依赖跟踪是怎么实现的"></a>hooks的依赖跟踪是怎么实现的</h3><p>你写代码的时候会不会遇到过在Effect中依赖了某个state，但是忘记将其加入到依赖中了，比如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Comp = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> [keyword, setKeyword] = useState(<span class="string">''</span>);</div><div class="line">  <span class="keyword">const</span> [pageNumber, setPageNumber] = useState(<span class="number">0</span>);</div><div class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;doFetch(keyword, pageNumber)&#125;, [pageNumber])</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span>&#123;keyword&#125;<span class="tag">&lt;/&gt;</span></span></div><div class="line"><span class="xml">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>上述的代码会造成useEffect在keyword变化的时候不会执行fetch，代码执行的时机或者执行结果会出现异常。那为什么useEffect中依赖的state必须加到依赖项中呢</p>
+<p>其实useEffect(), useMemo(), useCallback() 等hooks中，第2个参数是依赖项，react是怎么实现依赖跟踪的呢</p>
+<h4 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h4><p>我们还是直接前往关键代码位置<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// /packages/react-reconciler/src/ReactFiberHooks.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateEffectImpl</span>(<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  <span class="regexp">//</span> ...</span></span></div><div class="line"><span class="function"><span class="params">  create: (</span>) =&gt; (<span class="params">(</span>) =&gt; <span class="title">void</span>) | <span class="title">void</span>,</span></div><div class="line"><span class="function">  <span class="title">deps</span>: <span class="title">Array</span>&lt;<span class="title">mixed</span>&gt; | <span class="title">void</span> | <span class="title">null</span>,</span></div><div class="line"><span class="function">) </span>&#123;</div><div class="line">  <span class="keyword">const</span> hook = updateWorkInProgressHook();</div><div class="line">  <span class="keyword">const</span> nextDeps = deps === <span class="literal">undefined</span> ? <span class="literal">null</span> : deps;</div><div class="line">    <span class="keyword">const</span> prevEffect = currentHook.memoizedState;</div><div class="line">    <span class="keyword">if</span> (nextDeps !== <span class="literal">null</span>) &#123;</div><div class="line">      <span class="keyword">const</span> prevDeps = prevEffect.deps;</div><div class="line">      <span class="keyword">if</span> (areHookInputsEqual(nextDeps, prevDeps)) &#123;</div><div class="line">        hook.memoizedState = pushEffect(hookFlags, create, destroy, nextDeps);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  <span class="comment">// ...</span></div><div class="line">  currentlyRenderingFiber.flags |= fiberFlags;</div><div class="line">  hook.memoizedState = pushEffect(hookFlags, create, destroy, nextDeps);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从上面的代码可以看出，假如没有设置依赖项，或设置的依赖项为 null，则该 hook 每次渲染时都会执行；若依赖项任何一项都没有变化，使用上一次渲染的结果。依赖项目的判断是怎么做的呢<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">areHookInputsEqual</span>(<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  nextDeps: Array&lt;mixed&gt;,</span></span></div><div class="line"><span class="function"><span class="params">  prevDeps: Array&lt;mixed&gt; | null,</span></span></div><div class="line"><span class="function"><span class="params"></span>): <span class="title">boolean</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (prevDeps === <span class="literal">null</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// $FlowFixMe[incompatible-use] found when upgrading Flow</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; prevDeps.length &amp;&amp; i &lt; nextDeps.length; i++) &#123;</div><div class="line">    <span class="comment">// $FlowFixMe[incompatible-use] found when upgrading Flow</span></div><div class="line">    <span class="keyword">if</span> (is(nextDeps[i], prevDeps[i])) &#123;</div><div class="line">      <span class="keyword">continue</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在HooksDispatcherOnUpdate阶段，上面的代码会比较两个依赖项中的每一项是否有变化，若任意的一项变化，就返回 false，表示两个依赖项不相等, hooks会重新执行；若都一样，则hooks还使用之前缓存的数据，而不会去执行effect，这就是hooks依赖跟踪机制</p>
+<h3 id="useCallback和useMemo的区别是什么"><a href="#useCallback和useMemo的区别是什么" class="headerlink" title="useCallback和useMemo的区别是什么"></a>useCallback和useMemo的区别是什么</h3><p>首先useCallback我们经常用在包裹一个函数，避免组件re-render的时候生成一个新的函数，引起子组件re-render；一般我们会将useCallback和React.memo结合使用，可以参考一下上篇文章中关于<a href="https://juejin.cn/post/7172903844366516260#heading-4" target="_blank" rel="external">《用useCallback肯定能提升性能吗？》</a>的部分。而useMemo一般用于复杂的计算，优化一些不必要的计算，比如计算的相关参数都没有变化的时候，直接返回上一次的计算结果就好了，避免出现在当前组件中进行冗余的计算</p>
+<p>可以看看这个例子<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Children = React.memo(<span class="function">(<span class="params">props</span>) =&gt;</span> &lt;button onClick=&#123;props.doSubmit&#125;&gt;提交&lt;<span class="regexp">/button&gt;);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">export default function Demo() &#123;</span></div><div class="line"><span class="regexp">  const [number, setNumber] = useState(0);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  const doSubmit = useCallback(() =&gt; &#123;</span></div><div class="line"><span class="regexp">    console.log(`Number: $&#123;number&#125;`); /</span><span class="regexp">/ 每次输出都是初始值</span></div><div class="line"><span class="regexp">  &#125;, [number]); /</span><span class="regexp">/ 把`text`写在依赖数组里</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  const memoValue = React.useMemo(() =&gt; &#123;</span></div><div class="line"><span class="regexp">    return Array(100000).fill('').map(v =&gt; /</span>*数据计算*<span class="regexp">/ v);</span></div><div class="line"><span class="regexp">  &#125;, [number]);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  return (</span></div><div class="line"><span class="regexp">    &lt;&gt;</span></div><div class="line"><span class="regexp">      &lt;input value=&#123;number&#125; onChange=&#123;(e) =&gt; setNumber(e.target.value)&#125; /</span>&gt;</div><div class="line">      &lt;Children doSubmit=&#123;doSubmit&#125; /&gt;</div><div class="line">    &lt;<span class="regexp">/&gt;</span></div><div class="line"><span class="regexp">  );</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure></p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>useCallback和useMemo几乎完全一样，唯一的区别就是useCallback根据第二个参数（依赖项）缓存并返回第一个参数（回调函数），useMemo是根据第二个参数（依赖项）缓存并返回第一个参数（回调函数）的执行结果，<strong>两者一个缓存的回调函数，一个缓存的时回调函数的执行结果</strong></p>
+<h4 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h4><p>在上述的分析中，我们可以发现所有的 hooks 在内部实现时，都会区分mount阶段和update阶段，useCallback和useMemo也是会区分的，我们主要关心一下update阶段的代码，依赖更新部分的能力可以参考上面的分析，这不做过多解释，让我们就直观的看看useCallback和useMemo的区别<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateCallback</span>&lt;<span class="title">T</span>&gt;(<span class="params">callback: T, deps: Array&lt;mixed&gt; | void | null</span>): <span class="title">T</span> </span>&#123;</div><div class="line">  <span class="keyword">const</span> hook = updateWorkInProgressHook();</div><div class="line">  <span class="keyword">const</span> nextDeps = deps === <span class="literal">undefined</span> ? <span class="literal">null</span> : deps;</div><div class="line">  <span class="keyword">const</span> prevState = hook.memoizedState;</div><div class="line">  <span class="keyword">if</span> (areHookInputsEqual(nextDeps, prevDeps)) &#123;</div><div class="line">        <span class="keyword">return</span> prevState[<span class="number">0</span>];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 返回函数</span></div><div class="line">  hook.memoizedState = [callback, nextDeps];</div><div class="line">  <span class="keyword">return</span> callback;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateMemo</span>&lt;<span class="title">T</span>&gt;(<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  nextCreate: (</span>) =&gt; <span class="title">T</span>,</span></div><div class="line"><span class="function">  <span class="title">deps</span>: <span class="title">Array</span>&lt;<span class="title">mixed</span>&gt; | <span class="title">void</span> | <span class="title">null</span>,</span></div><div class="line"><span class="function">): <span class="title">T</span> </span>&#123;</div><div class="line">  <span class="keyword">const</span> hook = updateWorkInProgressHook();</div><div class="line">  <span class="keyword">const</span> nextDeps = deps === <span class="literal">undefined</span> ? <span class="literal">null</span> : deps;</div><div class="line">  <span class="keyword">const</span> prevState = hook.memoizedState;</div><div class="line">  <span class="keyword">if</span> (areHookInputsEqual(nextDeps, prevDeps)) &#123;</div><div class="line">    <span class="keyword">return</span> prevState[<span class="number">0</span>];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 计算结果</span></div><div class="line">  <span class="keyword">if</span> (shouldDoubleInvokeUserFnsInHooksDEV) &#123;</div><div class="line">    nextCreate();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">const</span> nextValue = nextCreate();</div><div class="line">  hook.memoizedState = [nextValue, nextDeps];</div><div class="line">  <span class="keyword">return</span> nextValue;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以直观的看到<code>hook.memoizedState</code>保存的分别是callback和nextValue，这样就可以解释两者一个缓存的回调函数，一个缓存的时回调函数的执行结果这个结果了</p>
+<h3 id="useEffect和useLayoutEffect执行时机有什么区别"><a href="#useEffect和useLayoutEffect执行时机有什么区别" class="headerlink" title="useEffect和useLayoutEffect执行时机有什么区别"></a>useEffect和useLayoutEffect执行时机有什么区别</h3><p>先看看官方文档对这两个hooks的描述，先看看useEffect:</p>
+<blockquote>
+<p>该 Hook 接收一个包含命令式、且可能有副作用代码的函数。使用 useEffect 完成副作用操作。赋值给 useEffect 的函数会在组件渲染到屏幕之后执行。默认情况下，effect 将在每轮渲染结束后执行，但你可以选择让它在只有某些值改变的时候才执行。</p>
+</blockquote>
+<p>再看看useLayoutEffect:</p>
+<blockquote>
+<p>其函数签名与 useEffect 相同，但它会在所有的 DOM 变更之后同步调用 effect。可以使用它来读取 DOM 布局并同步触发重渲染。在浏览器执行绘制之前，useLayoutEffect 内部的更新计划将被同步刷新。</p>
+</blockquote>
+<h4 id="源码分析-2"><a href="#源码分析-2" class="headerlink" title="源码分析"></a>源码分析</h4><p>下面的代码可以看出，useEffect和useLayoutEffect的调用的函数其实是同一个，那两者的区别是什么呢<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateLayoutEffect</span>(<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  create: (</span>) =&gt; (<span class="params">(</span>) =&gt; <span class="title">void</span>) | <span class="title">void</span>,</span></div><div class="line"><span class="function">  <span class="title">deps</span>: <span class="title">Array</span>&lt;<span class="title">mixed</span>&gt; | <span class="title">void</span> | <span class="title">null</span>,</span></div><div class="line"><span class="function">): <span class="title">void</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> updateEffectImpl(UpdateEffect, HookLayout, create, deps);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实关键点就是updateEffectImpl第一个参数fiberFlags的控制，分别是<code>PassiveEffect</code>和<code>UpdateEffect</code>,现在让给我们看一下两者在调度器Scheduler内的执行时机</p>
+<p>React的一次状态更新，可以简单概括为两个阶段，构造fiber树（render）和渲染fiber树（commit），为了直观，我们依旧不去关心优先级，不去关心调度器的实现，只关注useEffect和useLayoutEffect回掉函数执行时机，当workInProgressFiber树构建完成，就会进入commit阶段，useEffect的副作用才会开始执行或销毁，commit阶段的内部执行也是很复杂但是不是这个问题重点，让我们直接跳过commit阶段不相关的部分，前往Effect的执行部分</p>
+<p>commit的入口函数是<code>commitRoot --&gt; commitRootImpl</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">commitRootImpl</span>(<span class="params"></span></span></div><div class="line"><span class="function"><span class="params">  root: FiberRoot,</span></span></div><div class="line"><span class="function"><span class="params">  recoverableErrors: null | Array&lt;CapturedValue&lt;mixed&gt;&gt;,</span></span></div><div class="line"><span class="function"><span class="params">  transitions: Array&lt;Transition&gt; | null,</span></span></div><div class="line"><span class="function"><span class="params">  renderPriorityLevel: EventPriority,</span></span></div><div class="line"><span class="function"><span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// 异步调度effect</span></div><div class="line">  scheduleCallback(NormalSchedulerPriority, () =&gt; &#123;</div><div class="line">    flushPassiveEffects();</div><div class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">  &#125;);</div><div class="line">  <span class="comment">// Before Mutation阶段</span></div><div class="line">  <span class="keyword">const</span> shouldFireAfterActiveInstanceBlur = commitBeforeMutationEffects(</div><div class="line">      root,</div><div class="line">      finishedWork,</div><div class="line">    );</div><div class="line"></div><div class="line"> <span class="comment">// Mutation阶段</span></div><div class="line">  commitMutationEffects(root, finishedWork, lanes);</div><div class="line"> <span class="comment">// Layout阶段</span></div><div class="line">  commitLayoutEffects(finishedWork, root, lanes);</div><div class="line"></div><div class="line">  flushSyncCallbacks();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以明确的是，useLayoutEffect会在commit阶段中同步执行，回调函数会更早一点执行，可以在useLayoutEffects中进行一些可能影响dom的操作，其create中可以获取到最新的dom树且由于此时浏览器未进行绘制，这个时候操作dom可以避免一起一些浏览器的抖动行为，这部分逻辑就不再深入了，后续可以针对react的更新进行一次彻底的源码分析</p>
+<h4 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h4><p>这个问题其实还有个延伸问题，useEffect和useLayoutEffect和Class Component中的生命周期如何对应等等，这个可以看看源码思考一下</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看完上面的几个问题，我们基本也从几个片段看了一些Hooks的源码，现在我们应该对这几个问题有些相对清晰的认识了，但是似乎对react源码或者说react的更新过程有了一些更多的疑惑，这个可以让我们在后面的文章中继续分析</p>
+<p>对本文或者react hooks有问题的，欢迎留言讨论</p>
+<p><strong>参考资料</strong><br><a href="https://medium.com/@ryardley/react-hooks-not-magic-just-arrays-cd4f1857236e" target="_blank" rel="external">React hooks: not magic, just arrays</a></p>
+<p><a href="https://juejin.cn/post/6932763604492140557#heading-8" target="_blank" rel="external">useEffect和useLayoutEffect源码浅析</a><br><a href="https://www.xiabingbao.com/post/react/react-hooks-rjp9x1.html" target="_blank" rel="external">React18 源码解析之 hooks 的挂载</a><br><a href="https://juejin.cn/post/6954352486312312845#heading-6" target="_blank" rel="external">【万字长文】React hooks 源码详解</a><br><a href="https://juejin.cn/post/6844904080758800392#heading-1" target="_blank" rel="external">React Hooks源码解析，原来这么简单～</a><br><a href="https://zhuanlan.zhihu.com/p/387939403" target="_blank" rel="external">突破Hooks所有限制，只要50行代码</a><br><a href="https://github.com/monsterooo/blog/issues/37" target="_blank" rel="external">useCallback、useMemo 分析 &amp; 差别</a><br><a href="https://article.itxueyuan.com/rxK3Rp" target="_blank" rel="external">深入理解 React useLayoutEffect 和 useEffect 的执行时机</a></p>
+<p><img src="https://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2022/12/08/从源码的角度回答ReactHooks面试题/">从源码的角度回答ReactHooks面试题</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2022年12月08日 - 13:12</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2022/12/08/从源码的角度回答ReactHooks面试题/" title="从源码的角度回答ReactHooks面试题">https://zhyjor.github.io/2022/12/08/从源码的角度回答ReactHooks面试题/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2022/12/08/从源码的角度回答ReactHooks面试题/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/12/01/都React V18了，还不会正确使用Hooks吗/" rel="next" title="都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题">
+                <i class="fa fa-chevron-left"></i> 都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/01/06/Icon图标的正确使用姿势/" rel="prev" title="SVG图标的使用姿势：搭建私有图标库">
+                SVG图标的使用姿势：搭建私有图标库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带着问题看源码"><span class="nav-number">2.</span> <span class="nav-text">带着问题看源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的React-Hooks面试题"><span class="nav-number">3.</span> <span class="nav-text">常见的React Hooks面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么可以在Function-Component中使用使用私有状态"><span class="nav-number">3.1.</span> <span class="nav-text">为什么可以在Function Component中使用使用私有状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题分析"><span class="nav-number">3.1.1.</span> <span class="nav-text">问题分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不要在循环，条件或嵌套函数中调用hooks"><span class="nav-number">3.2.</span> <span class="nav-text">为什么不要在循环，条件或嵌套函数中调用hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题分析-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码解读"><span class="nav-number">3.2.2.</span> <span class="nav-text">源码解读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思考"><span class="nav-number">3.2.3.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hooks的依赖跟踪是怎么实现的"><span class="nav-number">3.3.</span> <span class="nav-text">hooks的依赖跟踪是怎么实现的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#源码分析"><span class="nav-number">3.3.1.</span> <span class="nav-text">源码分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useCallback和useMemo的区别是什么"><span class="nav-number">3.4.</span> <span class="nav-text">useCallback和useMemo的区别是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">3.4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码分析-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">源码分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useEffect和useLayoutEffect执行时机有什么区别"><span class="nav-number">3.5.</span> <span class="nav-text">useEffect和useLayoutEffect执行时机有什么区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#源码分析-2"><span class="nav-number">3.5.1.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思考-1"><span class="nav-number">3.5.2.</span> <span class="nav-text">思考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

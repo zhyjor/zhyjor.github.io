@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js,React," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="杭州下雪了，想去西湖看雪了，雪后的杭州更有水墨画里的感觉了，一下雪杭州就成了临安 今天主要想说一下react hooks，react hooks是react v16.8 之后引入的API，现在react都已经到18了，hooks怎么还能不会用呢。hooks引入的目的是给函数式组件增加数据状态管理的能力，同时增加代码的可复用能力。但是同时hooks也是一个潘多拉魔盒，因为函数式组件不再只是单纯的一个">
+<meta name="keywords" content="js,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题">
+<meta property="og:url" content="https://zhyjor.github.io/2022/12/01/都React V18了，还不会正确使用Hooks吗/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="杭州下雪了，想去西湖看雪了，雪后的杭州更有水墨画里的感觉了，一下雪杭州就成了临安 今天主要想说一下react hooks，react hooks是react v16.8 之后引入的API，现在react都已经到18了，hooks怎么还能不会用呢。hooks引入的目的是给函数式组件增加数据状态管理的能力，同时增加代码的可复用能力。但是同时hooks也是一个潘多拉魔盒，因为函数式组件不再只是单纯的一个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题">
+<meta name="twitter:description" content="杭州下雪了，想去西湖看雪了，雪后的杭州更有水墨画里的感觉了，一下雪杭州就成了临安 今天主要想说一下react hooks，react hooks是react v16.8 之后引入的API，现在react都已经到18了，hooks怎么还能不会用呢。hooks引入的目的是给函数式组件增加数据状态管理的能力，同时增加代码的可复用能力。但是同时hooks也是一个潘多拉魔盒，因为函数式组件不再只是单纯的一个">
+<meta name="twitter:image" content="http://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2022/12/01/都React V18了，还不会正确使用Hooks吗/"/>
+
+
+
+
+
+  <title> 都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2022/12/01/都React V18了，还不会正确使用Hooks吗/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-12-01T06:13:21+00:00">
+                2022-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/12/01/都React V18了，还不会正确使用Hooks吗/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2022/12/01/都React V18了，还不会正确使用Hooks吗/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>杭州下雪了，想去西湖看雪了，雪后的杭州更有水墨画里的感觉了，一下雪杭州就成了临安</p>
+<p>今天主要想说一下react hooks，react hooks是react v16.8 之后引入的API，现在react都已经到18了，hooks怎么还能不会用呢。hooks引入的目的是给函数式组件增加数据状态管理的能力，同时增加代码的可复用能力。但是同时hooks也是一个潘多拉魔盒，因为函数式组件不再只是单纯的一个纯函数了，可以在内部处理副作用了，使用不好就会经常遇到各种各样的问题，而且错误的使用方式也会引起re-render，引起一些性能上的问题</p>
+<p>本文主要介绍hooks的常见的几个问题与最优实践，同时介绍一下随着react版本迭代的API的变化</p>
+<p>闲言少叙，直接进入正文<br><a id="more"></a><br>首先，在使用之前，笔者还是想强调一下</p>
+<p><strong>请配置上<code>eslint-plugin-react-hooks</code></strong><br><strong>请配置上<code>eslint-plugin-react-hooks</code></strong><br><strong>请配置上<code>eslint-plugin-react-hooks</code></strong></p>
+<p>hooks的的使用确实很爽，但是和纯函数相比，还是有挺多反直觉的写法的，比如不能在判断语句中使用hooks。这就很容易有问题，我们需要使用工具来规避这些问题，来提醒我们有些写法是错误的。当然hooks的有其自己的合理性问题，我们暂时不做讨论，这个插件提醒可以保证让我们的写法是符合当前规范的，不至于出现低级问题</p>
+<h2 id="异步调用的闭包问题"><a href="#异步调用的闭包问题" class="headerlink" title="异步调用的闭包问题"></a>异步调用的闭包问题</h2><p>统计1秒内按钮点击的次数，先看代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Demo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> [number, setNumber] = React.useState(<span class="number">0</span>);</div><div class="line">  <span class="keyword">const</span> click = <span class="function"><span class="params">()</span> =&gt;</span></div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      setNumber(number + <span class="number">1</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;click&#125;</span>&gt;</span> 点击 &#123;number&#125; 次<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当多次点击的时候的时候，显示的点击次数错误。点击click方法内的闭包回调函数在组件render的时候捕获了number变量，为了解决这个问题可以使用函数方法来更新数据<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> click = <span class="function"><span class="params">()</span> =&gt;</span></div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      setNumber(<span class="function"><span class="params">number</span> =&gt;</span> number + <span class="number">1</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div></pre></td></tr></table></figure></p>
+<p>在调用状态更新函数的时候，会将准确的数据回调给当前的更新函数</p>
+<h3 id="更近一步"><a href="#更近一步" class="headerlink" title="更近一步"></a>更近一步</h3><p>同样的，假如我们统计开屏3秒内的点击次数，在计时结束后，将点击次数发送给server端的时候，就会遇到另一个问题<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Demo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> [number, setNumber] = React.useState(<span class="number">0</span>);</div><div class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      <span class="comment">// do fetch</span></div><div class="line">      <span class="built_in">console</span>.log(number);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      clearTimeout(timer);</div><div class="line">    &#125;;</div><div class="line">    <span class="comment">// 依赖这里会有个警告</span></div><div class="line">  &#125;, []);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setNumber((c) =&gt; c + 1)&#125;&gt;点击&#123;number&#125;次<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>首先我们会遇到一个<code>eslint-plugin-react-hooks</code>警告<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">React Hook useEffect has a missing dependency: <span class="string">'number'</span>. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)</div></pre></td></tr></table></figure></p>
+<p>而且执行结果也是由于闭包的原因不能正常提交，熟悉useEffect到都知道，这个原因是使用useEffect的时候，依赖需要添加到依赖数组内，这样才能更新数据到useEffect内，但是在这个例子中，添加了依赖后，每次点击都会引起计时器重新执行，引起倒计时失效，就和需求有冲突了，那这种情况下怎么解决呢？</p>
+<p>这个问题其实可以简单归累为：<strong>不想让useEffect重新执行的依赖怎么使用的问题</strong>，这个场景下就只能使用useRef来实现了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Demo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> [number, setNumber] = React.useState(<span class="number">0</span>);</div><div class="line">  <span class="keyword">const</span> numberRef = useRef(number);</div><div class="line">  numberRef.current = number;</div><div class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      <span class="comment">// do fetch</span></div><div class="line">      <span class="built_in">console</span>.log(numberRef.current);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      clearTimeout(timer);</div><div class="line">    &#125;;</div><div class="line">  &#125;, []);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;button onClick=&#123;() =&gt; setNumber(<span class="function">(<span class="params">c</span>) =&gt;</span> c + <span class="number">1</span>)&#125;&gt;点击&#123;number&#125;次&lt;<span class="regexp">/button&gt;</span></div><div class="line"><span class="regexp">  );</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>通过useRef可以来保证访问到的number一直是最新的，解决了闭包的问题，同时useEffect未直接依赖number，当number变化的时候不会引起重新执行</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>虽然和hooks的写法有关，本质上还是闭包问题，比如forEach内写的定时器也会有同样的问题；但是对于异步场景下的写法，<strong>不想引起useEffect重新执行的变量，就可以用useRef做一层代理</strong>，这种用法只能说是对react hooks设计的<br>一种妥协</p>
+<h2 id="用useCallback肯定能提升性能吗"><a href="#用useCallback肯定能提升性能吗" class="headerlink" title="用useCallback肯定能提升性能吗"></a>用useCallback肯定能提升性能吗</h2><p>useCallback的作用是缓存函数，避免重复生成新函数，引起组件重新渲染，比如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Children = <span class="function">(<span class="params">props</span>) =&gt;</span> &lt;button onClick=&#123;props.doFetch&#125;&gt;提交&lt;<span class="regexp">/button&gt;;</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">export default function Demo() &#123;</span></div><div class="line"><span class="regexp">  const doFetch = useCallback(() =&gt; &#123;</span></div><div class="line"><span class="regexp">    /</span><span class="regexp">/ fetch();</span></div><div class="line"><span class="regexp">  &#125;, []);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  return &lt;Children doFetch=&#123;doFetch&#125; /</span>&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是一个很常见的写法，但是需要明确在class组件的时候我们通常使用<code>shouldComponentUpdate</code>来拦截更新，通过比较父组件传入的props的变化，来觉得是否re-render子组件，上面的🌰中，<code>&lt;Children /&gt;</code>只是一个普通组件，只对传入的函数包裹一层useCallback是不能起到优化作用的，需要通过包裹一层<code>React.memo</code>才可以，React.memo会对对传入的props进行一次浅比较，避免非必要的更新，如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Children = React.memo(<span class="function">(<span class="params">props</span>) =&gt;</span> &lt;button onClick=&#123;props.doFetch&#125;&gt;提交&lt;<span class="regexp">/button&gt;);</span></div></pre></td></tr></table></figure></p>
+<p>另外需要补充的是，假如有一些特别复杂的对象属性需要传入的话，可以考虑通过useMemo进行一层包裹，避免一些不必要的re-render。当然，使用useMemo也是有一定的性能成本的，假如只是简单计算的话，直接计算就可以了，可能这样的成本还小一些。</p>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><p>下面这个场景下useCallback和React.memo组合可以起到优化的作用吗？<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Children = React.memo(<span class="function">(<span class="params">props</span>) =&gt;</span> &lt;button onClick=&#123;props.doSubmit&#125;&gt;提交&lt;<span class="regexp">/button&gt;);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">export default function Demo() &#123;</span></div><div class="line"><span class="regexp">  const [number, setNumber] = useState(0);</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  const doSubmit = useCallback(() =&gt; &#123;</span></div><div class="line"><span class="regexp">    console.log(`Number: $&#123;number&#125;`); /</span><span class="regexp">/ 每次输出都是初始值</span></div><div class="line"><span class="regexp">  &#125;, [number]); /</span><span class="regexp">/ 把`text`写在依赖数组里</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">  return (</span></div><div class="line"><span class="regexp">    &lt;&gt;</span></div><div class="line"><span class="regexp">      &lt;input value=&#123;number&#125; onChange=&#123;(e) =&gt; setNumber(e.target.value)&#125; /</span>&gt;</div><div class="line">      &lt;Children doSubmit=&#123;doSubmit&#125; /&gt;</div><div class="line">    &lt;<span class="regexp">/&gt;</span></div><div class="line"><span class="regexp">  );</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>结论是不行，原因可以考虑一下useCallback的deps该怎么处理</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>只需要记得<strong>使用useCallback的时候，对应的子组件一定要使用React.memo包裹</strong>，否则使用useCallback就没有任何的意义。当然useCallback的deps要根据实际场景来添加，否则就不会有任何的优化效果。</p>
+<p>另外对于useCallback，笔者个人的理解是有些破坏代码的可读性了，使用的时候需要按照场景具体评估一下，是否真的需要无脑使用，平衡好代码可维护性和性能</p>
+<h2 id="hooks组件怎么优雅的使用refs"><a href="#hooks组件怎么优雅的使用refs" class="headerlink" title="hooks组件怎么优雅的使用refs"></a>hooks组件怎么优雅的使用refs</h2><p>其实这个问题有些伪命题的感觉，当我们使用在父组件中通过ref操作子组件的方法时，已经就是不优雅的了。官方文档这样说：</p>
+<blockquote>
+<p>在常规的 React 数据流中，props 是父组件与子组件交互的唯一方式。要修改子元素，你需要用新的 props 去重新渲染子元素</p>
+</blockquote>
+<p>只能说非必要的尽量避免直接使用ref吧，尽量避免打乱react的单向数据流。那回到我们的问题，使用hooks的时候如何使用更优雅的使用ref呢</p>
+<p>官方文档提供了以下几个场景刚好适合使用Refs</p>
+<ul>
+<li>处理focus、文本选择或者媒体播放</li>
+<li>触发强制动画</li>
+<li>基层第三方库</li>
+</ul>
+<h3 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h3><p>由于函数组件没有实例，在函数组件内不能使用string ref,callback ref, create ref，会有如下报错</p>
+<blockquote>
+<p>Uncaught Invariant Violation: Function components cannot have refs. Did you mean to use React.forwardRef()?</p>
+</blockquote>
+<p>所以在函数组件内是能使用useRef,由于useRef返回一个对象，这个对象只有current一个值，并且这个值的地址在整个组件的生命周期内不会改变，所以useRef提供了组件生命周期内共享数据的存储，修改了ref.current的值不会触发组件re-render，而且组件re-render的时候，ref.current的值也会保留，类似class组件的静态变量，因此我们可以用useRef做很多事情，比如挂载特定的dom或者子组件的实例、存储全局定时器等等</p>
+<p>那useRef怎么使用呢，针对官方问题提供的几个场景，笔者简单给出几个demo</p>
+<h4 id="获取特定dom"><a href="#获取特定dom" class="headerlink" title="获取特定dom"></a>获取特定dom</h4><p>对于原生元素可以直接使用<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Input</span>(<span class="params">props</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> inputRef = useRef(<span class="literal">null</span>);</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">click</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    inputRef.current.focus();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;div&gt;</div><div class="line">      &lt;input type=<span class="string">"text"</span> ref=&#123;inputRef&#125; /&gt;</div><div class="line">      &lt;input type=<span class="string">"button"</span> value=<span class="string">"Focus the text input"</span> onClick=&#123;click&#125; /&gt;</div><div class="line">    &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">  );</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure></p>
+<p>通过ref.current可以直接操作input</p>
+<h3 id="useRef-forwardRef-useImperativeHandle组合用法"><a href="#useRef-forwardRef-useImperativeHandle组合用法" class="headerlink" title="useRef,forwardRef,useImperativeHandle组合用法"></a>useRef,forwardRef,useImperativeHandle组合用法</h3><p>首先先说一下forwardRef</p>
+<blockquote>
+<p>Ref 转发是一项将 ref 自动地通过组件传递到其一子组件的技巧。对于大多数应用中的组件来说，这通常不是必需的。但其对某些组件，尤其是可重用的组件库是很有用的。</p>
+</blockquote>
+<p>简答来说，就是函数式组件要想暴露给父组件ref的时候，需要使用forwardRef才能进行ref的传递。需要明确的是<strong>不能在函数式组件上使用ref属性，因为函数式组件没有实例</strong>，使用的话会直接抛出异常。</p>
+<p>然后再说一下useImperativeHandle，函数式组件使用useImperativeHandle 可以通过 forwardRef 暴露给父组件的自定义方法。这可以类比于class组件，我们可以通过class组件获取ref的组件实例，进而调用内部方法，我们也可以通过useImperativeHandle暴露的方法，调用函数式组件的内部方法，直接看🌰<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; useRef, useImperativeHandle &#125; <span class="keyword">from</span> <span class="string">"react"</span>;</div><div class="line"><span class="keyword">const</span> Children = React.forwardRef(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> inputRef = useRef(<span class="literal">null</span>);</div><div class="line">  useImperativeHandle(</div><div class="line">    ref,</div><div class="line">    () =&gt; &#123;</div><div class="line">      <span class="keyword">const</span> handleRefs = &#123;</div><div class="line">        onFocus() &#123;</div><div class="line">          inputRef.current.focus();</div><div class="line">        &#125;</div><div class="line">      &#125;;</div><div class="line">      <span class="keyword">return</span> handleRefs;</div><div class="line">    &#125;,</div><div class="line">    []</div><div class="line">  );</div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">placeholder</span>=<span class="string">"请输入"</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span>;</span></div><div class="line"><span class="xml">&#125;);</span></div><div class="line"><span class="xml"></span></div><div class="line"><span class="xml">const Demo = () =&gt; &#123;</span></div><div class="line"><span class="xml">  const childRef = useRef(null);</span></div><div class="line"><span class="xml">  const click = () =&gt; &#123;</span></div><div class="line"><span class="xml">    const &#123; onFocus &#125; = childRef.current;</span></div><div class="line"><span class="xml">    onFocus();</span></div><div class="line"><span class="xml">  &#125;;</span></div><div class="line"><span class="xml">  return (</span></div><div class="line"><span class="xml">    <span class="tag">&lt;&gt;</span></span></div><div class="line">      &lt;Children ref=&#123;childRef&#125; /&gt;</div><div class="line">      &lt;button onClick=&#123;click&#125;&gt;输入框focused&lt;/button&gt;</div><div class="line">    &lt;/&gt;</div><div class="line">  );</div><div class="line">&#125;;</div><div class="line"></div><div class="line">export default Demo;</div></pre></td></tr></table></figure></p>
+<p>useImperativeHandle 接受三个参数：</p>
+<ul>
+<li>forWardRef转发过来的ref</li>
+<li>自定义处理函数，返回值时暴露给父组件的ref对象</li>
+<li>依赖项deps，根据实际的依赖传入即可，用于更新ref对象</li>
+</ul>
+<p>通过useImperativeHandle外部组件就可以相对优雅的获取到子组件的“实例”，调用子组件的内部方法</p>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>写到这里，其实我们也能发现，useRef的使用频率还是挺高的，我们既可以把useRef当成普通的ref的相关API，用来操作子组件，也可以将其作为一个函数式组件内的静态变量来使用，可以说是hooks遇到问题的时候非常万金油的存在了</p>
+<p>说回ref,基本对于函数式组件来说，useRef,forwardRef,useImperativeHandle组合用法能覆盖所有需求了，但是还是那句话，能尽量避免使用的就避免使用，让自己的代码有更高的可维护性</p>
+<h2 id="如何封装自定义hooks"><a href="#如何封装自定义hooks" class="headerlink" title="如何封装自定义hooks"></a>如何封装自定义hooks</h2><p>自定义hooks是基于react hooks api的自定义扩展，可以将一段通用性逻辑封装起来，达到复用的效果; 简单来说通过自定义 Hook，可以将组件逻辑提取到可重用的函数中，可以在组件内直接使用</p>
+<p>封装的自定义hooks一般内部使用多个react hooks，用于解决一些复杂且通用的逻辑。接下来看几个🌰，然后可以对比一下自己的场景，当然也并不是所有能用自定义hooks的地方，就必须要用自定义hooks的，还是要判断一下可复用程度再做决定</p>
+<h3 id="提取自定义-hooks"><a href="#提取自定义-hooks" class="headerlink" title="提取自定义 hooks"></a>提取自定义 hooks</h3><blockquote>
+<p>当我们想在两个函数之间共享逻辑时，我们会把它提取到第三个函数中。而组件和 Hook 都是函数，所以也同样适用这种方式。</p>
+</blockquote>
+<p>自定义 hooks 是一个函数，其名称以 “use” 开头，函数内部可以调用其他的 Hook。自定义hooks和普通的函数并没有任何不同，但是结合公共hooks API的能力，在react的调度下，我们可以实现很多很有趣的功能，社区有实现的<a href="https://github.com/alibaba/hooks?spm=ata.21736010.0.0.1b261134fcWTYx" target="_blank" rel="external">ahooks</a>自定义hooks库，也可以自己参考一下</p>
+<p>接下来简单放几个相对有代表性的🌰：</p>
+<h3 id="useState属性合并"><a href="#useState属性合并" class="headerlink" title="useState属性合并"></a>useState属性合并</h3><p>你的代码里是不是写过这样的代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> [duration, setDuration] = useState(<span class="number">0</span>);</div><div class="line"><span class="keyword">const</span> [currentTime, setCurrentTime] = useState(<span class="number">0</span>);</div><div class="line"><span class="keyword">const</span> [volume, setCurrent] = useState(<span class="number">0</span>);</div><div class="line"><span class="keyword">const</span> [speed, setSpeed] = useState(<span class="number">0</span>);</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>这段代码是之前封装播放器的一段代码，里面对video的属性进行一定的提取，导致了代码中一排蔚为壮观的useState,这样的写法其实可以优化到一个字段内<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> [player, setPlayer] = useState(&#123;</div><div class="line">  duration: <span class="number">0</span>,</div><div class="line">  currentTime: <span class="number">0</span>,</div><div class="line">  volume: <span class="number">0</span>,</div><div class="line">  speed: <span class="number">0</span>,</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>当然这个时候更新装状态需要带上旧的状态<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setPlayer(&#123;...player, duration&#125;);</div></pre></td></tr></table></figure></p>
+<p>那怎么才能再省点代码，让我可以直接修改需要修改的参数，不需要改变的依旧保持现状呢，这个时候就可以封装一个自定义hooks，如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> useMergeState = <span class="function">(<span class="params">initialState</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> [state, setState] = useState(initialState);</div><div class="line">  <span class="keyword">const</span> setMergeState = <span class="function">(<span class="params">pickState</span>) =&gt;</span> &#123;</div><div class="line">    setState(<span class="function"><span class="params">preState</span> =&gt;</span> &#123;...preState, &#123;...pickState&#125;&#125;);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> [state, setMergeState]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就可以直接使用了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> [player, setPlayer] = useMergeState(&#123;</div><div class="line">  duration: <span class="number">0</span>,</div><div class="line">  currentTime: <span class="number">0</span>,</div><div class="line">  volume: <span class="number">0</span>,</div><div class="line">  speed: <span class="number">0</span>,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">setPlayer(&#123; <span class="attr">duration</span>: <span class="number">2</span>&#125;);</div></pre></td></tr></table></figure></p>
+<p>这就是一个最简单的自定义hooks，当然useMergeState还有可优化的地方，比如参考useState的用法，pickState可能是个函数，需要判断一下入参类型；然后内部的实现setMergeState其实可以通过useCallback进行一下包裹，让函数不用每次都初始化等等</p>
+<h3 id="dom相关的hooks"><a href="#dom相关的hooks" class="headerlink" title="dom相关的hooks"></a>dom相关的hooks</h3><p>我们经常会监听dom的滚动来做一些自定义的逻辑，比如滚动翻页等等，一个监听滚动的自定义hooks该怎么实现呢，我们需要先确定我们需获取到哪些值，以及我们的入参数是什么</p>
+<h4 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h4><p>入参：毋庸置疑肯定是dom元素的引用，可以使用useRef来实现<br>返回值：一般都是元素滚动的高度，可以根据自己的实际来决定</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> useScroll = <span class="function">(<span class="params">target</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> [position, setPosition] = useState();</div><div class="line"></div><div class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">onscroll</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">      setPos([target.current.scrollLeft, target.current.scrollTop])</div><div class="line">    &#125;</div><div class="line">    target.current.addEventListener(<span class="string">'scroll'</span>, onscroll, <span class="literal">false</span>)</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      target.current.removeEventListener(<span class="string">'scroll'</span>, onscroll, <span class="literal">false</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;, [])</div><div class="line"></div><div class="line">  <span class="keyword">return</span> position</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> useScroll</div></pre></td></tr></table></figure>
+<p>上述代码也是有一些可以优化的地方，比如一些参数有效性的判断等，这个🌰只是一个演示，提供一个参考思路</p>
+<h3 id="防抖函数"><a href="#防抖函数" class="headerlink" title="防抖函数"></a>防抖函数</h3><p>防抖节流函数大家肯定经常在开发中遇到，面试的估计也没有被少问。一般都是我们避免频繁调用接口，或者在react中避免频繁改动state的时候需要使用的，防抖节流的区别这里也不赘述了，简单来说主要区别就是防抖是操作后n秒内只能调用一次，假如n秒内又触发了操作，重新倒计时n秒；节流就是操作n秒内只能调用一次，即使是多次触发操作也是n秒内执行一次；节流一般用在输入框搜索，需要在最后一次提交后触发；节流一般用在滚动监听等等。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; useEffect, useMemo &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> debounce <span class="keyword">from</span> <span class="string">'lodash/debounce'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> useDebounce = <span class="function">(<span class="params">fn, wait</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> wait = wait ?? <span class="number">1000</span>;</div><div class="line"></div><div class="line">  <span class="keyword">const</span> debounced = useMemo(</div><div class="line">      () =&gt;</div><div class="line">        debounce(</div><div class="line">          fn(),</div><div class="line">          wait</div><div class="line">        ),</div><div class="line">      [],</div><div class="line">  );</div><div class="line">  <span class="keyword">return</span> [debounced.run, debounced.cancel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码为了突出自定义hooks的用法，基于lodash/debounce实现了一个节流hooks，其实核心就是简化debounce的用法，当然lodash/debounce还有更多的配置，自己可以基于自己的实际场景进行封装</p>
+<p>至于节流函数就作为一个思考题可以自己实现一下</p>
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>自定义hooks可以维护在项目中的一个单独hooks文件夹内，作为全局公共方法提供，当然也可以发布到自己的npm组件，提供给更多的项目使用。还有跟多的用法就不再一一演示了，可以自己实现一些，已加深对自定义hooks的理解</p>
+<h2 id="React-V18新增了哪些hooks-API"><a href="#React-V18新增了哪些hooks-API" class="headerlink" title="React V18新增了哪些hooks API"></a>React V18新增了哪些hooks API</h2><p>React V18已经发布了一段时间了，针对hooks也提供了一些新的API。新增的API有<code>useId，useInsertionEffect，useTransition，useDeferredValue，useSyncExternalStore</code>，让我们一一看看提供了什么新的能力。</p>
+<h3 id="Before，先看看React-V18带来了什么"><a href="#Before，先看看React-V18带来了什么" class="headerlink" title="Before，先看看React V18带来了什么"></a>Before，先看看React V18带来了什么</h3><p>可以可选的开启 Concurrent Mode，大幅提高了React的性能，推出了时间切片和任务优先级的概念，让 React 有了更多的可能性，更多的描述可以去看看官方文档，我们关注的点还是这几个新增的hooks，让我们简单的了解一下这几个API，具体的使用方法可以自己尝试一下</p>
+<h3 id="useSyncExternalStore"><a href="#useSyncExternalStore" class="headerlink" title="useSyncExternalStore"></a>useSyncExternalStore</h3><p>顾名思义，这个API是针对React的第三方状态管理库的。由于V18可以开启concurrent mode,使得render这个过程能够切分成以fiber为最小单位的多次任务,这些任务可能就会存在对外部状态的修改，加入在render的任务分片前后部分状态被修改了，那就会造成多次渲染结果不一致的问题，也就是<strong>tearing 问题</strong>，tearing 通俗地讲，就是外部状态不受 react 异步调度控制，非常容易错乱。useSyncExternalStore就是防止tearing的出现，通过订阅的方式保持最终渲染结果的一致性。</p>
+<p>最后简单看看API<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">useSyncExternalStore(</div><div class="line">    subscribe, <span class="comment">// 接收一个subscribe函数，该函数接收一个函数用于通知react外部状态发生变更</span></div><div class="line">    getSnapshot, <span class="comment">// 返回外部状态的最新快照值</span></div><div class="line">)</div></pre></td></tr></table></figure></p>
+<h3 id="useTransition"><a href="#useTransition" class="headerlink" title="useTransition"></a>useTransition</h3><p>transition 特性也是依赖 concurrent mode的，可以用来降低渲染优先级。当我们用startTransition包裹计算量大的函数的时候，就相当于通知了React当前计算的优先级很低，可以降低更新的优先级，减少重复渲染次数，可以当成一个防抖函数来处理（不完全相同）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Demo = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> [isPending, startTransition] = useTransition();</div><div class="line">  <span class="keyword">return</span> (</div><div class="line">      &lt;input</div><div class="line">        type=<span class="string">"text"</span></div><div class="line">        onChange=&#123;(event) =&gt; &#123;</div><div class="line">          startTransition(<span class="function"><span class="params">()</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(event.target.value);</div><div class="line">        &#125;&#125;&#125;</div><div class="line">      /&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看看官方的这个<a href="https://codesandbox.io/s/sparkling-field-41z4r3" target="_blank" rel="external">demo</a></p>
+<h3 id="useDeferredValue"><a href="#useDeferredValue" class="headerlink" title="useDeferredValue"></a>useDeferredValue</h3><p>和useTransition类似，useDeferredValue的特性也是依赖 concurrent mode 的, 可以直接翻译为使用一个推迟的值。 useDeferredValue 可以让我们延迟渲染优先级不高的部分，等高优先级的渲染任务结束后，延迟的渲染才开始，并且可中断不会阻塞用户输入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Demo = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</div><div class="line">  <span class="comment">// React 将会在合适的时间生成deferredValue</span></div><div class="line">  <span class="keyword">const</span> deferredValue = useDeferredValue(value, &#123; <span class="attr">timeoutMs</span>: <span class="number">1000</span> &#125;);</div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;div&gt;</div><div class="line">      &#123;</div><div class="line">        <span class="comment">//</span></div><div class="line">        deferredValue</div><div class="line">      &#125;</div><div class="line">    &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">  );</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure>
+<h3 id="useInsertionEffect"><a href="#useInsertionEffect" class="headerlink" title="useInsertionEffect"></a>useInsertionEffect</h3><p>类似useLayoutEffect，区别就是不能访问dom</p>
+<p>useInsertionEffect的出现就是为了解决cssinjs问题的，用于插入样式规则，而且一般是插入全局DOM节点，比如<code>&lt;style/&gt;</code>等。这个hooks为了避免在concurrent mode下，客户端生成或编辑<code>&lt;style/&gt;</code>时引起性能问题，可以在这个hooks中操作插入一些css节点<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">useCSS</span>(<span class="params">rule</span>) </span>&#123;</div><div class="line">  useInsertionEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">document</span>.head.appendChild(rule);</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">return</span> rule;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> Demo = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">let</span> className = useCSS(rule);</div><div class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;className&#125;</span> /&gt;</span>;</span></div><div class="line"><span class="xml">&#125;</span></div></pre></td></tr></table></figure></p>
+<h3 id="useID"><a href="#useID" class="headerlink" title="useID"></a>useID</h3><p>一般用于服务端渲染，生成一个ID，但是不要把这个ID作为数组循环渲染的key，渲染的唯一key一般是从你的数据中生成的, 就不再详细介绍了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>React Hooks很好用，但是想用好，还是需要多一点思考的。框架提供的能力，想转换为实际的生产力就需要我们不停的去学习如何使用这些能力，不断总结，有问题可以留言交流</p>
+<p><strong>参考资料</strong></p>
+<p><a href="https://react.html.cn/docs/refs-and-the-dom.html" target="_blank" rel="external">Refs 和 DOM官方文档</a><br><a href="https://zh-hans.reactjs.org/docs/hooks-custom.html" target="_blank" rel="external">自定义 Hook</a><br><a href="https://www.zhihu.com/question/502917860" target="_blank" rel="external">如何理解 React 18 中的 useSyncExternalStore ?</a><br><a href="https://blog.shabby.in/how-to-use-useTransition/useDerferredValue/" target="_blank" rel="external">useTransition/useDerferredValue使用指南</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2022/12/01/都React V18了，还不会正确使用Hooks吗/">都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2022年12月01日 - 14:12</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2022/12/01/都React V18了，还不会正确使用Hooks吗/" title="都React V18了,还不会正确使用React Hooks吗,万字长文解析Hooks的常见问题">https://zhyjor.github.io/2022/12/01/都React V18了，还不会正确使用Hooks吗/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2022/12/01/都React V18了，还不会正确使用Hooks吗/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/11/25/我是如何从eggjs升级到midwayjs的/" rel="next" title="我是如何从eggjs升级到midwayjs的">
+                <i class="fa fa-chevron-left"></i> 我是如何从eggjs升级到midwayjs的
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/12/08/从源码的角度回答ReactHooks面试题/" rel="prev" title="从源码的角度回答ReactHooks面试题">
+                从源码的角度回答ReactHooks面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#异步调用的闭包问题"><span class="nav-number">1.</span> <span class="nav-text">异步调用的闭包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更近一步"><span class="nav-number">1.1.</span> <span class="nav-text">更近一步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.2.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用useCallback肯定能提升性能吗"><span class="nav-number">2.</span> <span class="nav-text">用useCallback肯定能提升性能吗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思考题"><span class="nav-number">2.1.</span> <span class="nav-text">思考题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-1"><span class="nav-number">2.2.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hooks组件怎么优雅的使用refs"><span class="nav-number">3.</span> <span class="nav-text">hooks组件怎么优雅的使用refs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef"><span class="nav-number">3.1.</span> <span class="nav-text">useRef</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取特定dom"><span class="nav-number">3.1.1.</span> <span class="nav-text">获取特定dom</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef-forwardRef-useImperativeHandle组合用法"><span class="nav-number">3.2.</span> <span class="nav-text">useRef,forwardRef,useImperativeHandle组合用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-2"><span class="nav-number">3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何封装自定义hooks"><span class="nav-number">4.</span> <span class="nav-text">如何封装自定义hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提取自定义-hooks"><span class="nav-number">4.1.</span> <span class="nav-text">提取自定义 hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useState属性合并"><span class="nav-number">4.2.</span> <span class="nav-text">useState属性合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dom相关的hooks"><span class="nav-number">4.3.</span> <span class="nav-text">dom相关的hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#需求分析"><span class="nav-number">4.3.1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">4.3.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防抖函数"><span class="nav-number">4.4.</span> <span class="nav-text">防抖函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-1"><span class="nav-number">4.4.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-3"><span class="nav-number">4.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-V18新增了哪些hooks-API"><span class="nav-number">5.</span> <span class="nav-text">React V18新增了哪些hooks API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Before，先看看React-V18带来了什么"><span class="nav-number">5.1.</span> <span class="nav-text">Before，先看看React V18带来了什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useSyncExternalStore"><span class="nav-number">5.2.</span> <span class="nav-text">useSyncExternalStore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useTransition"><span class="nav-number">5.3.</span> <span class="nav-text">useTransition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useDeferredValue"><span class="nav-number">5.4.</span> <span class="nav-text">useDeferredValue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useInsertionEffect"><span class="nav-number">5.5.</span> <span class="nav-text">useInsertionEffect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useID"><span class="nav-number">5.6.</span> <span class="nav-text">useID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

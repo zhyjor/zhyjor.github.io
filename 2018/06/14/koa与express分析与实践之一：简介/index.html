@@ -1,0 +1,1044 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="koa与express分析与实践," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。">
+<meta name="keywords" content="koa与express分析与实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="koa与express分析与实践之一：简介">
+<meta property="og:url" content="https://zhyjor.github.io/2018/06/14/koa与express分析与实践之一：简介/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="koa与express分析与实践之一：简介">
+<meta name="twitter:description" content="Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。">
+<meta name="twitter:image" content="http://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/06/14/koa与express分析与实践之一：简介/"/>
+
+
+
+
+
+  <title> koa与express分析与实践之一：简介 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/06/14/koa与express分析与实践之一：简介/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                koa与express分析与实践之一：简介
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-14T07:14:17+00:00">
+                2018-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/14/koa与express分析与实践之一：简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/14/koa与express分析与实践之一：简介/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。<br><a id="more"></a></p>
+<h2 id="express简介"><a href="#express简介" class="headerlink" title="express简介"></a>express简介</h2><p>init一个node项目，项目初始化后安装express<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install express --save</div></pre></td></tr></table></figure></p>
+<p>使用express的代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"></div><div class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'Hello World!'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> host = server.address().address;</div><div class="line">  <span class="keyword">var</span> port = server.address().port;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Example app listening at http://%s:%s'</span>, host, port);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>上面的代码启动一个服务并监听从 3000 端口进入的所有连接请求。他将对所有 (/) URL 或 路由 返回 “Hello World!” 字符串。</p>
+<h3 id="express生成器"><a href="#express生成器" class="headerlink" title="express生成器"></a>express生成器</h3><p>通过应用生成器工具 express 可以快速创建一个应用的骨架。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">npm install express-generator -g</div><div class="line"></div><div class="line">express myapp</div><div class="line">cd myapp </div><div class="line">npm install</div><div class="line">set DEBUG=myapp &amp; npm start</div></pre></td></tr></table></figure></p>
+<p>通过 Express 应用生成器创建的应用一般都有如下目录结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── app.js</div><div class="line">├── bin</div><div class="line">│   └── www</div><div class="line">├── package.json</div><div class="line">├── public</div><div class="line">│   ├── images</div><div class="line">│   ├── javascripts</div><div class="line">│   └── stylesheets</div><div class="line">│       └── style.css</div><div class="line">├── routes</div><div class="line">│   ├── index.js</div><div class="line">│   └── users.js</div><div class="line">└── views</div><div class="line">    ├── error.jade</div><div class="line">    ├── index.jade</div><div class="line">    └── layout.jade</div><div class="line"></div><div class="line">7 directories, 9 files</div></pre></td></tr></table></figure></p>
+<h3 id="express路由"><a href="#express路由" class="headerlink" title="express路由"></a>express路由</h3><p>路由（Routing）是由一个 URI（或者叫路径）和一个特定的 HTTP 方法（GET、POST 等）组成的，涉及到应用如何响应客户端对某个网站节点的访问。每一个路由都可以有一个或者多个处理器函数，当匹配到路由时，这个/些函数将被执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.METHOD(PATH, HANDLER)</div></pre></td></tr></table></figure></p>
+<p>其中，app 是一个 express 实例；METHOD 是某个 HTTP 请求方式中的一个；PATH 是服务器端的路径；HANDLER 是当路由匹配到时需要执行的函数。</p>
+<p>使用字符串模式的路由是可以使用正则的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 匹配 abcd、abbcd、abbbcd等</span></div><div class="line">app.get(<span class="string">'/ab+cd'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'ab+cd'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 匹配 abcd、abxcd、abRABDOMcd、ab123cd等</span></div><div class="line">app.get(<span class="string">'/ab*cd'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'ab*cd'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 匹配 /abe 和 /abcde</span></div><div class="line">app.get(<span class="string">'/ab(cd)?e'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line"> res.send(<span class="string">'ab(cd)?e'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//使用正则表达式的路由路径示例：</span></div><div class="line"><span class="comment">// 匹配任何路径中含有 a 的路径：</span></div><div class="line">app.get(<span class="regexp">/a/</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'/a/'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 匹配 butterfly、dragonfly，不匹配 butterflyman、dragonfly man等</span></div><div class="line">app.get(<span class="regexp">/.*fly$/</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'/.*fly$/'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="路由句柄"><a href="#路由句柄" class="headerlink" title="路由句柄"></a>路由句柄</h3><p>著作权归作者所有。<br>商业转载请联系作者获得授权,非商业转载请注明出处。<br>链接:<a href="http://caibaojian.com/express-basic.html" target="_blank" rel="external">http://caibaojian.com/express-basic.html</a><br>来源:<a href="http://caibaojian.com" target="_blank" rel="external">http://caibaojian.com</a></p>
+<p>可以为请求处理提供多个回调函数，其行为类似 中间件。唯一的区别是这些回调函数有可能调用 next(‘route’) 方法而略过其他路由回调函数。</p>
+<p>路由句柄有多种形式，可以是一个函数、一个函数数组，或者是两者混合，如下所示<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">app.get(<span class="string">'/example/b'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'response will be sent by the next function ...'</span>);</div><div class="line">  next();</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'Hello from B!'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//使用回调函数数组处理路由：</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> cb0 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'CB0'</span>);</div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> cb1 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'CB1'</span>);</div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> cb2 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'Hello from C!'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">app.get(<span class="string">'/example/c'</span>, [cb0, cb1, cb2]);</div></pre></td></tr></table></figure></p>
+<h3 id="响应方法"><a href="#响应方法" class="headerlink" title="响应方法"></a>响应方法</h3><p>下表中响应对象（res）的方法向客户端返回响应，终结请求响应的循环。如果在路由句柄中一个方法也不调用，来自客户端的请求会一直挂起。</p>
+<p>方法 描述<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">res.download() 提示下载文件。</div><div class="line">res.end() 终结响应处理流程。</div><div class="line">res.JSON() 发送一个 <span class="built_in">JSON</span> 格式的响应。</div><div class="line">res.jsonp() 发送一个支持 JSONP 的 <span class="built_in">JSON</span> 格式的响应。</div><div class="line">res.redirect() 重定向请求。</div><div class="line">res.render() 渲染视图模板。</div><div class="line">res.send() 发送各种类型的响应。</div><div class="line">res.sendFile 以八位字节流的形式发送文件。</div><div class="line">res.sendStatus() 设置响应状态代码，并将其以字符串形式作为响应体的一部分发送。</div></pre></td></tr></table></figure></p>
+<h3 id="app-route"><a href="#app-route" class="headerlink" title="app.route()"></a>app.route()</h3><p>可使用 app.route() 创建路由路径的链式路由句柄。由于路径在一个地方指定，这样做有助于创建模块化的路由，而且减少了代码冗余和拼写错误。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.route(<span class="string">'/book'</span>)</div><div class="line">  .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'Get a random book'</span>);</div><div class="line">  &#125;)</div><div class="line">  .post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'Add a book'</span>);</div><div class="line">  &#125;)</div><div class="line">  .put(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.send(<span class="string">'Update the book'</span>);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="express-Router"><a href="#express-Router" class="headerlink" title="express.Router"></a>express.Router</h3><p>可使用 express.Router 类创建模块化、可挂载的路由句柄。Router 实例是一个完整的中间件和路由系统，因此常称其为一个 “mini-app”。</p>
+<p>在 app 目录下创建名为 birds.js 的文件，内容如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> router = express.Router();</div><div class="line"></div><div class="line"><span class="comment">// 该路由使用的中间件</span></div><div class="line">router.use(<span class="function"><span class="keyword">function</span> <span class="title">timeLog</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Time: '</span>, <span class="built_in">Date</span>.now());</div><div class="line">  next();</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 定义网站主页的路由</span></div><div class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'Birds home page'</span>);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 定义 about 页面的路由</span></div><div class="line">router.get(<span class="string">'/about'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.send(<span class="string">'About birds'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure></p>
+<p>然后在应用中加载路由模块：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> birds = <span class="built_in">require</span>(<span class="string">'./birds'</span>);</div><div class="line">...</div><div class="line">app.use(<span class="string">'/birds'</span>, birds);</div></pre></td></tr></table></figure></p>
+<p>应用即可处理发自 /birds 和 /birds/about 的请求，并且调用为该路由指定的 timeLog 中间件。</p>
+<h3 id="利用-Express-托管静态文件"><a href="#利用-Express-托管静态文件" class="headerlink" title="利用 Express 托管静态文件"></a>利用 Express 托管静态文件</h3><p>通过 Express 内置的 express.static 可以方便地托管静态文件，例如图片、CSS、JavaScript 文件等。</p>
+<p>将静态资源文件所在的目录作为参数传递给 express.static 中间件就可以提供静态资源文件的访问了。例如，假设在 public 目录放置了图片、CSS 和 JavaScript 文件，你就可以：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.use(express.static(<span class="string">'public'</span>));</div></pre></td></tr></table></figure></p>
+<p>现在，public 目录下面的文件就可以访问了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http://localhost:3000/images/kitten.jpg</div><div class="line">http://localhost:3000/css/style.css</div><div class="line">http://localhost:3000/js/app.js</div><div class="line">http://localhost:3000/images/bg.png</div><div class="line">http://localhost:3000/hello.html</div></pre></td></tr></table></figure>
+<p>如果你的静态资源存放在多个目录下面，你可以多次调用 express.static 中间件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">app.use(express.static(<span class="string">'public'</span>));</div><div class="line">app.use(express.static(<span class="string">'files'</span>));</div></pre></td></tr></table></figure></p>
+<p>如果你希望所有通过 express.static 访问的文件都存放在一个“虚拟（virtual）”目录（即目录根本不存在）下面，可以通过为静态资源目录指定一个挂载路径的方式来实现，如下所示：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="string">'/static'</span>, express.static(<span class="string">'public'</span>));</div></pre></td></tr></table></figure></p>
+<p>现在，你就爱可以通过带有 “/static” 前缀的地址来访问 public 目录下面的文件了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http://localhost:3000/static/images/kitten.jpg</div><div class="line">http://localhost:3000/static/css/style.css</div><div class="line">http://localhost:3000/static/js/app.js</div><div class="line">http://localhost:3000/static/images/bg.png</div><div class="line">http://localhost:3000/static/hello.html</div></pre></td></tr></table></figure></p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="如何处理-404-？"><a href="#如何处理-404-？" class="headerlink" title="如何处理 404 ？"></a>如何处理 404 ？</h4><p>在 Express 中，404 并不是一个错误（error）。因此，错误处理器中间件并不捕获 404。这是因为 404 只是意味着某些功能没有实现。也就是说，Express 执行了所有中间件、路由之后还是没有获取到任何输出。你所<strong>需要做的就是在其所有他中间件的后面添加一个处理 404 的中间件</strong>。如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  res.status(<span class="number">404</span>).send(<span class="string">'Sorry cant find that!'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="Express-支持哪些模板引擎？"><a href="#Express-支持哪些模板引擎？" class="headerlink" title="Express 支持哪些模板引擎？"></a>Express 支持哪些模板引擎？</h4><p>Express 支持任何符合 (path, locals, callback) 接口规范的模板引擎，<a href="https://github.com/tj/consolidate.js" target="_blank" rel="external">具体可看这个项目。</a></p>
+<h4 id="如何渲染纯-HTML-文件？"><a href="#如何渲染纯-HTML-文件？" class="headerlink" title="如何渲染纯 HTML 文件？"></a>如何渲染纯 HTML 文件？</h4><p>不需要！无需通过 res.render() 渲染 HTML。你可以通过 res.sendFile() 直接对外输出 HTML 文件。如果你需要对外提供的资源文件很多，可以使用 express.static() 中间件。</p>
+<h2 id="koa的使用"><a href="#koa的使用" class="headerlink" title="koa的使用"></a>koa的使用</h2><p><strong>Koa 必须使用 7.6 以上的版本。如果你的版本低于这个要求，就要先升级 Node。</strong></p>
+<p>Koa 应用程序是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。 Koa 类似于你可能遇到过的许多其他中间件系统。一个关键的设计点是在其低级中间件层中提供高级“语法糖”。 这提高了互操作性，稳健性，并使书写中间件更加愉快。这包括诸如内容协商，缓存清理，代理支持和重定向等常见任务的方法。 尽管提供了相当多的有用的方法 Koa 仍保持了一个很小的体积，因为没有捆绑中间件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"></div><div class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</div><div class="line">  ctx.body = <span class="string">'Hello World'</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>);</div></pre></td></tr></table></figure></p>
+<h3 id="级联"><a href="#级联" class="headerlink" title="级联"></a>级联</h3><p>Koa 中间件以更传统的方式级联，您可能习惯使用类似的工具 - 之前难以让用户友好地使用 node 的回调。然而，使用 async 功能，我们可以实现 “真实” 的中间件。对比 Connect 的实现，通过一系列功能直接传递控制，<strong>直到一个返回，Koa 调用“下游”，然后控制流回“上游”。</strong></p>
+<p>下面以 “Hello World” 的响应作为示例，当请求开始时首先请求流通过 x-response-time 和 logging 中间件，然后继续移交控制给 response 中间件。当一个中间件调用 next() 则该函数暂停并将控制传递给定义的下一个中间件。当在下游没有更多的中间件执行后，堆栈将展开并且每个中间件恢复执行其上游行为。</p>
+<h3 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h3><p>应用程序设置是 app 实例上的属性，目前支持如下：</p>
+<ul>
+<li>app.env 默认是 NODE_ENV 或 “development”</li>
+<li>app.proxy 当真正的代理头字段将被信任时</li>
+<li>app.subdomainOffset 对于要忽略的 .subdomains 偏移[2]</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.listen(...) // 应用程序被绑定到端口</div><div class="line">app.callback() // 返回适用于 http.createServer() 方法的回调函数来处理请求</div><div class="line">app.use(function) // 将给定的中间件方法添加到此应用程序</div><div class="line">app.keys= // 设置签名的 Cookie 密钥。</div><div class="line">app.context // app.context 是从其创建 ctx 的原型</div><div class="line">app.on(&apos;error&apos;,func)</div></pre></td></tr></table></figure>
+<h3 id="上下文-Context"><a href="#上下文-Context" class="headerlink" title="上下文(Context)"></a>上下文(Context)</h3><p>Koa Context 将 node 的 request 和 response 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。 这些操作在 HTTP 服务器开发中频繁使用，它们被添加到此级别而不是更高级别的框架，这将强制中间件重新实现此通用功能。</p>
+<p>每个请求都将创建一个 Context，并在中间件中作为接收器引用，或者 ctx 标识符，如以下代码片段所示：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</div><div class="line">  ctx; <span class="comment">// 这是 Context</span></div><div class="line">  ctx.request; <span class="comment">// 这是 koa Request</span></div><div class="line">  ctx.response; <span class="comment">// 这是 koa Response</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>为方便起见许多上下文的访问器和方法直接委托给它们的 ctx.request或 ctx.response ，不然的话它们是相同的。 例如 ctx.type 和 ctx.length 委托给 response 对象，ctx.path 和 ctx.method 委托给 request。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ctx.req // Node 的 request 对象.</div><div class="line">ctx.res // Node 的 response 对象.绕过 Koa 的 response 处理是 不被支持的. 应避免使用以下 node 属性res.statusCode,res.writeHead(),res.write()res.end()</div><div class="line">ctx.request // koa 的 Request 对象.</div><div class="line">ctx.response // koa 的 Response 对象.</div><div class="line">ctx.state // 推荐的命名空间，用于通过中间件传递信息和你的前端视图。</div><div class="line">ctx.app //应用程序实例引用</div><div class="line">ctx.cookies.get(name, [options]) //通过 options 获取 cookie name</div><div class="line">ctx.cookies.set(name, value, [options]) // 通过 options 设置 cookie name 的 value</div><div class="line">ctx.throw([status], [msg], [properties]) // Helper 方法抛出一个 .status 属性默认为 500 的错误，这将允许 Koa 做出适当地响应。</div><div class="line">ctx.assert(value, [status], [msg], [properties]) // 当 !value 时，Helper 方法抛出类似于 .throw() 的错误。这与 node 的 assert() 方法类似.</div><div class="line">ctx.respond // 为了绕过 Koa 的内置 response 处理，你可以显式设置 ctx.respond = false;。 如果您想要写入原始的 res 对象而不是让 Koa 处理你的 response，请使用此参数。</div></pre></td></tr></table></figure></p>
+<h3 id="Request-别名"><a href="#Request-别名" class="headerlink" title="Request 别名"></a>Request 别名</h3><p>以下访问器和 Request 别名等效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">ctx.header </div><div class="line">ctx.headers </div><div class="line">ctx.method </div><div class="line">ctx.method=</div><div class="line">ctx.url</div><div class="line">ctx.url=</div><div class="line">ctx.originalUrl</div><div class="line">ctx.origin</div><div class="line">ctx.href</div><div class="line">ctx.path</div><div class="line">ctx.path=</div><div class="line">ctx.query</div><div class="line">ctx.query=</div><div class="line">ctx.querystring</div><div class="line">ctx.querystring=</div><div class="line">ctx.host</div><div class="line">ctx.hostname</div><div class="line">ctx.fresh</div><div class="line">ctx.stale</div><div class="line">ctx.socket </div><div class="line">ctx.protocol</div><div class="line">ctx.secure</div><div class="line">ctx.ip</div><div class="line">ctx.ips</div><div class="line">ctx.subdomains</div><div class="line">ctx.is()</div><div class="line">ctx.accepts()</div><div class="line">ctx.acceptsEncodings()</div><div class="line">ctx.acceptsCharsets()</div><div class="line">ctx.acceptsLanguages()</div><div class="line">ctx.get()</div></pre></td></tr></table></figure></p>
+<h3 id="Response-别名"><a href="#Response-别名" class="headerlink" title="Response 别名"></a>Response 别名</h3><p>以下访问器和 Response 别名等效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">ctx.body</div><div class="line">ctx.body=</div><div class="line">ctx.status</div><div class="line">ctx.status=</div><div class="line">ctx.message</div><div class="line">ctx.message=</div><div class="line">ctx.length=</div><div class="line">ctx.length</div><div class="line">ctx.type=</div><div class="line">ctx.type</div><div class="line">ctx.headerSent</div><div class="line">ctx.redirect()</div><div class="line">ctx.attachment()</div><div class="line">ctx.set()</div><div class="line">ctx.append()</div><div class="line">ctx.remove()</div><div class="line">ctx.lastModified=</div><div class="line">ctx.etag=</div></pre></td></tr></table></figure></p>
+<h3 id="响应-Response"><a href="#响应-Response" class="headerlink" title="响应(Response)"></a>响应(Response)</h3><p>Koa Response 对象是在 node 的 vanilla 响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">response.header // 响应标头对象</div><div class="line">response.headers // 响应标头对象。别名是 response.header</div><div class="line">response.socket // 请求套接字</div><div class="line">response.status // 获取响应状态。默认情况下，response.status 设置为 404 而不是像 node 的 res.statusCode 那样默认为 200</div><div class="line">response.status= // 通过数字代码设置响应状态</div><div class="line">response.message // 获取响应的状态消息. 默认情况下, response.message 与 response.status 关联</div><div class="line">response.message= // 将响应的状态消息设置为给定值</div><div class="line">response.length= // 将响应的 Content-Length 设置为给定值</div><div class="line">response.length // 以数字返回响应的 Content-Length，或者从ctx.body推导出来，或者undefined</div><div class="line">response.body // 获取响应主体</div><div class="line">response.body= // 将响应体设置为以下之一：string 写入,Buffer 写入,Stream 管道,Object || Array JSON-字符串化,null 无内容响应,如果 response.status 未被设置, Koa 将会自动设置状态为 200 或 204。</div><div class="line">response.get(field) // 不区分大小写获取响应标头字段值 field</div><div class="line">response.set(field, value) // 设置响应标头 field 到 value</div><div class="line">response.append(field, value) // 用值 val 附加额外的标头 field</div><div class="line">response.set(fields) // 用一个对象设置多个响应标头fields</div><div class="line">response.remove(field) // 删除标头 field</div><div class="line">response.type // 获取响应 Content-Type 不含参数 &quot;charset&quot;</div><div class="line">response.type= // 设置响应 Content-Type 通过 mime 字符串或文件扩展名</div><div class="line">response.is(types...) // 非常类似 ctx.request.is(). 检查响应类型是否是所提供的类型之一。这对于创建操纵响应的中间件特别有用</div><div class="line">response.redirect(url, [alt]) // 执行 [302] 重定向到 url.要更改 “302” 的默认状态，只需在该调用之前或之后分配状态。要变更主体请在此调用之后。</div><div class="line">response.attachment([filename]) // 将 Content-Disposition 设置为 “附件” 以指示客户端提示下载。(可选)指定下载的 filename</div><div class="line">response.headerSent // 检查是否已经发送了一个响应头。 用于查看客户端是否可能会收到错误通知</div><div class="line">response.lastModified // 将 Last-Modified 标头返回为 Date, 如果存在</div><div class="line">response.lastModified= // 将 Last-Modified 标头设置为适当的 UTC 字符串。您可以将其设置为 Date 或日期字符串</div><div class="line">response.etag= // 设置包含 &quot; 包裹的 ETag 响应， 请注意，没有相应的 response.etag getter</div><div class="line">response.vary(field) // 在 field 上变化</div><div class="line">response.flushHeaders() // 刷新任何设置的标头，并开始主体</div></pre></td></tr></table></figure></p>
+<h2 id="Koa-还是-Express？"><a href="#Koa-还是-Express？" class="headerlink" title="Koa 还是 Express？"></a>Koa 还是 Express？</h2><p>koa是一个比express更精简，使用node新特性的中间件框架，相比之前express就是一个庞大的框架。</p>
+<ul>
+<li>如果你喜欢diy，很潮，可以考虑koa，它有足够的扩展和中间件，而且自己写很简单</li>
+<li>如果你想简单点，找一个框架啥都有，那么先express</li>
+</ul>
+<p>koa是大势所趋。</p>
+<p><strong>参考资料</strong><br><a href="http://caibaojian.com/express-basic.html" target="_blank" rel="external">学习nodejs：express 入门和基础知识</a><br><a href="https://juejin.im/entry/59e747f0f265da431c6f668e" target="_blank" rel="external">一文讲透koa-源码剖析</a><br><a href="https://juejin.im/entry/58a11f61128fe1005823a257" target="_blank" rel="external">Node.js 框架对比之 Express VS Koa</a><br><a href="https://cnodejs.org/topic/55815f28395a0c1812f18257" target="_blank" rel="external">Koa 还是 Express？</a></p>
+<p><a href="https://koa.bootcss.com/#" target="_blank" rel="external">koa官方文档</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/06/14/koa与express分析与实践之一：简介/">koa与express分析与实践之一：简介</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年06月14日 - 15:06</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/06/14/koa与express分析与实践之一：简介/" title="koa与express分析与实践之一：简介">https://zhyjor.github.io/2018/06/14/koa与express分析与实践之一：简介/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/06/14/koa与express分析与实践之一：简介/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/koa与express分析与实践/" rel="tag"># koa与express分析与实践</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/14/区块链入门之三：全节点钱包与轻钱包/" rel="next" title="区块链入门之三：全节点钱包与轻钱包、中心化钱包">
+                <i class="fa fa-chevron-left"></i> 区块链入门之三：全节点钱包与轻钱包、中心化钱包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/14/vue基础之三：slot与slot-scope的深入理解/" rel="prev" title="vue基础之三：slot与slot-scope的深入理解">
+                vue基础之三：slot与slot-scope的深入理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#express简介"><span class="nav-number">1.</span> <span class="nav-text">express简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#express生成器"><span class="nav-number">1.1.</span> <span class="nav-text">express生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#express路由"><span class="nav-number">1.2.</span> <span class="nav-text">express路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由句柄"><span class="nav-number">1.3.</span> <span class="nav-text">路由句柄</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应方法"><span class="nav-number">1.4.</span> <span class="nav-text">响应方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-route"><span class="nav-number">1.5.</span> <span class="nav-text">app.route()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#express-Router"><span class="nav-number">1.6.</span> <span class="nav-text">express.Router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用-Express-托管静态文件"><span class="nav-number">1.7.</span> <span class="nav-text">利用 Express 托管静态文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见问题"><span class="nav-number">1.8.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何处理-404-？"><span class="nav-number">1.8.1.</span> <span class="nav-text">如何处理 404 ？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express-支持哪些模板引擎？"><span class="nav-number">1.8.2.</span> <span class="nav-text">Express 支持哪些模板引擎？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何渲染纯-HTML-文件？"><span class="nav-number">1.8.3.</span> <span class="nav-text">如何渲染纯 HTML 文件？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa的使用"><span class="nav-number">2.</span> <span class="nav-text">koa的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#级联"><span class="nav-number">2.1.</span> <span class="nav-text">级联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例方法"><span class="nav-number">2.2.</span> <span class="nav-text">实例方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文-Context"><span class="nav-number">2.3.</span> <span class="nav-text">上下文(Context)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-别名"><span class="nav-number">2.4.</span> <span class="nav-text">Request 别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-别名"><span class="nav-number">2.5.</span> <span class="nav-text">Response 别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应-Response"><span class="nav-number">2.6.</span> <span class="nav-text">响应(Response)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Koa-还是-Express？"><span class="nav-number">3.</span> <span class="nav-text">Koa 还是 Express？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

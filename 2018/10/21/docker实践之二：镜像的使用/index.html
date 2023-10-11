@@ -1,0 +1,1091 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="docker,docker实践," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="镜像是 Docker 的三大组件之一，Docker 运行容器前需要本地存在对应的镜像，如果本地不存在该镜像，Docker 会从镜像仓库下载该镜像。">
+<meta name="keywords" content="docker,docker实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker实践之二：镜像的使用">
+<meta property="og:url" content="https://zhyjor.github.io/2018/10/21/docker实践之二：镜像的使用/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="镜像是 Docker 的三大组件之一，Docker 运行容器前需要本地存在对应的镜像，如果本地不存在该镜像，Docker 会从镜像仓库下载该镜像。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker实践之二：镜像的使用">
+<meta name="twitter:description" content="镜像是 Docker 的三大组件之一，Docker 运行容器前需要本地存在对应的镜像，如果本地不存在该镜像，Docker 会从镜像仓库下载该镜像。">
+<meta name="twitter:image" content="http://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/10/21/docker实践之二：镜像的使用/"/>
+
+
+
+
+
+  <title> docker实践之二：镜像的使用 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/10/21/docker实践之二：镜像的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                docker实践之二：镜像的使用
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-21T03:33:33+00:00">
+                2018-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/21/docker实践之二：镜像的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/21/docker实践之二：镜像的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>镜像是 Docker 的三大组件之一，Docker 运行容器前需要本地存在对应的镜像，如果本地不存在该镜像，Docker 会从镜像仓库下载该镜像。</p>
+<a id="more"></a>
+<h2 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h2><h3 id="什么是Image"><a href="#什么是Image" class="headerlink" title="什么是Image"></a>什么是Image</h3><p>文件和meta data的集合（root filesystem）<br>分层的，并且每一层都可以添加改变，删除文件，成为一个新的image<br>不同的image可以共享相同的layer<br>image本身是一个read-only</p>
+<p>Docker Hub 上有大量的高质量的镜像可以用，从 Docker 镜像仓库获取镜像的命令是 docker pull。其命令格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]</div></pre></td></tr></table></figure></p>
+<p>具体的选项可以通过 <code>docker pull --help</code> 命令看到，这里我们说一下镜像名称的格式。</p>
+<ul>
+<li>Docker 镜像仓库地址：地址的格式一般是 <code>&lt;域名/IP&gt;[:端口号]</code>。默认地址是 Docker Hub。</li>
+<li>仓库名：如之前所说，这里的仓库名是两段式名称，即 <code>&lt;用户名&gt;/&lt;软件名&gt;</code>。对于 Docker Hub，如果不给出用户名，则默认为 <code>library</code>，也就是官方镜像。</li>
+</ul>
+<p>比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ docker pull ubuntu:16.04</div><div class="line">16.04: Pulling from library/ubuntu</div><div class="line">18d680d61657: Pull complete </div><div class="line">0addb6fece63: Pull complete </div><div class="line">78e58219b215: Pull complete </div><div class="line">eb6959a66df2: Pull complete </div><div class="line">Digest: sha256:76702ec53c5e7771ba3f2c4f6152c3796c142af2b3cb1a02fce66c697db24f12</div><div class="line">Status: Downloaded newer image for ubuntu:16.04</div></pre></td></tr></table></figure></p>
+<p><strong>上面的命令中没有给出 Docker 镜像仓库地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 <code>ubuntu:16.04</code>，因此将会获取官方镜像 <code>library/ubuntu</code> 仓库中标签为 16.04 的镜像。</strong></p>
+<p>从下载过程中可以看到我们之前提及的分层存储的概念，镜像是由多层存储所构成。<strong>下载也是一层层的去下载，并非单一文件。</strong>下载过程中给出了每一层的 ID 的前 12 位。并且下载结束后，给出该镜像完整的 sha256 的摘要，以确保下载一致性。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>有了镜像后，我们就能够以这个镜像为基础启动并运行一个容器。以上面的 ubuntu:16.04 为例，如果我们打算启动里面的 bash 并且进行交互式操作的话，可以执行下面的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">docker run -it --rm \</div><div class="line">&gt; ubuntu:16.04 \</div><div class="line">&gt; bash</div><div class="line">root@96e8ccadfada:/# cat /etc/os-release</div><div class="line">NAME=&quot;Ubuntu&quot;</div><div class="line">VERSION=&quot;16.04.5 LTS (Xenial Xerus)&quot;</div><div class="line">ID=ubuntu</div><div class="line">ID_LIKE=debian</div><div class="line">PRETTY_NAME=&quot;Ubuntu 16.04.5 LTS&quot;</div><div class="line">VERSION_ID=&quot;16.04&quot;</div><div class="line">HOME_URL=&quot;http://www.ubuntu.com/&quot;</div><div class="line">SUPPORT_URL=&quot;http://help.ubuntu.com/&quot;</div><div class="line">BUG_REPORT_URL=&quot;http://bugs.launchpad.net/ubuntu/&quot;</div><div class="line">VERSION_CODENAME=xenial</div><div class="line">UBUNTU_CODENAME=xenial</div></pre></td></tr></table></figure></p>
+<p>docker run 就是运行容器的命令</p>
+<ul>
+<li><code>-it</code>：这是两个参数，一个是 <code>-i</code>：交互式操作，一个是 <code>-t</code> 终端。我们这里打算进入 bash 执行一些命令并查看返回结果，因此我们需要交互式终端。</li>
+<li><code>--rm</code>：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 <code>docker rm</code>。我们这里只是随便执行个命令，看看结果，不需要排障和保留结果，因此使用 <code>--rm</code> 可以避免浪费空间。</li>
+<li><code>ubuntu:16.04</code>：这是指用 <code>ubuntu:16.04</code> 镜像为基础来启动容器。</li>
+<li><code>bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash。</li>
+</ul>
+<p>进入容器后，我们可以在 Shell 下操作，执行任何所需的命令。这里，我们执行了 <code>cat /etc/os-release</code>，这是 Linux 常用的查看当前系统版本的命令，从返回的结果可以看到容器内是 Ubuntu 16.04.4 LTS 系统。</p>
+<p><strong>最后我们通过 exit 退出了这个容器。</strong></p>
+<h2 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h2><p>要想列出已经下载下来的镜像，可以使用 <code>docker image ls</code> 命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker image ls</div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">ubuntu              16.04               4a689991aa24        4 days ago          116MB</div><div class="line">hello-world         latest              4ab4c602aa5e        6 weeks ago         1.84kB</div></pre></td></tr></table></figure></p>
+<p>列表包含了仓库名、标签、镜像ID、创建时间以及所占用的空间。这里标识的所占用空间和在 Docker Hub 上看到的镜像大小不同，仓库里的是是压缩后的体积。</p>
+<p>另外一个需要注意的问题是，docker image ls 列表中的镜像体积总和并非是所有镜像实际硬盘消耗。由于 Docker 镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。由于 Docker 使用 Union FS，相同的层只需要保存一份即可，因此实际镜像硬盘占用空间很可能要比这个列表镜像大小的总和要小的多。</p>
+<p>你可以通过以下命令来便捷的查看镜像、容器、数据卷所占用的空间。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker system df</div><div class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</div><div class="line">Images              2                   1                   116MB               116MB (99%)</div><div class="line">Containers          1                   0                   0B                  0B</div><div class="line">Local Volumes       0                   0                   0B                  0B</div><div class="line">Build Cache         0                   0                   0B                  0B</div></pre></td></tr></table></figure></p>
+<h2 id="删除本地镜像"><a href="#删除本地镜像" class="headerlink" title="删除本地镜像"></a>删除本地镜像</h2><p>如果要删除本地的镜像，可以使用 <code>docker image rm</code> 命令，其格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># &lt;镜像&gt; 可以是 镜像短 ID、镜像长 ID、镜像名 或者 镜像摘要。</div><div class="line">$ docker image rm [选项] &lt;镜像1&gt; [&lt;镜像2&gt; ...]</div></pre></td></tr></table></figure></p>
+<p><strong>我们可以用镜像的完整 ID，也称为 长 ID，来删除镜像。</strong>使用脚本的时候可能会用长 ID，但是人工输入就太累了，所以<strong>更多的时候是用 短 ID 来删除镜像</strong>。<code>docker image ls</code> 默认列出的就已经是短 ID 了，一般取前3个字符以上，只要足够区分于别的镜像就可以了。我们<strong>也可以用镜像名，也就是 <code>&lt;仓库名&gt;:&lt;标签&gt;</code>，来删除镜像</strong>。<strong>当然，更精确的是使用 镜像摘要 删除镜像。</strong></p>
+<blockquote>
+<p>删除行为分为两类，一类是 Untagged，另一类是 Deleted。我们之前介绍过，镜像的唯一标识是其 ID 和摘要，而一个镜像可以有多个标签。 </p>
+</blockquote>
+<p>因此当我们使用上面命令删除镜像的时候，实际上是在要求删除某个标签的镜像。所以首先需要做的是将满足我们要求的所有镜像标签都取消，这就是我们看到的 Untagged 的信息。因为一个镜像可以对应多个标签，因此当我们删除了所指定的标签后，可能还有别的标签指向了这个镜像，如果是这种情况，那么 Delete 行为就不会发生。所以并非所有的 docker image rm 都会产生删除镜像的行为，有可能仅仅是取消了某个标签而已。</p>
+<h2 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h2><p>镜像是容器的基础，每次执行 docker run 的时候都会指定哪个镜像作为容器运行的基础。在之前的例子中，我们所使用的都是来自于 Docker Hub 的镜像。直接使用这些镜像是可以满足一定的需求，而当这些镜像无法直接满足需求时，我们就需要定制这些镜像。</p>
+<h3 id="慎用docker-commit"><a href="#慎用docker-commit" class="headerlink" title="慎用docker commit"></a>慎用<code>docker commit</code></h3><p>docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用 Dockerfile 来完成。</p>
+<p>回顾一下之前我们学到的知识，镜像是多层存储，每一层是在前一层的基础上进行的修改；而容器同样也是多层存储，是在以镜像为基础层，在其基础上加一层作为容器运行时的存储层。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --name webserver -d -p 80:80 nginx</div></pre></td></tr></table></figure></p>
+<p>这条命令会用 nginx 镜像启动一个容器，命名为 webserver，并且映射了 80 端口，这样我们可以用浏览器打开<a href="http://localhost,去访问这个" target="_blank" rel="external">http://localhost,去访问这个</a> nginx 服务器。</p>
+<p>现在，假设我们非常不喜欢这个欢迎页面，我们希望改成欢迎 Docker 的文字，我们可以使用 docker exec 命令进入容器，修改其内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker exec -it webserver bash</div><div class="line">root@3729b97e8226:/# echo &apos;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&apos; &gt; /usr/share/nginx/html/index.html</div><div class="line">root@3729b97e8226:/# exit</div><div class="line">exit</div></pre></td></tr></table></figure>
+<p>我们以交互式终端方式进入 webserver 容器，并执行了 bash 命令，也就是获得一个可操作的 Shell。</p>
+<p>然后，我们用 <code>&lt;h1&gt;Hello, Docker!&lt;/h1&gt;</code> 覆盖了 <code>/usr/share/nginx/html/index.html</code> 的内容。</p>
+<p>现在我们再刷新浏览器的话，会发现内容被改变了。我们修改了容器的文件，也就是改动了容器的存储层。我们可以通过 docker diff 命令看到具体的改动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ docker diff webserver</div><div class="line">C /root</div><div class="line">A /root/.bash_history</div><div class="line">C /run</div><div class="line">C /usr</div><div class="line">C /usr/share</div><div class="line">C /usr/share/nginx</div><div class="line">C /usr/share/nginx/html</div><div class="line">C /usr/share/nginx/html/index.html</div><div class="line">C /var</div><div class="line">C /var/cache</div><div class="line">C /var/cache/nginx</div><div class="line">A /var/cache/nginx/client_temp</div><div class="line">A /var/cache/nginx/fastcgi_temp</div><div class="line">A /var/cache/nginx/proxy_temp</div><div class="line">A /var/cache/nginx/scgi_temp</div><div class="line">A /var/cache/nginx/uwsgi_temp</div></pre></td></tr></table></figure></p>
+<p><strong>现在我们定制好了变化，我们希望能将其保存下来形成镜像。</strong></p>
+<p>要知道，当我们运行一个容器的时候（如果不使用卷的话），我们做的任何文件修改都会被记录于容器存储层里。而 Docker 提供了一个 docker commit 命令，可以将容器的存储层保存下来成为镜像。换句话说，就是在原有镜像的基础上，再叠加上容器的存储层，并构成新的镜像。以后我们运行这个新镜像的时候，就会拥有原有容器最后的文件变化。</p>
+<p>docker commit 的语法格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker commit [选项] &lt;容器ID或容器名&gt; [&lt;仓库名&gt;[:&lt;标签&gt;]]</div></pre></td></tr></table></figure></p>
+<p>我们可以用下面的命令将容器保存为镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ docker commit \</div><div class="line">    --author &quot;Tao Wang &lt;twang2218@gmail.com&gt;&quot; \</div><div class="line">    --message &quot;修改了默认网页&quot; \</div><div class="line">    webserver \</div><div class="line">    nginx:v2</div><div class="line">sha256:07e33465974800ce65751acc279adc6ed2dc5ed4e0838f8b86f0c87aa1795214</div></pre></td></tr></table></figure></p>
+<p>我们还可以用 docker history 具体查看镜像内的历史记录，如果比较 nginx:latest 的历史记录，我们会发现新增了我们刚刚提交的这一层。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ docker history nginx:v2</div><div class="line">IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT</div><div class="line">07e334659748        54 seconds ago      nginx -g daemon off;                            95 B                修改了默认网页</div><div class="line">e43d811ce2f4        4 weeks ago         /bin/sh -c #(nop)  CMD [&quot;nginx&quot; &quot;-g&quot; &quot;daemon    0 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c #(nop)  EXPOSE 443/tcp 80/tcp        0 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c ln -sf /dev/stdout /var/log/nginx/   22 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c apt-key adv --keyserver hkp://pgp.   58.46 MB</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.11.5-1   0 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c #(nop)  MAINTAINER NGINX Docker Ma   0 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]            0 B</div><div class="line">&lt;missing&gt;           4 weeks ago         /bin/sh -c #(nop) ADD file:23aa4f893e3288698c   123 MB</div></pre></td></tr></table></figure></p>
+<p>新的镜像定制好后，我们可以来运行这个镜像。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --name web2 -d -p 81:80 nginx:v2</div></pre></td></tr></table></figure></p>
+<p>这里我们命名为新的服务为 web2，并且映射到 81 端口。我们就可以直接访问 <a href="http://localhost:81" target="_blank" rel="external">http://localhost:81</a> 看到结果，其内容应该和之前修改后的 webserver 一样。</p>
+<p>至此，我们第一次完成了定制镜像，使用的是 docker commit 命令，手动操作给旧的镜像添加了新的一层，形成新的镜像，对镜像多层存储应该有了更直观的感觉。</p>
+<h3 id="使用-Dockerfile-定制镜像"><a href="#使用-Dockerfile-定制镜像" class="headerlink" title="使用 Dockerfile 定制镜像"></a>使用 Dockerfile 定制镜像</h3><p>从刚才的 docker commit 的学习中，我们可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p>
+<p><strong>Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</strong></p>
+<p>还以之前定制 nginx 镜像为例，这次我们使用 Dockerfile 来定制:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">FROM nginx</div><div class="line">RUN echo &apos;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&apos; &gt; /usr/share/nginx/html/index.html</div></pre></td></tr></table></figure></p>
+<h4 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM 指定基础镜像"></a>FROM 指定基础镜像</h4><p>所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。就像我们之前运行了一个 nginx 镜像的容器，再进行修改一样，基础镜像是必须指定的。而 <strong>FROM 就是指定基础镜像，因此一个 Dockerfile 中 FROM 是必备的指令，并且必须是第一条指令。</strong></p>
+<p>在 Docker Store 上有非常多的高质量的官方镜像，有可以直接拿来使用的服务类的镜像，除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。<strong>如果你以 scratch 为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在。</strong></p>
+<h4 id="RUN-执行命令"><a href="#RUN-执行命令" class="headerlink" title="RUN 执行命令"></a>RUN 执行命令</h4><p>RUN 指令是用来执行命令行命令的。由于命令行的强大能力，RUN 指令在定制镜像时是最常用的指令之一。其格式有两种：</p>
+<ul>
+<li>shell 格式：RUN <code>&lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 RUN 指令就是这种格式。</li>
+<li>exec 格式：RUN [“可执行文件”, “参数1”, “参数2”]，这更像是函数调用中的格式。</li>
+</ul>
+<p>每一个 RUN 的行为，就和刚才我们手工建立镜像的过程一样：新建立一层，在其上执行这些命令，执行结束后，commit 这一层的修改，构成新的镜像。Union FS 是有最大层数限制的，比如 AUFS，曾经是最大不得超过 42 层，现在是不得超过 127 层。</p>
+<p>为了避免不必要的分层，Dockerfile 正确的写法应该类似这样：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> debian:jessie</div><div class="line"></div><div class="line"><span class="keyword">RUN</span><span class="bash"> buildDeps=<span class="string">'gcc libc6-dev make'</span> \</span></div><div class="line"><span class="bash">    &amp;&amp; apt-get update \</span></div><div class="line"><span class="bash">    &amp;&amp; apt-get install -y <span class="variable">$buildDeps</span> \</span></div><div class="line"><span class="bash">    &amp;&amp; wget -O redis.tar.gz <span class="string">"http://download.redis.io/releases/redis-3.2.5.tar.gz"</span> \</span></div><div class="line"><span class="bash">    &amp;&amp; mkdir -p /usr/src/redis \</span></div><div class="line"><span class="bash">    &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \</span></div><div class="line"><span class="bash">    &amp;&amp; make -C /usr/src/redis \</span></div><div class="line"><span class="bash">    &amp;&amp; make -C /usr/src/redis install \</span></div><div class="line"><span class="bash">    &amp;&amp; rm -rf /var/lib/apt/lists/* \</span></div><div class="line"><span class="bash">    &amp;&amp; rm redis.tar.gz \</span></div><div class="line"><span class="bash">    &amp;&amp; rm -r /usr/src/redis \</span></div><div class="line"><span class="bash">    &amp;&amp; apt-get purge -y --auto-remove <span class="variable">$buildDeps</span></span></div></pre></td></tr></table></figure></p>
+<p>可以看到这一组命令的最后添加了清理工作的命令，删除了为了编译构建所需要的软件，清理了所有下载、展开的文件，并且还清理了 apt 缓存文件。这是很重要的一步，我们之前说过，镜像是多层存储，每一层的东西并不会在下一层被删除，会一直跟随着镜像。因此镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉。</p>
+<h4 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h4><p>在 Dockerfile 文件所在目录执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ docker build -t nginx:v3 .</div><div class="line">Sending build context to Docker daemon 2.048 kB</div><div class="line">Step 1 : FROM nginx</div><div class="line"> ---&gt; e43d811ce2f4</div><div class="line">Step 2 : RUN echo &apos;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&apos; &gt; /usr/share/nginx/html/index.html</div><div class="line"> ---&gt; Running in 9cdc27646c7b</div><div class="line"> ---&gt; 44aa4490ce2c</div><div class="line">Removing intermediate container 9cdc27646c7b</div><div class="line">Successfully built 44aa4490ce2c</div></pre></td></tr></table></figure></p>
+<p>从命令的输出结果中，我们可以清晰的看到镜像的构建过程。这里我们使用了 docker build 命令进行镜像构建。其格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker build [选项] &lt;上下文路径/URL/-&gt;</div></pre></td></tr></table></figure></p>
+<p>在这里我们指定了最终镜像的名称 -t nginx:v3，构建成功后，我们可以像之前运行 nginx:v2 那样来运行这个镜像，其结果会和 nginx:v2 一样。</p>
+<h4 id="镜像构建上下文（Context）"><a href="#镜像构建上下文（Context）" class="headerlink" title="镜像构建上下文（Context）"></a>镜像构建上下文（Context）</h4><p>如果注意，会看到 <code>docker build</code> 命令最后有一个 <code>.</code>。<code>.</code> 表示当前目录，而 Dockerfile 就在当前目录，因此不少初学者以为这个路径是在指定 Dockerfile 所在路径，这么理解其实是不准确的。如果对应上面的命令格式，你可能会发现，这是在指定上下文路径。</p>
+<p>当构建的时候，用户会指定构建镜像上下文的路径，docker build 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。</p>
+<p>如果在 Dockerfile 中这么写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">COPY ./package.json /app/</div></pre></td></tr></table></figure></p>
+<p>这并不是要复制执行 docker build 命令所在的目录下的 <code>package.json</code>，也不是复制 Dockerfile 所在目录下的 <code>package.json</code>，而是复制 上下文（context） 目录下的 <code>package.json</code>。</p>
+<p>现在就可以理解刚才的命令 <code>docker build -t nginx:v3 .</code>中的这个 <code>.</code>，实际上是在指定上下文的目录，<code>docker build</code> 命令会将该目录下的内容打包交给 Docker 引擎以帮助构建镜像。</p>
+<p>一般来说，应该会将 Dockerfile 置于一个空目录下，或者项目根目录下。如果该目录下没有所需文件，那么应该把所需文件复制一份过来。如果目录下有些东西确实不希望构建时传给 Docker 引擎，那么可以用 <code>.gitignore</code> 一样的语法写一个 <code>.dockerignore</code>，该文件是用于剔除不需要作为上下文传递给 Docker 引擎的。</p>
+<h4 id="其它-docker-build-的用法"><a href="#其它-docker-build-的用法" class="headerlink" title="其它 docker build 的用法"></a>其它 docker build 的用法</h4><ul>
+<li>直接用 Git repo 进行构建，<code>docker build</code> 还支持从 URL 构建，比如可以直接从 Git repo 中构建</li>
+<li>用给定的 tar 压缩包构建</li>
+<li>从标准输入中读取 Dockerfile 进行构建</li>
+<li>从标准输入中读取上下文压缩包进行构建</li>
+</ul>
+<h4 id="多阶段构建"><a href="#多阶段构建" class="headerlink" title="多阶段构建"></a>多阶段构建</h4><p>在 Docker 17.05 版本之前，我们构建 Docker 镜像时，通常会采用两种方式：</p>
+<ul>
+<li>全部放入一个 Dockerfile,所有的构建过程编包含在一个 Dockerfile 中，包括项目及其依赖库的编译、测试、打包等流程,Dockerfile 特别长，可维护性降低;镜像层次多，镜像体积较大，部署时间变长;源代码存在泄露的风险</li>
+<li>分散到多个 Dockerfile，我们事先在一个 Dockerfile 将项目及其依赖库编译测试打包好后，再将其拷贝到运行环境中，这种方式需要我们编写两个 Dockerfile 和一些编译脚本才能将其两个阶段自动整合起来，这种方式虽然可以很好地规避第一种方式存在的风险，但明显部署过程较复杂。</li>
+</ul>
+<p>为解决以上问题，Docker v17.05 开始支持多阶段构建 (multistage builds)。使用多阶段构建我们就可以很容易解决前面提到的问题，并且只需要编写一个 Dockerfile：</p>
+<p>例如</p>
+<p>编写 Dockerfile 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">FROM golang:1.9-alpine as builder</div><div class="line"></div><div class="line">RUN apk --no-cache add git</div><div class="line"></div><div class="line">WORKDIR /go/src/github.com/go/helloworld/</div><div class="line"></div><div class="line">RUN go get -d -v github.com/go-sql-driver/mysql</div><div class="line"></div><div class="line">COPY app.go .</div><div class="line"></div><div class="line">RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .</div><div class="line"></div><div class="line">FROM alpine:latest as prod</div><div class="line"></div><div class="line">RUN apk --no-cache add ca-certificates</div><div class="line"></div><div class="line">WORKDIR /root/</div><div class="line"></div><div class="line">COPY --from=0 /go/src/github.com/go/helloworld/app .</div><div class="line"></div><div class="line">CMD [&quot;./app&quot;]</div></pre></td></tr></table></figure></p>
+<p>很明显使用多阶段构建的镜像体积小，同时也完美解决了上边提到的问题。同时我们可以只构建某一阶段的镜像，也可以构建时从其他镜像复制文件。</p>
+<h4 id="其它制作镜像的方式"><a href="#其它制作镜像的方式" class="headerlink" title="其它制作镜像的方式"></a>其它制作镜像的方式</h4><p><strong>从 rootfs 压缩包导入：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">格式：docker import [选项] &lt;文件&gt;|&lt;URL&gt;|- [&lt;仓库名&gt;[:&lt;标签&gt;]]</div></pre></td></tr></table></figure></p>
+<p><strong>`docker save 和 docker load</strong><br>Docker 还提供了 docker load 和 docker save 命令，用以将镜像保存为一个 tar 文件，然后传输到另一个位置上，再加载进来。这是在没有 Docker Registry 时的做法，现在已经不推荐，镜像迁移应该直接使用 Docker Registry，无论是直接使用 Docker Hub 还是使用内网私有 Registry 都可以。</p>
+<h4 id="dockerfile语法"><a href="#dockerfile语法" class="headerlink" title="dockerfile语法"></a>dockerfile语法</h4><p><strong>FROM:使用base image</strong><br>尽力使用官方的作为base<br><strong>LABEL:作者，版本等</strong><br>Metadata不可少，类似代码里的注释<br><strong>RUN:运行命令</strong><br>每运行一次run,都会增加一层，使用<code>&amp;&amp;</code>合并，使用<code>\</code>命令换行<br><strong>WORKDIR:修改目录</strong><br>若没有这个目录，会创建目录，要使用WORKdir,不要使用run cd，要使用绝对目录<br><strong>ADD and COPY</strong><br>可以添加文件到一个目录，也可以解压缩文件到一个目录；大部分时间COPY优于ADD，添加远程文件可以通过，curl和wget<br><strong>ENV:设置常量</strong><br>增加可维护性<br><strong>VOLUME and EXPOSE</strong><br>存储和网络<br><strong>CMD and ENTRYPOINT</strong></p>
+<p><strong>如何进行debug</strong></p>
+<h4 id="对比RUN、CMD、ENTRYPOINT"><a href="#对比RUN、CMD、ENTRYPOINT" class="headerlink" title="对比RUN、CMD、ENTRYPOINT"></a>对比RUN、CMD、ENTRYPOINT</h4><p><strong>RUN:</strong>执行命令并创建新的ImageLayer<br><strong>CMD:</strong>设置容器启动后默认执行的命令和参数、若docker RUN指定的其他命令，CMD会被忽略，若定义了多个CMD，只有最后一个会执行<br><strong>ENTRYPOINT:</strong>设置容器启动时执行的命令，让容器以应用程序或者服务的形式运行，不会被忽略，一定会执行，最佳实践：写一个shell作为entrypoint</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -d &apos;&apos; # 后台运行</div></pre></td></tr></table></figure>
+<p><strong>shell格式：</strong>执行的shell<br><strong>exec格式：</strong>RUN[“”,””]特定的格式</p>
+<h2 id="镜像的实现原理"><a href="#镜像的实现原理" class="headerlink" title="镜像的实现原理"></a>镜像的实现原理</h2><p>Docker 镜像是怎么实现增量的修改和维护的？</p>
+<p>每个镜像都由很多层次构成，Docker 使用 Union FS 将这些不同的层结合到一个镜像中去。</p>
+<p>通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允许用户在其上进行一些写操作。</p>
+<p>Docker 在 AUFS 上构建的容器也是利用了类似的原理。</p>
+<h2 id="镜像的发布"><a href="#镜像的发布" class="headerlink" title="镜像的发布"></a>镜像的发布</h2><p>push上传的镜像斜线前的内容需要是自己dockerhub的用户名才能上传，否则会deny，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker login</div><div class="line">docker push </div><div class="line"></div><div class="line">上传自己的镜像被拒绝denied: requested access to the resource is denied</div><div class="line">docker tag zhyjor163/hello-world zhyjor/hello-world:latest</div></pre></td></tr></table></figure></p>
+<p>注意使用私有仓库的时候需要修改<code>ect/docker/daemon.json</code>,和<code>/lib/systemd/system/docker.service</code></p>
+<p><strong>参考资料</strong><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/10/21/docker实践之二：镜像的使用/">docker实践之二：镜像的使用</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年10月21日 - 11:10</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/10/21/docker实践之二：镜像的使用/" title="docker实践之二：镜像的使用">https://zhyjor.github.io/2018/10/21/docker实践之二：镜像的使用/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/10/21/docker实践之二：镜像的使用/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/docker实践/" rel="tag"># docker实践</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/19/docker实践之一：安装与启动/" rel="next" title="docker实践之一：安装与启动">
+                <i class="fa fa-chevron-left"></i> docker实践之一：安装与启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/23/docker深入理解之一：基本概念/" rel="prev" title="docker深入理解之一：基本概念">
+                docker深入理解之一：基本概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取"><span class="nav-number">1.</span> <span class="nav-text">获取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Image"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看镜像"><span class="nav-number">3.</span> <span class="nav-text">查看镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除本地镜像"><span class="nav-number">4.</span> <span class="nav-text">删除本地镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作镜像"><span class="nav-number">5.</span> <span class="nav-text">制作镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慎用docker-commit"><span class="nav-number">5.1.</span> <span class="nav-text">慎用docker commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">5.2.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FROM-指定基础镜像"><span class="nav-number">5.2.1.</span> <span class="nav-text">FROM 指定基础镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RUN-执行命令"><span class="nav-number">5.2.2.</span> <span class="nav-text">RUN 执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建镜像"><span class="nav-number">5.2.3.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像构建上下文（Context）"><span class="nav-number">5.2.4.</span> <span class="nav-text">镜像构建上下文（Context）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它-docker-build-的用法"><span class="nav-number">5.2.5.</span> <span class="nav-text">其它 docker build 的用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多阶段构建"><span class="nav-number">5.2.6.</span> <span class="nav-text">多阶段构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它制作镜像的方式"><span class="nav-number">5.2.7.</span> <span class="nav-text">其它制作镜像的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dockerfile语法"><span class="nav-number">5.2.8.</span> <span class="nav-text">dockerfile语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比RUN、CMD、ENTRYPOINT"><span class="nav-number">5.2.9.</span> <span class="nav-text">对比RUN、CMD、ENTRYPOINT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像的实现原理"><span class="nav-number">6.</span> <span class="nav-text">镜像的实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像的发布"><span class="nav-number">7.</span> <span class="nav-text">镜像的发布</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

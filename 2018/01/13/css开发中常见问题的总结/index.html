@@ -1,0 +1,1034 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css,css进阶," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="css是一个很矛盾的东西，即复杂又简单，你很容易的使用它做出某些效果，一个效果有很多种的实现方式；实现方式越多，越容易写的不知所云。而且有时候写出来的效果和最初的预想差别很大，但是我们这时候就会说：”应该就是这样啊！”本文就是讲这些应该这样的点指出来“到底要怎样”">
+<meta name="keywords" content="css,css进阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css开发中常见问题的总结">
+<meta property="og:url" content="https://zhyjor.github.io/2018/01/13/css开发中常见问题的总结/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="css是一个很矛盾的东西，即复杂又简单，你很容易的使用它做出某些效果，一个效果有很多种的实现方式；实现方式越多，越容易写的不知所云。而且有时候写出来的效果和最初的预想差别很大，但是我们这时候就会说：”应该就是这样啊！”本文就是讲这些应该这样的点指出来“到底要怎样”">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.wxcha.com/file/201704/11/5b66961fe5.jpg">
+<meta property="og:image" content="http://img.wxcha.com/file/201704/11/b1e20cad0d.jpg">
+<meta property="og:image" content="http://img.hb.aicdn.com/ec75ffa7051ca66d3a2dc01ec18e374a53e1e71a22e899-GrMUJ9_fw658">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css开发中常见问题的总结">
+<meta name="twitter:description" content="css是一个很矛盾的东西，即复杂又简单，你很容易的使用它做出某些效果，一个效果有很多种的实现方式；实现方式越多，越容易写的不知所云。而且有时候写出来的效果和最初的预想差别很大，但是我们这时候就会说：”应该就是这样啊！”本文就是讲这些应该这样的点指出来“到底要怎样”">
+<meta name="twitter:image" content="http://img.wxcha.com/file/201704/11/5b66961fe5.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/01/13/css开发中常见问题的总结/"/>
+
+
+
+
+
+  <title> css开发中常见问题的总结 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/01/13/css开发中常见问题的总结/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                css开发中常见问题的总结
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-13T07:25:12+00:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/13/css开发中常见问题的总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/13/css开发中常见问题的总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>css是一个很矛盾的东西，即复杂又简单，你很容易的使用它做出某些效果，一个效果有很多种的实现方式；实现方式越多，越容易写的不知所云。而且有时候写出来的效果和最初的预想差别很大，但是我们这时候就会说：”应该就是这样啊！”本文就是讲这些应该这样的点指出来“到底要怎样”<br><img src="http://img.wxcha.com/file/201704/11/5b66961fe5.jpg" alt=""></p>
+<a id="more"></a>
+<h4 id="Margin崩塌"><a href="#Margin崩塌" class="headerlink" title="Margin崩塌"></a>Margin崩塌</h4><p>不同于其他很多属性，盒模型中垂直方向上的Margin会在相遇时发生崩塌，也就是说当某个元素的底部Margin与另一个元素的顶部Margin相邻时，只有二者中的较大值会被保留下来。详情可以查看另一篇关于<a href="https://zhyjor.github.io/2017/10/25/css%E8%BF%9B%E9%98%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%9B%92%E6%A8%A1%E5%9E%8B/">盒模型</a>的博客</p>
+<h4 id="使用css-reset"><a href="#使用css-reset" class="headerlink" title="使用css reset"></a>使用css reset</h4><p>虽然这些年来随着浏览器的迅速发展与规范的统一，浏览器特性碎片化的情况有所改善，但是在不同的浏览器之间仍然存在着很多的行为差异。而解决这种问题的最好的办法就是使用某个CSS Reset来为所有的元素设置统一的样式，保证你能在相对统一干净的样式表的基础上开始工作。目前流行的Reset库有 normalize.css, minireset以及 ress ，它们都可以修正很多已知的浏览器之间的差异性</p>
+<h4 id="关于box-sizing"><a href="#关于box-sizing" class="headerlink" title="关于box-sizing"></a>关于box-sizing</h4><p>最好的理解它的方式就是看看它的两种取值，详情可以查看另一篇关于<a href="https://zhyjor.github.io/2017/10/25/css%E8%BF%9B%E9%98%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%9B%92%E6%A8%A1%E5%9E%8B/">盒模型</a>的博客</p>
+<h4 id="Table-borders"><a href="#Table-borders" class="headerlink" title="Table borders"></a>Table borders</h4><p>通过设置<code>border-collapse:collapse</code></p>
+<h4 id="使用Kebab-case命名变量"><a href="#使用Kebab-case命名变量" class="headerlink" title="使用Kebab-case命名变量"></a>使用Kebab-case命名变量</h4><p>建议是使用BEM规范，只要遵循一些简单的原则即可以保证基于组件风格的命名一致性。你也可以参考CSS Tricks来获得更多的细节描述。</p>
+<h4 id="避免重复代码"><a href="#避免重复代码" class="headerlink" title="避免重复代码"></a>避免重复代码</h4><p>大部分元素的CSS属性都是从DOM树根部继承而来，这也是其命名为级联样式表的由来。我们以font属性为例，该属性往往是继承自父属性，因此我们并不需要再单独地为元素设置该属性。我们只需要在html或者body中添加该属性然后使其层次传递下去即可</p>
+<h4 id="使用transform添加CSS-Animations"><a href="#使用transform添加CSS-Animations" class="headerlink" title="使用transform添加CSS Animations"></a>使用transform添加CSS Animations</h4><p>不建议直接改变元素的width与height属性或者left/top/bottom/right这些属性来达到动画效果，而应该优先使用transform()属性来提供更平滑的变换效果，并且能使得代码的可读性会更好:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.ball &#123;</div><div class="line">    left: 50px;</div><div class="line">    transition: 0.4s ease-out;</div><div class="line">&#125;/* Not Cool*/.ball.slide-out &#123;</div><div class="line">    left: 500px;</div><div class="line">&#125;/* Cool*/.ball.slide-out &#123;</div><div class="line">    transform: translateX(450px);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Transform的几个属性translate、rotate、scale都具有比较好的浏览器兼容性可以放心使用。</p>
+<h4 id="尽可能使用低优先级的选择器"><a href="#尽可能使用低优先级的选择器" class="headerlink" title="尽可能使用低优先级的选择器"></a>尽可能使用低优先级的选择器</h4><p>并不是所有的CSS选择器的优先级都一样，很多初学者在使用CSS选择器的时候都是考虑以新的特性去复写全部的继承特性，不过这一点在某个元素多状态时就麻烦了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">a&#123;</div><div class="line">    color: #fff;</div><div class="line">    padding: 15px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">a#blue-btn &#123;</div><div class="line">    background-color: blue;</div><div class="line">&#125;</div><div class="line"></div><div class="line">a.active &#123;</div><div class="line">    background-color: red;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们本来希望将.active类添加到按钮上然后使其显示为红色，不过在上面这个例子中很明显起不了作用，因为button已经以ID选择器设置过了背景色，也就是所谓的Higher Selector Specificity。</p>
+<p><strong>一般来说，选择器的优先级顺序为：ID(#id) &gt; Class(.class) &gt; Type(header)</strong></p>
+<h4 id="避免使用-important"><a href="#避免使用-important" class="headerlink" title="避免使用!important"></a>避免使用!important</h4><p>认真的说，千万要避免使用!important，这可能会导致你在未来的开发中无尽的属性重写，你应该选择更合适的CSS选择器。而唯一的可以使用!important属性的场景就是当你想去复写某些行内样式的时候，不过行内样式本身也是需要避免的。</p>
+<p>####Em, Rem, 以及 Pixel</p>
+<ul>
+<li>em – 其基本单位即为当前元素的font-size值，经常适用于media-queries中，em是特别适用于响应式开发中。</li>
+<li>rem – 其是相对于html属性的单位，可以保证文本段落真正的响应式尺寸特性。</li>
+<li>px – Pixels 并没有任何的动态扩展性，它们往往用于描述绝对单位，并且可以在设置值与最终的显示效果之间保留一定的一致性。</li>
+</ul>
+<h4 id="使用text-transform属性设置文本大写"><a href="#使用text-transform属性设置文本大写" class="headerlink" title="使用text-transform属性设置文本大写"></a>使用text-transform属性设置文本大写</h4><p><code>text-transform: uppercase;</code></p>
+<h4 id="使用Autoprefixers来提升浏览器兼容性"><a href="#使用Autoprefixers来提升浏览器兼容性" class="headerlink" title="使用Autoprefixers来提升浏览器兼容性"></a>使用Autoprefixers来提升浏览器兼容性</h4><ul>
+<li>Online tools: Autoprefixer</li>
+<li>Text editor plugins: Sublime Text, Atom</li>
+<li>Libraries: Autoprefixer (PostCSS)</li>
+</ul>
+<h4 id="在大型项目中使用预处理器"><a href="#在大型项目中使用预处理器" class="headerlink" title="在大型项目中使用预处理器"></a>在大型项目中使用预处理器</h4><p>估计你肯定听说过 Sass, Less, PostCSS, Stylus这些预处理器与对应的语法。Preprocessors可以允许我们将未来的CSS特性应用在当前的代码开发中，譬如变量支持、函数、嵌套式的选择器以及很多其他的特性</p>
+<h4 id="在生产环境下使用Minified代码"><a href="#在生产环境下使用Minified代码" class="headerlink" title="在生产环境下使用Minified代码"></a>在生产环境下使用Minified代码</h4><ul>
+<li>Online tools – CSS Minifier (API included), CSS Compressor</li>
+<li>Text editor plugins: Sublime Text, Atom</li>
+<li>Libraries: Minfiy (PHP), CSSO and CSSNano (PostCSS, Grunt, Gulp)</li>
+</ul>
+<h4 id="多参阅Caniuse"><a href="#多参阅Caniuse" class="headerlink" title="多参阅Caniuse"></a>多参阅Caniuse</h4><p>不同的浏览器在兼容性上差异很大，因此如果我们可以针对我们所需要适配的浏览器，在caniuse上我们可以查询某个特性的浏览器版本适配性，是否需要添加特定的前缀或者在某个平台上是否存在Bug等等。不过光光使用<a href="https://caniuse.com/" target="_blank" rel="external">caniuse</a>肯定是不够的，我们还需要使用些额外的服务来进行检测。</p>
+<h4 id="Validate-校验"><a href="#Validate-校验" class="headerlink" title="Validate:校验"></a>Validate:校验</h4><p>对于CSS的校验可能不如HTML校验或者JavaScript校验那么重要，不过在正式发布之前用Lint工具校验一波你的CSS代码还是很有意义的。它会告诉你代码中潜在的错误，提示你一些不符合最佳实践的代码以及给你一些提升代码性能的建议。就像Minifers与Autoprefixers，也有很多可用的工具:</p>
+<ul>
+<li>Online tools: W3 Validator, CSS Lint</li>
+<li>Text editor plugins: Sublime Text, Atom</li>
+<li>Libraries: stylelint (Node.js, PostCSS), css-validator (Node.js)</li>
+</ul>
+<p><img src="http://img.wxcha.com/file/201704/11/b1e20cad0d.jpg" alt=""></p>
+<p><strong>参考资料</strong><br><a href="http://www.codeceo.com/article/20-modern-css-tips.html" target="_blank" rel="external">20个编写现代CSS代码的建议</a></p>
+<p><img src="http://img.hb.aicdn.com/ec75ffa7051ca66d3a2dc01ec18e374a53e1e71a22e899-GrMUJ9_fw658" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/01/13/css开发中常见问题的总结/">css开发中常见问题的总结</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年01月13日 - 15:01</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/01/13/css开发中常见问题的总结/" title="css开发中常见问题的总结">https://zhyjor.github.io/2018/01/13/css开发中常见问题的总结/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/01/13/css开发中常见问题的总结/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/css进阶/" rel="tag"># css进阶</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/11/http协议详解之一：缓存（熟悉的304）/" rel="next" title="http协议详解之一：缓存（熟悉的304）">
+                <i class="fa fa-chevron-left"></i> http协议详解之一：缓存（熟悉的304）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/15/浏览器与前端开发之一：跨域与跨域访问/" rel="prev" title="浏览器与前端开发之一：跨域与跨域访问">
+                浏览器与前端开发之一：跨域与跨域访问 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Margin崩塌"><span class="nav-number">1.</span> <span class="nav-text">Margin崩塌</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用css-reset"><span class="nav-number">2.</span> <span class="nav-text">使用css reset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于box-sizing"><span class="nav-number">3.</span> <span class="nav-text">关于box-sizing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Table-borders"><span class="nav-number">4.</span> <span class="nav-text">Table borders</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Kebab-case命名变量"><span class="nav-number">5.</span> <span class="nav-text">使用Kebab-case命名变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免重复代码"><span class="nav-number">6.</span> <span class="nav-text">避免重复代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用transform添加CSS-Animations"><span class="nav-number">7.</span> <span class="nav-text">使用transform添加CSS Animations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#尽可能使用低优先级的选择器"><span class="nav-number">8.</span> <span class="nav-text">尽可能使用低优先级的选择器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免使用-important"><span class="nav-number">9.</span> <span class="nav-text">避免使用!important</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用text-transform属性设置文本大写"><span class="nav-number">10.</span> <span class="nav-text">使用text-transform属性设置文本大写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Autoprefixers来提升浏览器兼容性"><span class="nav-number">11.</span> <span class="nav-text">使用Autoprefixers来提升浏览器兼容性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在大型项目中使用预处理器"><span class="nav-number">12.</span> <span class="nav-text">在大型项目中使用预处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在生产环境下使用Minified代码"><span class="nav-number">13.</span> <span class="nav-text">在生产环境下使用Minified代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多参阅Caniuse"><span class="nav-number">14.</span> <span class="nav-text">多参阅Caniuse</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Validate-校验"><span class="nav-number">15.</span> <span class="nav-text">Validate:校验</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1063 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端,面试," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="整理的一部分前端面试博客，好好看，查漏补缺">
+<meta name="keywords" content="前端,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InterviewSource之前端">
+<meta property="og:url" content="https://zhyjor.github.io/2018/02/25/InterviewSource之前端/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="整理的一部分前端面试博客，好好看，查漏补缺">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="InterviewSource之前端">
+<meta name="twitter:description" content="整理的一部分前端面试博客，好好看，查漏补缺">
+<meta name="twitter:image" content="http://static.zhyjor.com/wexin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/02/25/InterviewSource之前端/"/>
+
+
+
+
+
+  <title> InterviewSource之前端 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/02/25/InterviewSource之前端/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                InterviewSource之前端
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-25T00:59:44+00:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/25/InterviewSource之前端/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/25/InterviewSource之前端/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>整理的一部分前端面试博客，好好看，查漏补缺<br><a id="more"></a><br><a href="https://segmentfault.com/a/1190000013331105" target="_blank" rel="external">面试的信心来源于过硬的基础</a><br><a href="http://www.jqhtml.com/14909.html" target="_blank" rel="external">JavaScript：面试频繁出现的几个易错点</a><br><a href="https://juejin.im/post/5abf68886fb9a028b54802e0" target="_blank" rel="external">记前端工程师面试题，一起带大家理一理</a><br><a href="http://www.bslxx.com/m/list.php?tid=2" target="_blank" rel="external">大前端/vue/分析</a><br><a href="https://www.villainhr.com/page/2018/03/26/BAT%20%E8%A6%81%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%89%8D%E7%AB%AF%E5%AE%9E%E4%B9%A0%E7%94%9F%EF%BC%9F" target="_blank" rel="external">BAT 要的是什么样的前端实习生？</a><br><a href="https://juejin.im/post/5a718cd36fb9a01caa20d8a8" target="_blank" rel="external">杭州17届前端期待加入一个更好的团队</a><br><a href="https://juejin.im/post/5acd0c8a6fb9a028da7cdfaf" target="_blank" rel="external">面试官: 实现双向绑定Proxy比defineproperty优劣如何?</a><br><a href="https://juejin.im/post/5b94d8965188255c5a0cdc02" target="_blank" rel="external">2018前端面试总结，看完弄懂，工资少说加3K | 掘金技术征文</a></p>
+<p><strong><a href="https://juejin.im/collection/5a9e4cd56fb9a00a0f45a9db" target="_blank" rel="external">掘金面试合集</a></strong><br><a href="https://juejin.im/post/5b5567b25188256256696ee0#heading-5" target="_blank" rel="external">面试图谱：前端基础技术知识讲解</a><br><strong><a href="https://yuchengkai.cn/docs/zh/frontend/" target="_blank" rel="external">面试图谱·大合集</a></strong><br><strong><a href="https://juejin.im/post/5b44a485e51d4519945fb6b7" target="_blank" rel="external">总结了17年初到18年初百场前端面试的面试经验(含答案)</a></strong></p>
+<p><a href="https://blog.csdn.net/lxcao/article/details/53011255" target="_blank" rel="external">Web前端面试指导(完结)</a><br><a href="https://juejin.im/post/5b9091e7e51d450e70423161" target="_blank" rel="external">上拉加载下拉刷新了解下</a></p>
+<h2 id="一般的合集"><a href="#一般的合集" class="headerlink" title="一般的合集"></a>一般的合集</h2><p><a href="https://juejin.im/entry/57b68b8b0a2b58005c8270eb" target="_blank" rel="external">一些基础的前端技术面试问题·很基础</a><br><a href="https://www.jianshu.com/p/1288380ec7cc" target="_blank" rel="external">2017年前端面试题整理汇总100题</a><br><a href="https://juejin.im/post/5a964b636fb9a0636264056f" target="_blank" rel="external">前端开发面试题和答案（转载）</a><br><a href="https://juejin.im/post/5b976f4b5188255c865e0240" target="_blank" rel="external">【译】使用 webpack 进行 web 性能优化（一）：减小前端资源大小</a></p>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><p><a href="https://juejin.im/entry/59fc0494518825076a0c507f" target="_blank" rel="external">25个最基本的JavaScript面试问题及答案</a><br><a href="https://juejin.im/entry/5b02806b518825673b625291" target="_blank" rel="external">37个JavaScript基本面试问题和解答</a><br><a href="https://juejin.im/post/5a321ff76fb9a0450d1118ae" target="_blank" rel="external">深入浅出ES6知识大合集</a><br><a href="https://juejin.im/post/5b1f899fe51d4506c60e46ee" target="_blank" rel="external">44道JavaScript难题（JavaScript Puzzlers!）</a><br><a href="https://juejin.im/post/5b32f552f265da59991155f0" target="_blank" rel="external">Promise之你看得懂的Promise</a><br><a href="https://juejin.im/post/5b2f02cd5188252b937548ab" target="_blank" rel="external">BAT前端经典面试问题：史上最最最详细的手写Promise教程</a><br><a href="https://juejin.im/post/5b4a9136f265da0f990d49cb" target="_blank" rel="external">近百高频知识点，十万余字，地表最强前端面试图谱了解下</a><br><strong><a href="https://juejin.im/post/5b5749cbe51d453467550494" target="_blank" rel="external">前端面试&amp;笔试&amp;错题指南(三）</a></strong><br><a href="https://github.com/forrany/Web-Project" target="_blank" rel="external">Web-Project·实用项目·面试总结</a><br><a href="https://juejin.im/post/5b5749cbe51d453467550494" target="_blank" rel="external">前端面试&amp;笔试&amp;错题指南（二）</a></p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><a href="https://juejin.im/post/5b331bc7f265da598451fd88" target="_blank" rel="external">前端你应该了解的数据结构与算法</a><br><a href="https://juejin.im/post/5b3b70ea6fb9a04fe91a5039" target="_blank" rel="external">2018年6月前端面试经历(中)·排序·查找·斐波那契·模板引擎</a><br><a href="https://juejin.im/post/5b3b93115188251afa62ad46" target="_blank" rel="external">编写一个简单的JavaScript模板引擎</a><br><a href="https://juejin.im/post/5b5dbcf8f265da0fa86750d1" target="_blank" rel="external">前端与算法-动态规划之01背包问题浅析与实现</a><br><a href="https://juejin.im/post/5b72f0caf265da282809f3b5" target="_blank" rel="external">前端笔试&amp;面试爬坑系列—算法</a></p>
+<h2 id="http相关"><a href="#http相关" class="headerlink" title="http相关"></a>http相关</h2><p><a href="https://juejin.im/entry/5a40777df265da4322416cf0" target="_blank" rel="external">面试时如何优雅的谈论HTTP／1.0／1.1／2.0</a><br><a href="https://juejin.im/post/5b34e6ba51882574d20bbdd4" target="_blank" rel="external">人生苦短，了解一下前端必须明白的http知识点</a><br><a href="https://juejin.im/post/5b29d2c4e51d4558b80b1d8c" target="_blank" rel="external">跟着动画来学习TCP三次握手和四次挥手</a><br><a href="https://juejin.im/post/5b5f20686fb9a04f844adbdd" target="_blank" rel="external">搞定计算机网络面试，看这篇就够了</a><br><a href="https://github.com/forthealllight/blog/issues/19" target="_blank" rel="external">前端面试总结——http、html和浏览器篇</a></p>
+<h2 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h2><p><a href="https://juejin.im/entry/5a54b747518825734216c3df" target="_blank" rel="external">Vue学习看这篇就够(可以梳理一下知识点，挺全的)</a><br><a href="https://www.imooc.com/article/32884" target="_blank" rel="external">你或许不知道Vue的这些小技巧</a><br><a href="https://www.imooc.com/article/24041" target="_blank" rel="external">你不知道的Vue技巧之–开发一个可以通过方法调用的组件</a><br><a href="http://www.imooc.com/article/details/id/34154" target="_blank" rel="external">投稿004期 |太原面经分享：如何在vue面试环节，展示你晋级阿里P6+的技术功底？</a><br><a href="https://juejin.im/post/5b4c0a715188251acc22fdd7" target="_blank" rel="external">Vue(ES6)中的data属性为什么不能是一个对象？</a></p>
+<h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><p><a href="https://juejin.im/entry/5ab1b78af265da2378402505" target="_blank" rel="external">HTML5新特性</a></p>
+<h2 id="趣味问题"><a href="#趣味问题" class="headerlink" title="趣味问题"></a>趣味问题</h2><p><a href="https://juejin.im/post/5afabdd4f265da0b9a6a1d8b" target="_blank" rel="external">作为前端，如何帮帝都的朋友租到合适的房子？</a></p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p><a href="https://juejin.im/post/5b2b76e251882574934c388d" target="_blank" rel="external">为无线前端团队打造高效git工作流</a></p>
+<h2 id="合集"><a href="#合集" class="headerlink" title="合集"></a>合集</h2><p><a href="https://juejin.im/entry/5809991d8ac247005b4295aa" target="_blank" rel="external">Web 前端知识点总结 Awsome frontend learning resource</a><br><a href="https://juejin.im/entry/59ee1471f265da43052dca3c" target="_blank" rel="external">火爆：2017前端面试最新整理</a><br><a href="https://juejin.im/entry/580f18248ac247005b6336b0" target="_blank" rel="external">Web 前端知识点总结</a></p>
+<h2 id="高仿"><a href="#高仿" class="headerlink" title="高仿"></a>高仿</h2><p><a href="http://www.voidcn.com/article/p-vcjpvjaa-e.html" target="_blank" rel="external">vue.js - 收藏集 - 掘金</a></p>
+<h2 id="招聘-amp-内推"><a href="#招聘-amp-内推" class="headerlink" title="招聘&amp;内推"></a>招聘&amp;内推</h2><h3 id="杭州"><a href="#杭州" class="headerlink" title="杭州"></a>杭州</h3><p><a href="https://job.youzan.com/" target="_blank" rel="external">有赞团队</a><br><a href="http://job.didichuxing.com/social/p/6472" target="_blank" rel="external">滴滴杭州</a><br><a href="http://job.mogujie.com/#/social?_k=zjfhxq" target="_blank" rel="external">美丽联合·美丽说·蘑菇街·微信技术栈</a><br><a href="https://www.zhihu.com/people/lion-dande/activities" target="_blank" rel="external">蘑菇街内推·知乎上一个前端妹子·做过vue转小程序的</a><br><a href="http://job.10jqka.com.cn/social.html" target="_blank" rel="external">同花顺·要求较低·看起来一般·无详细的技术栈</a><br><a href="http://job.wacai.com/#/job/7ec44126-b0c0-4a92-bd28-a48936dc0b1e?_k=7g3bf0" target="_blank" rel="external">挖财·要求资深和普通的都有·看来很cool·混合开发技术栈</a><br><a href="http://job.u51.com/Search/detail.html?id=560120613&amp;Salary=8" target="_blank" rel="external">51信用卡·前端开发看起来不多</a><br><a href="http://www.hotjob.cn/wt/zyhy/web/index/webPositionN300!getOnePosition?postId=101305&amp;recruitType=2&amp;brandCode=1&amp;importPost=1&amp;columnId=2" target="_blank" rel="external">中国移动杭州研究院</a><br><a href="https://www.zhipin.com/job_detail/c1380971b0ce50c103x_3Nq9GA~~.html?ka=comp_joblist_12_blank&amp;lid=a3128ade-32fd-4b45-85cc-54b7fa799a05.brand_jod_list" target="_blank" rel="external">贝贝网</a><br><a href="https://www.liepin.com/company/8141158/" target="_blank" rel="external">大搜车团队·看起来不错·印象分不错</a><br><a href="http://www.ct108.com/join/job" target="_blank" rel="external">畅唐网络·游戏公司·有微信技术栈</a><br><a href="https://www.songxiaocai.com/join.html" target="_blank" rel="external">杭州小农网络科技有限公司·宋小菜·偏react技术栈·有微信技术栈</a><br><a href="http://job.dianwoda.com/#/social" target="_blank" rel="external">点我达动态·组件库·浏览器原理·js性能·不要求兼容·要求点react的经验·看起来还不错</a><br>官网做的不好，一返回提交的表单都没了，<a href="https://juejin.im/user/5af2e0756fb9a07a9d70552c" target="_blank" rel="external">点我达掘金内推</a></p>
+<p><a href="https://hr.163.com/position/list.do?postType=0103&amp;workPlaceStr=229&amp;currentPage=1" target="_blank" rel="external">网易杭州·有移动端技术栈</a></p>
+<h3 id="深圳"><a href="#深圳" class="headerlink" title="深圳"></a>深圳</h3><p><a href="https://job.toutiao.com" target="_blank" rel="external">今日头条</a><br><a href="https://juejin.im/post/5ae13cfe5188256715475806" target="_blank" rel="external">头条内推·2018 美团、腾讯、头条、蔚来 社招面试随谈</a><br><a href="https://help.futu5.com/about/detail?job=frontend" target="_blank" rel="external">富途证券</a><br><a href="https://futu.im/posts/2018-01-18-invite/" target="_blank" rel="external">富途2018 web前端招聘</a><br><a href="https://aotu.io/join/" target="_blank" rel="external">京东凹凸实验室</a></p>
+<h3 id="广州"><a href="#广州" class="headerlink" title="广州"></a>广州</h3><p><a href="http://hr.yy.com/#/job/53df420c-323a-4542-a98d-30d2cfd0b502?_k=tnzs3u" target="_blank" rel="external">YY-欢聚时刻</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>团队氛围</td>
+<td>轻松，自由，交流氛围应该还可以，但不知道和个推的那边有没有交流</td>
+<td>有每个人的分享会，管理氛围更接近阿里，前端组人数挺大，应该挺有交流空间</td>
+<td>未拿到更详细的信息，现场感觉挺安静</td>
+</tr>
+<tr>
+<td>个人定位与发展潜力</td>
+<td>感觉起来比较看重，会重点培养</td>
+<td>应该是业务型角色，需评估团队中的定位</td>
+<td>业务线的早期参与者，角色还行，前端leader很好</td>
+</tr>
+<tr>
+<td>团队现状与发展潜力</td>
+<td>前端业务线不够明确，技术栈略显混乱，需评估，但团队整体实力挺强，要求挺高</td>
+<td>业务线明确，前端结构完整，技术栈清晰，团队成员阿里背景的较多</td>
+<td>业务线明确，技术栈比较清晰，需要和北京那边联合完成项目</td>
+</tr>
+<tr>
+<td>公司业务</td>
+<td>app，内容，基于推送的一些拓展</td>
+<td>内容，短视频，toB的媒体服务</td>
+<td>目前在做一个在线问诊系统</td>
+</tr>
+<tr>
+<td>前端leader印象</td>
+<td>未聊</td>
+<td>水平不错，印象较深刻</td>
+<td>一面聊到，还可</td>
+</tr>
+<tr>
+<td>团队总监/老板</td>
+<td>很好，很有魅力，大佬</td>
+<td>较严肃，技术出身</td>
+<td>后端，挺有趣，看起来工作年限应该不低</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>二号线</td>
+<td>二号线</td>
+<td>人工智能小镇（余杭）</td>
+</tr>
+</tbody>
+</table>
+<p>|加班|双休，老板不建议无意义加班，但有些情况加班无可避免|双休，加班会多点，hr表示加班会有的|大小周，hr表示“不加班不是程序员”|</p>
+<p><strong>参考资料</strong><br><a href=""></a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/25/InterviewSource之前端/">InterviewSource之前端</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年02月25日 - 08:02</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/02/25/InterviewSource之前端/" title="InterviewSource之前端">https://zhyjor.github.io/2018/02/25/InterviewSource之前端/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/02/25/InterviewSource之前端/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/24/JavaScript常见问题之三：arguments类数组对象/" rel="next" title="JavaScript常见问题之三：arguments类数组对象">
+                <i class="fa fa-chevron-left"></i> JavaScript常见问题之三：arguments类数组对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/学点linux之二：软链接与硬链接/" rel="prev" title="学点linux之二：软链接与硬链接">
+                学点linux之二：软链接与硬链接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一般的合集"><span class="nav-number">1.</span> <span class="nav-text">一般的合集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js"><span class="nav-number">2.</span> <span class="nav-text">js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">3.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http相关"><span class="nav-number">4.</span> <span class="nav-text">http相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue"><span class="nav-number">5.</span> <span class="nav-text">vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html"><span class="nav-number">6.</span> <span class="nav-text">html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#趣味问题"><span class="nav-number">7.</span> <span class="nav-text">趣味问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">8.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合集"><span class="nav-number">9.</span> <span class="nav-text">合集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高仿"><span class="nav-number">10.</span> <span class="nav-text">高仿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#招聘-amp-内推"><span class="nav-number">11.</span> <span class="nav-text">招聘&内推</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#杭州"><span class="nav-number">11.1.</span> <span class="nav-text">杭州</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深圳"><span class="nav-number">11.2.</span> <span class="nav-text">深圳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广州"><span class="nav-number">11.3.</span> <span class="nav-text">广州</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">12.</span> <span class="nav-text">分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>

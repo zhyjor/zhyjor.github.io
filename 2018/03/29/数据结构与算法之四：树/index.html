@@ -1,0 +1,1182 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Neucha:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构与算法,数据结构," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="秋染蒹葭" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="树结构用处很多，如现代计算机文件系统使用的B+树，本文对树结构进行详细的整理，从二叉树到红黑树，希望可以有一个比较完整清晰的认识。">
+<meta name="keywords" content="数据结构与算法,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之四：树">
+<meta property="og:url" content="https://zhyjor.github.io/2018/03/29/数据结构与算法之四：树/index.html">
+<meta property="og:site_name" content="秋染蒹葭">
+<meta property="og:description" content="树结构用处很多，如现代计算机文件系统使用的B+树，本文对树结构进行详细的整理，从二叉树到红黑树，希望可以有一个比较完整清晰的认识。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.zhyjor.com/201808281750_420.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290927_227.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290941_993.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290942_59.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290949_254.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290949_348.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808290955_209.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291002_88.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291007_84.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291025_144.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291027_241.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805052305_929.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805052306_725.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805052306_295.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805052307_783.png">
+<meta property="og:image" content="http://static.zhyjor.com/201805052307_36.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291038_997.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291040_558.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291041_767.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291044_856.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291045_408.png">
+<meta property="og:image" content="http://static.zhyjor.com/201808291050_921.png">
+<meta property="og:image" content="http://static.zhyjor.com/wexin.png">
+<meta property="og:updated_time" content="2023-10-11T02:22:23.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法之四：树">
+<meta name="twitter:description" content="树结构用处很多，如现代计算机文件系统使用的B+树，本文对树结构进行详细的整理，从二叉树到红黑树，希望可以有一个比较完整清晰的认识。">
+<meta name="twitter:image" content="http://static.zhyjor.com/201808281750_420.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhyjor.github.io/2018/03/29/数据结构与算法之四：树/"/>
+
+
+
+
+
+  <title> 数据结构与算法之四：树 | 秋染蒹葭 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?340874ba9357cbe81570aa4ac1185941";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhyjor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">秋染蒹葭</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">会当凌绝顶，一览众山小</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://zhyjor.github.io/2018/03/29/数据结构与算法之四：树/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhyjor">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="秋染蒹葭">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="秋染蒹葭" src="/images/avatar.jpg">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构与算法之四：树
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+		
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T03:03:27+00:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/29/数据结构与算法之四：树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/29/数据结构与算法之四：树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+ 
+        
+
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>树结构用处很多，如现代计算机文件系统使用的B+树，本文对树结构进行详细的整理，从二叉树到红黑树，希望可以有一个比较完整清晰的认识。<br><a id="more"></a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>树是一种一对多的的线性结构，一对多的意思是一个元素只能有一个前驱，但是可以有多个后继。<br>树（tree）是n（n&gt;=0）个结点的有穷集。n=0时称为空树。在任意一个非空树中：</p>
+<ul>
+<li>每个元素称为结点（node）</li>
+<li>仅有一个特定的结点被称为根结点或树根（root）</li>
+<li>当n&gt;1时，其余结点可分为m（m≥0）个互不相交的集合T1，T2，……Tm，其中每一个集合Ti（1&lt;=i&lt;=m）本身也是一棵树，被称作根的子树（subtree）。</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li>n&gt;0时，根节点是唯一的。</li>
+<li>m&gt;0时，子树的个数没有限制，但它们一定是互不相交的。</li>
+</ul>
+<p><strong>结点拥有的子树数被称为结点的度（Degree）。度为0的结点称为叶节点（Leaf）或终端结点，度不为0的结点称为分支结点。</strong></p>
+<p>除根结点外，分支结点也被称为内部结点。结点的子树的根称为该结点的孩子（Child），该结点称为孩子的双亲或父结点。同一个双亲的孩子之间互称为兄弟。树的度是树中各个结点度的最大值。</p>
+<p>结点的层次（Level）从根开始定义起，根为第一层，根的孩子为第二层。双亲在同一层的结点互为堂兄弟。树中结点的最大层次称为树的深度（Depth）或高度。如果将树中结点的各个子树看成从左到右是有次序的，不能互换的，则称该树为有序树，否则称为无序树。森林是m（m&gt;=0）棵互不相交的树的集合。</p>
+<p>树的定义：<br><img src="http://static.zhyjor.com/201808281750_420.png" alt=""></p>
+<h2 id="树的存储结构"><a href="#树的存储结构" class="headerlink" title="树的存储结构"></a>树的存储结构</h2><p>由于树中每个结点的孩子可以有多个，所以简单的顺序存储结构无法满足树的实现要求。下面介绍三种常用的表示树的方法：双亲表示法、孩子表示法和孩子兄弟表示法。</p>
+<h3 id="双亲表示法"><a href="#双亲表示法" class="headerlink" title="双亲表示法"></a>双亲表示法</h3><p>由于树中每个结点都仅有一个双亲结点（根节点没有），我们可以使用指向双亲结点的指针来表示树中结点的关系。这种表示法有点类似于前面介绍的静态链表的表示方法。具体做法是以一组连续空间存储树的结点，同时在每个结点中，设一个「游标」指向其双亲结点在数组中的位置。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PTree</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">100</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</div><div class="line">    <span class="keyword">private</span> Node[] nodes;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> class <span class="title">Node</span><span class="params">()</span> </span>&#123;</div><div class="line">        E data;</div><div class="line">        <span class="keyword">int</span> parent;</div><div class="line"></div><div class="line">        Node(E data, <span class="keyword">int</span> parent) &#123;</div><div class="line">            <span class="keyword">this</span>.data = data;</div><div class="line">            <span class="keyword">this</span>.parent = parent;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PTree</span><span class="params">()</span> </span>&#123;</div><div class="line">        nodes = <span class="keyword">new</span> PTree.Node[DEFAULT_CAPACITY];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于根结点没有双亲结点，我们约定根节点的parent域值为-1。树的双亲表示法如下所示：</p>
+<p><img src="http://static.zhyjor.com/201808290927_227.png" alt=""></p>
+<p>这样的存储结构，我们可以根据结点的parent域在O(1)的时间找到其双亲结点，但是只能通过遍历整棵树才能找到它的孩子结点。一种解决办法是在结点结构中增加其孩子结点的域，但若结点的孩子结点很多，结点结构将会变的很复杂。</p>
+<h3 id="孩子表示法"><a href="#孩子表示法" class="headerlink" title="孩子表示法"></a>孩子表示法</h3><p>由于树中每个结点可能有多个孩子，可以考虑用多重链表，即每个结点有多个指针域，每个指针指向一个孩子结点，我们把这种方法叫多重链表表示法。它有两种设计方案：</p>
+<p><strong>方案一：</strong>指针域的个数等于树的度。其结点结构可以表示为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>() </span>&#123;</div><div class="line">    E data;</div><div class="line">    Node child1;</div><div class="line">    Node child2;</div><div class="line">    ...</div><div class="line">    Node childn;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对于上一节中的树，树的度为3，其实现为：<br><img src="http://static.zhyjor.com/201808290941_993.png" alt=""><br><strong>显然，当树中各结点的度相差很大时，这种方法对空间有很大的浪费。</strong></p>
+<p><strong>方案二：</strong>每个结点指针域的个数等于该结点的度，取一个位置来存储结点指针的个数。其结点结构可以表示为：</p>
+<p><img src="http://static.zhyjor.com/201808290942_59.png" alt=""></p>
+<p><strong>这种方法克服了浪费空间的缺点，但由于各结点结构不同，在运算上会带来时间上的损耗。</strong></p>
+<p>为了减少空指针的浪费，同时又使结点相同。我们可以将顺序存储结构和链式存储结构相结合。具体做法是：把每个结点的孩子结点以单链表的形式链接起来，若是叶子结点则此单链表为空。然后将所有链表存放进一个一维数组中。这种表示方法被称为孩子表示法。其结构为：</p>
+<p><img src="http://static.zhyjor.com/201808290949_254.png" alt=""></p>
+<p>代码表示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CTree</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">100</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</div><div class="line">    <span class="keyword">private</span> Node[] nodes;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> class <span class="title">Node</span><span class="params">()</span> </span>&#123;</div><div class="line">        E data;</div><div class="line">        ChildNode firstChild;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//链表结点</span></div><div class="line">    <span class="function"><span class="keyword">private</span> class <span class="title">ChildNode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> cur; <span class="comment">//存放结点在nodes数组中的下标</span></div><div class="line">        ChildNode next;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CTree</span><span class="params">()</span> </span>&#123;</div><div class="line">        nodes = <span class="keyword">new</span> CTree.Node[DEFAULT_CAPACITY];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种结构对于查找某个结点的孩子结点比较容易，但若想要查找它的双亲或兄弟，则需要遍历整棵树，比较麻烦。可以将双亲表示法和孩子表示法相结合，这种方法被称为双亲孩子表示法。其结构如下：</p>
+<p><img src="http://static.zhyjor.com/201808290949_348.png" alt=""></p>
+<p><strong>其代码和孩子表示法的基本相同，只需在Node结点中增加parent域即可。</strong></p>
+<h3 id="孩子兄弟表示法"><a href="#孩子兄弟表示法" class="headerlink" title="孩子兄弟表示法"></a>孩子兄弟表示法</h3><p>任意一棵树，它的结点的第一个孩子如果存在则是唯一的，它的<strong>右兄弟</strong>如果存在也是唯一的。因此，我们可以使用两个分别指向该结点的第一个孩子和右兄弟的指针来表示一颗树。其结点结构为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>() </span>&#123;</div><div class="line">    E data;</div><div class="line">    Node firstChild;</div><div class="line">    Node rightSib;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其结构如下：<br><img src="http://static.zhyjor.com/201808290955_209.png" alt=""></p>
+<p>这个方法，可以方便的查找到某个结点的孩子，只需先通过firstChild找到它的第一个孩子，然后通过rightSib找到它的第二个孩子，接着一直下去，直到找到想要的孩子。若要查找某个结点的双亲和左兄弟，使用这个方法则比较麻烦。</p>
+<p>这个方法最大的好处是将一颗复杂的树变成了一颗二叉树。这样就可以使用二叉树的一些特性和算法了。</p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><blockquote>
+<p>二叉树（Binary Tree）是每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。</p>
+</blockquote>
+<p>二叉树的特点：</p>
+<ul>
+<li>二叉树不存在度大于2的结点。</li>
+<li>二叉树的子树有左右之分，次序不能颠倒。</li>
+</ul>
+<p>如下图中，树1和树2是同一棵树，但它们是不同的二叉树。<br><img src="http://static.zhyjor.com/201808291002_88.png" alt=""></p>
+<h4 id="斜树"><a href="#斜树" class="headerlink" title="斜树"></a>斜树</h4><blockquote>
+<p>所有的结点都只有左子树的二叉树叫左斜树。所有的结点都只有右子树的二叉树叫右斜树。这两者统称为斜树。</p>
+</blockquote>
+<p>斜树每一层只有一个结点，结点的个数与二叉树的深度相同。<strong>其实斜树就是线性表结构。</strong></p>
+<h4 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h4><blockquote>
+<p>在一棵二叉树中，如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。</p>
+</blockquote>
+<p>满二叉树具有如下特点：</p>
+<ul>
+<li>叶子只能出现在最下一层</li>
+<li>非叶子结点的度一定是2</li>
+<li>同样深度的二叉树中，满二叉树的结点个数最多，叶子数最多。</li>
+</ul>
+<h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><blockquote>
+<p>若设二叉树的高度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第h层有叶子结点，并且叶子结点都是从左到右依次排布，这就是完全二叉树。</p>
+</blockquote>
+<p>对于一棵具有n个节点的二叉树（按层序编号），如果编号为i的节点与同样深度的满二叉树中编号为i的节点在二叉树的位置完全相同，则为完全二叉树。</p>
+<p>完全二叉树的特点：</p>
+<ul>
+<li>叶子结点只能出现在最下两层</li>
+<li>最下层叶子在左部并且连续</li>
+<li>同样结点数的二叉树，完全二叉树的深度最小</li>
+</ul>
+<p><img src="http://static.zhyjor.com/201808291007_84.png" alt=""></p>
+<h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><blockquote>
+<p>平衡二叉树又被称为AVL树（区别于AVL算法），它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树.</p>
+</blockquote>
+<p>平衡二叉树一般是一个有序树，它具有二叉树的所有性质，其遍历操作和二叉树的遍历操作相同。但是由于其对二叉树施加了额外限制，因而其添加、删除操作都必须保证平衡二叉树的因子被保持。</p>
+<p><strong>平衡二叉树中引入了一个概念：</strong>平衡二叉树节点的平衡因子，它指的是该节点的两个子树，即左子树和右子树的高度差，即用左子树的高度减去右子树的高度，如果该节点的某个子树不存在，则该子树的高度为0,如果高度差的绝对值超过1就要根据情况进行调整。</p>
+<p><strong>平衡的调整共有四种情况：分别为LL,LR,RR,RL。</strong></p>
+<h3 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h3><ul>
+<li>在二叉树的第 i 层至多有 2^(i －1)个结点。(i&gt;=1)</li>
+<li>深度为 k 的二叉树至多有 2^(k-1)个结点(k &gt;=1)。</li>
+<li>对任何一棵二叉树T, 如果其叶结点数为n0, 度为2的结点数为 n2,则n0＝n2＋1。</li>
+<li>具有 n (n&gt;=0) 个结点的完全二叉树的深度为log2(n)+1</li>
+<li>如将一棵有n个结点的完全二叉树自顶向下，同层自左向右连续为结点编号0,1, …, n-1，则有： <ul>
+<li>若i = 0, 则 i 无双亲,   若i &gt; 0, 则 i 的双亲为(i -1)/2</li>
+<li>若<code>2*i+1 &lt; n</code>, 则i 的左子女为 <code>2*i+1</code>，若<code>2*i+2 &lt; n</code>, 则 i 的右子女为<code>2*i+2</code></li>
+<li>若结点编号i为偶数，且i != 0,则左兄弟结点i-1.</li>
+<li>若结点编号i为奇数，且i != n-1,则右兄弟结点为i+1.</li>
+<li>结点i 所在层次为log2(i+1)</li>
+</ul>
+</li>
+</ul>
+<h3 id="二叉树的实现"><a href="#二叉树的实现" class="headerlink" title="二叉树的实现"></a>二叉树的实现</h3><p>二叉树是一种特殊的树，它的存储结构相对于前面谈到的一般树的存储结构要简单一些。</p>
+<h4 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h4><p>二叉树的顺序存储结构就是用一维数组来存储二叉树中的结点。不使用数组的第一个位置。结点的存储位置反映了它们之间的逻辑关系：位置k的结点的双亲结点的位置为k/2，它的两个孩子结点的位置分别为2k和2k+1。</p>
+<p><img src="http://static.zhyjor.com/201808291025_144.png" alt=""></p>
+<p>代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayBinaryTree</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_DEPTH = <span class="number">5</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</div><div class="line">    <span class="keyword">private</span> E[] datas;</div><div class="line"></div><div class="line">    ArrayBinaryTree() &#123;</div><div class="line">        <span class="keyword">this</span>(DEFAULT_DEPTH);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    ArrayBinaryTree(<span class="keyword">int</span> depth) &#123;</div><div class="line">        datas = (E[]) <span class="keyword">new</span> Object[(<span class="keyword">int</span>)Math.pow(<span class="number">2</span>, depth)];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> size == <span class="number">0</span>; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> size; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">getRoot</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> datas[<span class="number">1</span>]; &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回指定节点的父节点    </span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">getParent</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;  </div><div class="line">        checkIndex(index);  </div><div class="line">        <span class="keyword">if</span> (index == <span class="number">1</span>) &#123;    </div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"根节点不存在父节点！"</span>);    </div><div class="line">        &#125;    </div><div class="line">        <span class="keyword">return</span> datas[index/<span class="number">2</span>];    </div><div class="line">    &#125;    </div><div class="line">        </div><div class="line">    <span class="comment">//获取右子节点    </span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">getRight</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;    </div><div class="line">        checkIndex(index*<span class="number">2</span> + <span class="number">1</span>);  </div><div class="line">        <span class="keyword">return</span> datas[index * <span class="number">2</span> + <span class="number">1</span>];    </div><div class="line">    &#125;    </div><div class="line">        </div><div class="line">    <span class="comment">//获取左子节点    </span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">getLeft</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;    </div><div class="line">        checkIndex(index*<span class="number">2</span>);    </div><div class="line">        <span class="keyword">return</span> datas[index * <span class="number">2</span>];    </div><div class="line">    &#125;     </div><div class="line">        </div><div class="line">    <span class="comment">//返回指定数据的位置    </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(E data)</span></span>&#123;    </div><div class="line">       <span class="keyword">if</span>(data==<span class="keyword">null</span>)&#123;   </div><div class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();  </div><div class="line">       &#125; <span class="keyword">else</span> &#123;  </div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;datas.length;i++) &#123;  </div><div class="line">               <span class="keyword">if</span>(data.equals(datas[i])) &#123;  </div><div class="line">                   <span class="keyword">return</span> i;  </div><div class="line">               &#125;  </div><div class="line">           &#125;  </div><div class="line">       &#125;  </div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span>;    </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//顺序添加元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E element)</span> </span>&#123;</div><div class="line">        checkIndex(size + <span class="number">1</span>);</div><div class="line">        datas[size + <span class="number">1</span>] = element;</div><div class="line">        size++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//在指定位置添加元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E element, <span class="keyword">int</span> parent, <span class="keyword">boolean</span> isLeft)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(datas[parent] == <span class="keyword">null</span>) &#123;  </div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"index["</span>+parent+<span class="string">"] is not Exist!"</span>);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">if</span>(element == <span class="keyword">null</span>) &#123;  </div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();  </div><div class="line">        &#125; </div><div class="line"></div><div class="line">        <span class="keyword">if</span>(isLeft) &#123;</div><div class="line">            checkIndex(<span class="number">2</span>*parent);</div><div class="line">            <span class="keyword">if</span>(datas[parent*<span class="number">2</span>] != <span class="keyword">null</span>) &#123;  </div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"index["</span>+parent*<span class="number">2</span>+<span class="string">"] is  Exist!"</span>);  </div><div class="line">            &#125;</div><div class="line">            datas[<span class="number">2</span>*parent] = element;</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            checkIndex(<span class="number">2</span>*parent + <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(datas[(parent+<span class="number">1</span>)*<span class="number">2</span>]!=<span class="keyword">null</span>) &#123;  </div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"index["</span>+ parent*<span class="number">2</span>+<span class="number">1</span> +<span class="string">"] is  Exist!"</span>);  </div><div class="line">            &#125; </div><div class="line">            datas[<span class="number">2</span>*parent + <span class="number">1</span>] = element;</div><div class="line">        &#125;</div><div class="line">        size++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//检查下标是否越界</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span>(index &lt;= <span class="number">0</span> || index &gt;= datas.length) &#123;  </div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();  </div><div class="line">        &#125;  </div><div class="line">    &#125; </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">char</span>[] data = &#123;<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'D'</span>,<span class="string">'E'</span>,<span class="string">'F'</span>,<span class="string">'G'</span>,<span class="string">'H'</span>,<span class="string">'I'</span>,<span class="string">'J'</span>&#125;;</div><div class="line">        ArrayBinaryTree&lt;Character&gt; abt = <span class="keyword">new</span> ArrayBinaryTree&lt;&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;data.length; i++) &#123;</div><div class="line">            abt.add(data[i]);</div><div class="line">        &#125;</div><div class="line">        System.out.print(abt.getParent(abt.indexOf(<span class="string">'J'</span>)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一棵深度为k的右斜树，只有k个结点，但却需要分配2k-1个顺序存储空间。所以顺序存储结构一般只用于完全二叉树。</p>
+<h4 id="链式存储"><a href="#链式存储" class="headerlink" title="链式存储"></a>链式存储</h4><p>二叉树每个结点最多有两个孩子，所以为它设计一个数据域和两个指针域即可。我们称这样的链表为二叉链表。其结构如下图：<br><img src="http://static.zhyjor.com/201808291027_241.png" alt=""></p>
+<p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedBinaryTree</span>&lt;<span class="title">E</span>&gt; </span>&#123;    </div><div class="line">    <span class="keyword">private</span> List&lt;Node&gt; nodeList = <span class="keyword">null</span>;  </div><div class="line">   </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;  </div><div class="line">        Node leftChild;  </div><div class="line">        Node rightChild;  </div><div class="line">        E data;  </div><div class="line">  </div><div class="line">        Node(E data) &#123;  </div><div class="line">            <span class="keyword">this</span>.data = data;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">getRoot</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> nodeList.get(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createBinTree</span><span class="params">(E[] array)</span> </span>&#123;  </div><div class="line">        nodeList = <span class="keyword">new</span> LinkedList&lt;Node&gt;();  </div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;  </div><div class="line">            nodeList.add(<span class="keyword">new</span> Node(array[i]));  </div><div class="line">        &#125;  </div><div class="line">        <span class="comment">// 对前lasti-1个父节点按照父节点与孩子节点的数字关系建立二叉树  </span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length / <span class="number">2</span> - <span class="number">1</span>; i++) &#123;   </div><div class="line">            nodeList.get(i).leftChild = nodeList.get(i * <span class="number">2</span> + <span class="number">1</span>);    </div><div class="line">            nodeList.get(i).rightChild = nodeList.get(i * <span class="number">2</span> + <span class="number">2</span>);  </div><div class="line">        &#125;  </div><div class="line">        <span class="comment">// 最后一个父节点:因为最后一个父节点可能没有右孩子，所以单独拿出来处理  </span></div><div class="line">        <span class="keyword">int</span> lastParent = array.length / <span class="number">2</span> - <span class="number">1</span>;  </div><div class="line">        nodeList.get(lastParent).leftChild = nodeList  .get(lastParent * <span class="number">2</span> + <span class="number">1</span>);  </div><div class="line"></div><div class="line">        <span class="comment">// 右孩子,如果数组的长度为奇数才建立右孩子  </span></div><div class="line">        <span class="keyword">if</span> (array.length % <span class="number">2</span> == <span class="number">1</span>) &#123;  </div><div class="line">            nodeList.get(lastParent).rightChild = nodeList.get(lastParent * <span class="number">2</span> + <span class="number">2</span>);  </div><div class="line">        &#125;  </div><div class="line">    &#125; </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Character[] data = &#123;<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'D'</span>,<span class="string">'E'</span>,<span class="string">'F'</span>,<span class="string">'G'</span>,<span class="string">'H'</span>,<span class="string">'I'</span>,<span class="string">'J'</span>&#125;;</div><div class="line">        LinkedBinaryTree&lt;Character&gt; ldt = <span class="keyword">new</span> LinkedBinaryTree&lt;&gt;();</div><div class="line">        ldt.createBinTree(data);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h3><blockquote>
+<p>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有结点，使得每个结点被访问一次且仅被访问一次。</p>
+</blockquote>
+<p>二叉树的遍历主要包括前序遍历、中序遍历、后序遍历和层序遍历四种，其中前三种是非常常用的。</p>
+<h4 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h4><p>二叉树为空就空操作返回，否则先访问根结点，然后遍历左子树，最后遍历右子树。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//顺序存储</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrderTraverse</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (datas[index] == <span class="keyword">null</span>)  </div><div class="line">        <span class="keyword">return</span>;  </div><div class="line">    System.out.print(datas[index] + <span class="string">" "</span>);  </div><div class="line">    preOrderTraverse(index*<span class="number">2</span>);  </div><div class="line">    preOrderTraverse(index*<span class="number">2</span>+<span class="number">1</span>);  </div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="comment">//链式存储</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrderTraverse</span><span class="params">(Node node)</span> </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>)  </div><div class="line">        <span class="keyword">return</span>;  </div><div class="line">    System.out.print(node.data + <span class="string">" "</span>);  </div><div class="line">    preOrderTraverse(node.leftChild);  </div><div class="line">    preOrderTraverse(node.rightChild);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="http://static.zhyjor.com/201805052305_929.png" alt=""></p>
+<p>前序遍历有如下技巧<br><img src="http://static.zhyjor.com/201805052306_725.png" alt=""></p>
+<ul>
+<li>从根节点的左边开始，绕过所有节点和边，画出一条封闭的、有向的遍历曲线（如上图红色所示）</li>
+<li>对于每个节点，曲线第一次从连线进入节点的位置标记为1，最后一次从节点出去的位置标记为2 。</li>
+<li>如上图的标记所示，沿着遍历曲线的方向，依次经过标记为1的节点为前序遍历序列：ABEFIJCDGH 。</li>
+</ul>
+<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>若二叉树为空，则空操作返回，否则从根节点开始（注意不是先访问根节点），中序遍历根节点的左子树，然后是访问根节点，最后中序遍历右子树。</p>
+<p><strong>先遍历左子树，然后遍历根结点，最后遍历右子树。</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//链式存储</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inOrderTraverse</span><span class="params">(Node node)</span> </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>)  </div><div class="line">        <span class="keyword">return</span>;  </div><div class="line">    inOrderTraverse(node.leftChild);</div><div class="line">    System.out.print(node.data + <span class="string">" "</span>);  </div><div class="line">    inOrderTraverse(node.rightChild);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="http://static.zhyjor.com/201805052306_295.png" alt=""></p>
+<p>同样的技巧<br><img src="http://static.zhyjor.com/201805052307_783.png" alt=""></p>
+<ul>
+<li>对于所有叶子节点，在标记1和2中间加上标记0。</li>
+<li>当父节点只有左子树时，在该节点右下方标记0；当父节点只有右子树时，在该节点的左下方标记0 。</li>
+<li>当父节点同时有左右子树时，在其正下方标记0 。</li>
+<li>沿着遍历曲线的方向，依次经过标记为0的节点为中序遍历序列：DGBAECHF 。</li>
+</ul>
+<h4 id="后续遍历"><a href="#后续遍历" class="headerlink" title="后续遍历"></a>后续遍历</h4><p>若二叉树为空，则空操作返回，否则从左到右先叶子后节点的方式遍历访问左右子树，最后是访问根节点。</p>
+<p><strong>先遍历左子树，然后遍历右子树，最后遍历根结点。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//链式存储</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postOrderTraverse</span><span class="params">(Node node)</span> </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>)  </div><div class="line">        <span class="keyword">return</span>;  </div><div class="line">    postOrderTraverse(node.leftChild);</div><div class="line">    postOrderTraverse(node.rightChild);  </div><div class="line">    System.out.print(node.data + <span class="string">" "</span>);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://static.zhyjor.com/201805052307_36.png" alt=""></p>
+<p>沿着遍历曲线的方向，依次经过标记为2的节点为后序遍历序列：EIJFBCGHDA 。</p>
+<h4 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h4><p>从上到下逐层遍历，在同一层中，按从左到右的顺序遍历。</p>
+<h3 id="遍历的性质"><a href="#遍历的性质" class="headerlink" title="遍历的性质"></a>遍历的性质</h3><ul>
+<li>已知前序遍历和中序遍历，可以唯一的确定一个二叉树； </li>
+<li>已知后序遍历和中序遍历，可以唯一的确定一个二叉树；</li>
+<li>但是，已知前序遍历和后序遍历，是不能唯一的确定一棵二叉树的。 </li>
+</ul>
+<p>比如，如前序遍历是ABC，后序遍历是CBA的二叉树有如下，我们可以确定A是根节点，但是无法确定那个是左子树，哪个是右子树。<br><img src="http://static.zhyjor.com/201808291038_997.png" alt=""></p>
+<h2 id="线索二叉树"><a href="#线索二叉树" class="headerlink" title="线索二叉树"></a>线索二叉树</h2><blockquote>
+<p>对于n个结点的二叉树，在二叉链存储结构中有n+1个空指针域，利用这些空指针域存放在某种遍历次序下该结点的前驱结点和后继结点的指针，这些指针被称为线索，加上线索的二叉树称为线索二叉树。</p>
+</blockquote>
+<p>结点结构如下：<br><img src="http://static.zhyjor.com/201808291040_558.png" alt=""></p>
+<p>其中：</p>
+<ul>
+<li>lTag为0时，lChild指向该结点的左孩子，为1时指向该结点的前驱</li>
+<li>rTag为0时，rChild指向该结点的右孩子，为1时指向该结点的后继。</li>
+</ul>
+<p>线索二叉树的结构图为：图中蓝色虚线为前驱，红色虚线为后继<br><img src="http://static.zhyjor.com/201808291041_767.png" alt=""></p>
+<p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">public class ThreadedBinaryTree&lt;E&gt; &#123;</div><div class="line">    private TBTreeNode root;</div><div class="line">    private int size;          // 大小  </div><div class="line">    private TBTreeNode pre;   // 线索化的时候保存前驱  </div><div class="line"></div><div class="line">    class TBTreeNode &#123;</div><div class="line">        E element;</div><div class="line">        boolean lTag; //false表示指向孩子结点，true表示指向前驱或后继的线索</div><div class="line">        boolean rTag;</div><div class="line">        TBTreeNode lChild;</div><div class="line">        TBTreeNode rChild;</div><div class="line"></div><div class="line">        public TBTreeNode(E element) &#123;</div><div class="line">            this.element = element;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public ThreadedBinaryTree(E[] data) &#123;</div><div class="line">        this.pre = null;  </div><div class="line">        this.size = data.length;  </div><div class="line">        this.root = createTBTree(data, 1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //构建二叉树</div><div class="line">    public TBTreeNode createTBTree(E[] data, int index) &#123;  </div><div class="line">        if (index &gt; data.length)&#123;  </div><div class="line">            return null;  </div><div class="line">        &#125;  </div><div class="line">        TBTreeNode node = new TBTreeNode(data[index - 1]);  </div><div class="line">        TBTreeNode left = createTBTree(data, 2 * index);  </div><div class="line">        TBTreeNode right = createTBTree(data, 2 * index + 1);  </div><div class="line">        node.lChild = left;  </div><div class="line">        node.rChild = right;  </div><div class="line">        return node;  </div><div class="line">    &#125; </div><div class="line"></div><div class="line">    /** </div><div class="line">     * 将二叉树线索化   </div><div class="line">     */  </div><div class="line">    public void inThreading(TBTreeNode node) &#123;  </div><div class="line">        if (node != null) &#123;  </div><div class="line">            inThreading(node.lChild);     // 线索化左孩子 </div><div class="line"></div><div class="line">            if (node.lChild == null) &#123;  // 左孩子为空  </div><div class="line">                node.lTag = true;    // 将左孩子设置为线索  </div><div class="line">                node.lChild = pre;  </div><div class="line">            &#125;  </div><div class="line">            if (pre != null &amp;&amp; pre.rChild == null) &#123;  // 右孩子为空  </div><div class="line">                pre.rTag = true;  </div><div class="line">                pre.rChild = node;  </div><div class="line">            &#125;  </div><div class="line">            pre = node;  </div><div class="line"></div><div class="line">            inThreading(node.rChild);  // 线索化右孩子  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 中序遍历线索二叉树 </div><div class="line">     */  </div><div class="line">    public void inOrderTraverseWithThread(TBTreeNode node) &#123;</div><div class="line"></div><div class="line">        while(node != null) &#123;</div><div class="line">            while(!node.lTag) &#123; //找到中序遍历的第一个结点</div><div class="line">                node = node.lChild;</div><div class="line">            &#125;</div><div class="line">            System.out.print(node.element + &quot; &quot;); </div><div class="line">            while(node.rTag &amp;&amp; node.rChild != null) &#123; //若rTag为true，则打印后继结点</div><div class="line">                node = node.rChild;</div><div class="line">                System.out.print(node.element + &quot; &quot;); </div><div class="line">            &#125;</div><div class="line">            node = node.rChild;</div><div class="line">        &#125;</div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 中序遍历，线索化后不能使用</div><div class="line">     */  </div><div class="line">    public void inOrderTraverse(TBTreeNode node) &#123;  </div><div class="line">        if(node == null)</div><div class="line">            return;</div><div class="line">        inOrderTraverse(node.lChild);  </div><div class="line">        System.out.print(node.element + &quot; &quot;);  </div><div class="line">        inOrderTraverse(node.rChild);  </div><div class="line">    &#125; </div><div class="line"></div><div class="line">    public TBTreeNode getRoot() &#123; return root;&#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Character[] data = &#123;&apos;A&apos;,&apos;B&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;F&apos;,&apos;G&apos;,&apos;H&apos;,&apos;I&apos;,&apos;J&apos;&#125;;</div><div class="line">        ThreadedBinaryTree&lt;Character&gt; tbt = new ThreadedBinaryTree&lt;&gt;(data);</div><div class="line">        tbt.inOrderTraverse(tbt.getRoot());</div><div class="line">        System.out.println();</div><div class="line">        tbt.inThreading(tbt.getRoot());</div><div class="line">        tbt.inOrderTraverseWithThread(tbt.getRoot());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>线索二叉树充分利用了空指针域的空间，提高了遍历二叉树的效率。</p>
+<h2 id="树、森林与二叉树的转换"><a href="#树、森林与二叉树的转换" class="headerlink" title="树、森林与二叉树的转换"></a>树、森林与二叉树的转换</h2><h3 id="树转换为二叉树"><a href="#树转换为二叉树" class="headerlink" title="树转换为二叉树"></a>树转换为二叉树</h3><ul>
+<li>加线。在所有兄弟结点之间加一条连线。</li>
+<li>去线。树中的每个结点，只保留它与第一个孩子结点的连线，删除它与其它孩子结点之间的连线。</li>
+<li>层次调整。以树的根节点为轴心，将整棵树顺时针旋转一定角度，使之结构层次分明。（注意第一个孩子是结点的左孩子，兄弟转换过来的孩子是结点的右孩子）</li>
+</ul>
+<p><img src="http://static.zhyjor.com/201808291044_856.png" alt=""></p>
+<h3 id="森林转换为二叉树"><a href="#森林转换为二叉树" class="headerlink" title="森林转换为二叉树"></a>森林转换为二叉树</h3><ul>
+<li>把每棵树转换为二叉树。</li>
+<li>第一棵二叉树不动，从第二棵二叉树开始，依次把后一棵二叉树的根结点作为前一棵二叉树的根结点的右孩子，用线连接起来。</li>
+</ul>
+<p><img src="http://static.zhyjor.com/201808291045_408.png" alt=""></p>
+<h3 id="二叉树转换为树"><a href="#二叉树转换为树" class="headerlink" title="二叉树转换为树"></a>二叉树转换为树</h3><p>是树转换为二叉树的逆过程。</p>
+<ul>
+<li>加线。若某结点X的左孩子结点存在，则将这个左孩子的右孩子结点、右孩子的右孩子结点、右孩子的右孩子的右孩子结点…，都作为结点X的孩子。将结点X与这些右孩子结点用线连接起来。</li>
+<li>去线。删除原二叉树中所有结点与其右孩子结点的连线。</li>
+<li>层次调整。</li>
+</ul>
+<p><img src="http://static.zhyjor.com/201808291050_921.png" alt=""></p>
+<h3 id="二叉树转换为森林"><a href="#二叉树转换为森林" class="headerlink" title="二叉树转换为森林"></a>二叉树转换为森林</h3><p>假如一棵二叉树的根节点有右孩子，则这棵二叉树能够转换为森林，否则将转换为一棵树。</p>
+<ul>
+<li>从根节点开始，若右孩子存在，则把与右孩子结点的连线删除。再查看分离后的二叉树，若其根节点的右孩子存在，则连线删除…。直到所有这些根节点与右孩子的连线都删除为止。</li>
+<li>将每棵分离后的二叉树转换为树。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这一节开头讲了树的一些基本概念，重点介绍了树的三种不同的存储方法：双亲表示法、孩子表示法和孩子兄弟表示法。由兄弟表示法引入了一种特殊的树：二叉树，并详细介绍了它的性质、不同结构的实现方法和遍历方法。最后介绍了线索二叉树的实现方法。其实一些高级的应用，会在后续的文章中关注。</p>
+<p><strong>参考资料</strong><br><a href="https://blog.csdn.net/xiaotan2011929/article/details/61427919" target="_blank" rel="external">图解二叉树及二叉树遍历</a><br><a href="https://www.cnblogs.com/gonjan-blog/p/6504668.html" target="_blank" rel="external">java 完全二叉树的构建与四种遍历方法</a><br><a href="https://blog.csdn.net/u012532559/article/details/44671167" target="_blank" rel="external">平衡二叉树的构造与实现</a><br><a href="https://blog.csdn.net/DaveBobo/article/details/77603549" target="_blank" rel="external">二叉搜索树(BST)与平衡二叉树(AVL树)专题</a><br><a href="https://blog.csdn.net/why_still_confused/article/details/51532222" target="_blank" rel="external">二叉树的五大性质及证明</a><br><a href="http://www.cnblogs.com/zhuyf87/archive/2012/11/04/2753950.html" target="_blank" rel="external">树、森林和二叉树的转换</a></p>
+<p><img src="http://static.zhyjor.com/wexin.png" alt=""></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/29/数据结构与算法之四：树/">数据结构与算法之四：树</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 zhyjor 的个人博客">zhyjor</a></p>
+  <p><span>发布时间:</span>2018年03月29日 - 11:03</p>
+  <p><span>最后更新:</span>2023年10月11日 - 02:10</p>
+  <p><span>原始链接:</span><a href="/2018/03/29/数据结构与算法之四：树/" title="数据结构与算法之四：树">https://zhyjor.github.io/2018/03/29/数据结构与算法之四：树/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhyjor.github.io/2018/03/29/数据结构与算法之四：树/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+  
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>🐶 您的支持将鼓励我继续创作 🐶</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赞赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-img.jpg" alt="zhyjor WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-img.jpg" alt="zhyjor Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+         
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/26/微服务实践之一：基础模块介绍及规范/" rel="next" title="微服务实践之一：基础模块介绍及规范">
+                <i class="fa fa-chevron-left"></i> 微服务实践之一：基础模块介绍及规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/webpack深入理解之一：webpack的运行机制/" rel="prev" title="webpack深入理解之一：webpack的运行机制">
+                webpack深入理解之一：webpack的运行机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="monthly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE5Ny83NzQ2"></div>
+	
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhyjor" />
+          <p class="site-author-name" itemprop="name">zhyjor</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">336</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">182</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhyjor" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhyjor" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-battery-3"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.woaitqs.cc/" title="Qisen Tang" target="_blank">Qisen Tang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://szhshp.org" title="szhshp的博客" target="_blank">szhshp的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://python.zhangwei.website" title="JuniorCoder" target="_blank">JuniorCoder</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hippo-jessy.com" title="Hippo" target="_blank">Hippo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/lippi-ouyang" title="友链出租" target="_blank">友链出租</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的存储结构"><span class="nav-number">2.</span> <span class="nav-text">树的存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#双亲表示法"><span class="nav-number">2.1.</span> <span class="nav-text">双亲表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#孩子表示法"><span class="nav-number">2.2.</span> <span class="nav-text">孩子表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#孩子兄弟表示法"><span class="nav-number">2.3.</span> <span class="nav-text">孩子兄弟表示法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树"><span class="nav-number">3.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#斜树"><span class="nav-number">3.1.1.</span> <span class="nav-text">斜树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#满二叉树"><span class="nav-number">3.1.2.</span> <span class="nav-text">满二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完全二叉树"><span class="nav-number">3.1.3.</span> <span class="nav-text">完全二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">3.1.4.</span> <span class="nav-text">平衡二叉树</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的性质"><span class="nav-number">3.2.</span> <span class="nav-text">二叉树的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的实现"><span class="nav-number">3.3.</span> <span class="nav-text">二叉树的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序存储"><span class="nav-number">3.3.1.</span> <span class="nav-text">顺序存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链式存储"><span class="nav-number">3.3.2.</span> <span class="nav-text">链式存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的遍历"><span class="nav-number">3.4.</span> <span class="nav-text">二叉树的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前序遍历"><span class="nav-number">3.4.1.</span> <span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中序遍历"><span class="nav-number">3.4.2.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后续遍历"><span class="nav-number">3.4.3.</span> <span class="nav-text">后续遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#层序遍历"><span class="nav-number">3.4.4.</span> <span class="nav-text">层序遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历的性质"><span class="nav-number">3.5.</span> <span class="nav-text">遍历的性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线索二叉树"><span class="nav-number">4.</span> <span class="nav-text">线索二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树、森林与二叉树的转换"><span class="nav-number">5.</span> <span class="nav-text">树、森林与二叉树的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#树转换为二叉树"><span class="nav-number">5.1.</span> <span class="nav-text">树转换为二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#森林转换为二叉树"><span class="nav-number">5.2.</span> <span class="nav-text">森林转换为二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树转换为树"><span class="nav-number">5.3.</span> <span class="nav-text">二叉树转换为树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树转换为森林"><span class="nav-number">5.4.</span> <span class="nav-text">二叉树转换为森林</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhyjor</span>
+</div>
+
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共338.7k字</span>
+</div>
+
+
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ezlippi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
+})();
+</script>
+
+<style>
+#live2dcanvas{
+  position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 999;
+	width: 150px;
+	height: 300px;
+  pointer-events: none;
+  opacity: 1;
+}
+</style>
+</body>
+</html>
